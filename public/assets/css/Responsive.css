@@ -1,0 +1,962 @@
+﻿@media screen and (max-width: 1024px) {
+    .listoption>ul>li>h6 {
+        font-size: 12px;
+    }
+    .mobile-filter,
+    .mobileapply_ftr {
+        display: block;
+        text-align: center;
+    }
+    .container_pd {
+        padding: 10px;
+    }
+    .modifyhead .search_box {
+        margin: 10px 0px;
+    }
+    .flexlist {
+        flex-wrap: wrap;
+    }
+    .prishow {
+        border-left: none;
+        background: #f2f2f2;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .detailsmain,
+    .flexws,
+    .btmlist_to {
+        display: block;
+    }
+    .leftmain_rv {
+        width: 100%;
+        padding-right: 0;
+    }
+    .dts_heading>h1,
+    .to_list>span {
+        font-size: 15px;
+    }
+    .dts_heading>span {
+        font-size: 13px;
+    }
+    .leftlogo_rv,
+    .righttxt_rv {
+        width: 100%;
+    }
+    .tbrtvr>h4 {
+        font-size: 16px;
+    }
+    .btmlist_to>span {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .rightmain_rv {
+        width: 100%;
+    }
+    .mtprew1 {
+        margin: 20px 0;
+    }
+    .ckeck_trm input {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .blknone {
+        display: none;
+    }
+    .logo_menu_box,
+    .rc_book,
+    .popular_fbox,
+    .boxsearching>.d-flex {
+        flex-wrap: wrap;
+        columns: 0px;
+    }
+    .ultop>li>a {
+        font-size: 12px;
+    }
+    .search_location,
+    .search_date,
+    .search_adult {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .numberbox,
+    .qr_ap {
+        width: 100%;
+    }
+    .numberbox {
+        margin-bottom: 20px;
+        padding-right: 0;
+        border: none;
+    }
+    .btnsb_link {
+        padding: 10px 10px;
+        white-space: nowrap;
+    }
+    .helptxt {
+        margin-bottom: 10px;
+    }
+    .mbr_qr {
+        flex-wrap: wrap;
+    }
+    .section_heading_center h2 {
+        font-size: 19px;
+    }
+    .packege_src>input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .imagination_boxed img {
+        margin-top: 10px;
+    }
+    .packege_src {
+        flex-wrap: wrap;
+    }
+    .search_des {
+        width: 100%;
+    }
+    .pckbox {
+        padding: 15px;
+    }
+    .pckbox>h2 {
+        font-size: 15px;
+    }
+    .leftri {
+        border-radius: initial;
+    }
+    .searchbtn {
+        margin-top: 0;
+    }
+    .clids {
+        top: 0;
+    }
+    .booking_box {
+        width: 42%;
+    }
+    .flightbox {
+        width: 48%;
+    }
+    .flx_pflt>span,
+    .nty_txt>span {
+        font-size: 13px;
+    }
+    .f_box,
+    .contact_box_f {
+        margin-bottom: 20px;
+    }
+    .form_tvl {
+        display: block;
+        column-gap: 0;
+    }
+    .col4 .deps,
+    .col4 .tvlbox,
+    .datesm1,
+    .datesm2,
+    .col2 .tvlbox,
+    .coln2 .tvlbox {
+        width: 100%;
+    }
+    .tvlbox {
+        margin-bottom: 20px;
+    }
+    .pdbox_wht {
+        padding: 10px;
+    }
+    .radio_gd>li>label {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1260px) {
+    .formbox_visa {
+        width: 48%;
+    }
+}
+
+@media screen and (min-width: 990px) and (max-width: 1100px) {
+    .formbox_visa {
+        width: 57%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .icnv {
+        width: 31%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .banner_at .carousel-item>h4{font-size: 30px;}
+    .banner_at .search_box{margin-top: 20px;}   
+   .banner_at {padding: 10px;}
+    .price_right{margin-top: 20px;}
+    .price_right>h2{text-align: center;}
+    .tabsb {
+        justify-content: space-between;
+    }
+    .sbt1 {
+        padding: 10px 4px;
+    }
+    .tbrtvr {
+        flex-wrap: wrap;
+        padding: 0px 10px;
+    }
+    .triptop .nav-tabs .nav-link {
+        font-size: 16px;
+    }
+    .menu_more {
+        display: block;
+    }
+    .txt_more {
+        display: none;
+    }
+    .logo {
+        padding-left: 35px;
+    }
+    .dropmore .dropdown .dropdown-toggle::after {
+        display: none;
+    }
+    .boxthems {
+        right: initial;
+        left: -162px;
+        top: 18px;
+    }
+    .cogbtn {
+        right: -35px;
+        left: initial;
+        border-radius: 0px 5px 5px 0px;
+    }
+    .showcog {
+        right: initial;
+        left: 0;
+    }
+    #hidemedia1 {
+        display: none;
+    }
+    #hidemedia2 {
+        display: block;
+    }
+    .topheader,
+    .logo_menu_box,
+    .boxsearching .d-flex,
+    .rc_book,
+    .popular_fbox {
+        flex-wrap: wrap;
+        columns: 0px;
+    }
+    .search_location,
+    .Fromwhere,
+    .Towhere,
+    .search_date,
+    .search_adult {
+        width: 100%;
+    }
+    .search_date,
+    .search_adult {
+        margin-bottom: 20px;
+    }
+    .search_box {
+        margin: 0;
+        padding: 10px;
+    }
+    .tab_nav .nav-tabs {
+        margin-bottom: 10px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tab_nav .nav-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .width50 {
+        width: 100%;
+        float: left;
+    }
+    .tab_nav .nav-tabs .nav-link {
+        font-size: 0.875rem;
+        padding: 8px 12px;
+    }
+    .sbt1>label {
+        font-size: 14px;
+    }
+    .lcchange .search_location {
+        width: 100%;
+    }
+    .lcchange {
+        margin-top: 0 !important;
+    }
+    .search_adult .dropslct .dropdown-menu {
+        width: 100%;
+    }
+    .graybg {
+        padding-bottom: 30px;
+    }
+    .Towhere .input_src {
+        padding: 10px 10px 10px 47px;
+    }
+    .Towhere .iconint {
+        left: 20px;
+    }
+    .smallfont>h1 {
+        font-size: 20px;
+    }
+    .allheading>h1 {
+        margin-bottom: 20px;
+    }
+    .whysec {
+        margin-bottom: 20px;
+    }
+    .ftbtn_src {
+        width: 100%;
+        text-align: center;
+    }
+    .tabsearh_input {
+        padding: 20px 15px;
+    }
+    .Fromwhere,
+    .Towhere {
+        margin-bottom: 20px;
+    }
+    .excng_bx {
+        right: 0;
+        transform: rotate(90deg);
+        top: 97px;
+        background: none;
+    }
+    .excng_bx_w {
+        fill: #000;
+    }
+    .gapbox,
+    .topheader,
+    .modifyhead .search_box {
+        padding: 0 20px;
+    }
+    .ultop>li>a {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .topheader {
+        justify-content: center !important;
+    }
+    .after_br>li::after {
+        top: 7px;
+        height: 18px;
+    }
+    .ultop {
+        align-items: center;
+    }
+    .logo_menu_box {
+        padding: 15px;
+    }
+    .flgt_icon,
+    .leftrds::before {
+        display: none !important;
+    }
+    .sbt1 {
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .sbt1>label,
+    .modifyhead .sbt1>label {
+        padding: 4px 12px;
+    }
+    .modifyhead .sbt1>label::before {
+        display: none;
+    }
+    .search_title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .activetb input {
+        width: 22px;
+        height: 22px;
+    }
+    .sbt1 input {
+        width: 15px;
+        height: 15px;
+        left: 9px;
+    }
+    .sbt1 input::before {
+        width: 22px;
+        height: 21px;
+        border-radius: 50px;
+        left: -4px;
+        top: -3px;
+    }
+    .allheading>h1,
+    .allheading>h2 {
+        font-size: 25px;
+    }
+    .topeqal_pd {
+        padding-top: 30px;
+    }
+    .smallfont>h1 {
+        font-size: 20px;
+    }
+    .booking_box,
+    .flightbox {
+        width: 100%;
+    }
+    .imgbook>img {
+        width: 100%;
+    }
+    .login_mytrip .d-flex,
+    .tripid {
+        display: block !important;
+    }
+    .logintrip,
+    .login_trip_dts,
+    .formtrip,
+    .formtrip_txt {
+        width: 100%;
+    }
+    .pdtop_b {
+        padding: 20px 0px;
+    }
+    .logintrip>button {
+        font-size: 14px;
+    }
+    .trip_pop_list>li {
+        font-size: 9px;
+    }
+    .formbs>p {
+        font-size: 11px;
+    }
+    .sbtrip {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+    .banner_txt>ul>li>h1 {
+        font-size: 20px;
+    }
+    .breadcumb {
+        padding: 30px 20px;
+    }
+    .para_aball {
+        padding: 0 20px;
+    }
+    .para_aball>h2 {
+        font-size: 18px;
+    }
+    .para_aball>p {
+        font-size: 12px;
+    }
+    .smallcr {
+        width: 100%;
+    }
+    .tpd {
+        margin-top: 20px;
+    }
+    .rightpro {
+        width: 100%;
+        padding-left: 0;
+    }
+    .profile_form {
+        display: block !important;
+    }
+    .profile_form>h2 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .form_lr_p,
+    .twoflex,
+    .twotop {
+        flex-wrap: wrap;
+    }
+    .form_lr_p>label,
+    .twoflex .email_box,
+    .twotop .nav-tabs {
+        width: 100%;
+    }
+    .twotop .nav-tabs {
+        margin-bottom: 20px;
+    }
+    .search_tc {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .search_tc .position-relative {
+        width: 100%;
+    }
+    .containerfx {
+        padding: 0 20px;
+    }
+    .ept_txt>h3 {
+        font-size: 14px;
+    }
+    .leftpro {
+        width: 100%;
+    }
+    .modifyhead .tabsb {
+        padding: 0 0;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        white-space: nowrap;
+    }
+    .tabsearh_input {
+        border-radius: 0 0px 10px 10px;
+        padding: 20px 10px;
+    }
+    .modifyhead .sbt1 {
+        padding: 10px 5px;
+        width: 100%;
+    }
+    .frmbg,
+    .iconbox_vs,
+    .typebox {
+        flex-wrap: wrap;
+    }
+    .imgvs,
+    .formbox_visa,
+    .icnv,
+    .tybox_d {
+        width: 100%;
+    }
+    .iconchoise>h3 {
+        font-size: 25px;
+    }
+    .icnv {
+        padding: 20px 20px;
+    }
+    .htolst .search_date {
+        width: 47%;
+    }
+    .htolst .search_date,
+    .htolst .search_adult {
+        margin-bottom: 10px;
+    }
+    .htolst .list_fliter {
+        margin-top: 20px;
+    }
+    .pribtns {
+        width: 100%;
+        padding: 15px;
+    }
+    .top_txt_price,
+    .left_top_txt>h1 {
+        flex-wrap: wrap;
+    }
+    .left_top_txt>h1>span {
+        margin-left: 0 !important;
+    }
+    .price_right,
+    .bkd {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    .amities_rpt,
+    .boxnear_txt {
+        width: 100%;
+    }
+    .changehd .htolst .search_date {
+        width: 100%;
+    }
+    .colps_rv>h6 {
+        padding: 0;
+    }
+    .tmrv_rt {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+    }
+    .box_pkdeal{width: 50%;}
+}
+
+@media screen and (max-width: 640px) {
+    .box_pkdeal{width: 100%;}
+    #main #privacy .card .card-header .btn-header-link {
+        font-size: 15px !important;
+        line-height: 20px;
+    }
+    .newvisa {
+        padding: 0;
+    }
+    .twobox {
+        flex-wrap: wrap;
+    }
+    .visainp {
+        padding: 9px 10px 8px 30px;
+    }
+    .wi50 {
+        width: 100%;
+    }
+    .airline-name1 h5,
+    .list-unstyleds>li {
+        font-size: 15px;
+    }
+    .mdtxt {
+        width: 100%;
+    }
+    .mdbtn .mod_bt {
+        width: 25px;
+        height: 25px;
+        line-height: 0;
+        padding: 0;
+    }
+    .mdbtn {
+        position: absolute;
+        right: 0;
+        top: 19px;
+        z-index: 9;
+        width: auto;
+    }
+    .logo {
+        width: 100%;
+        column-gap: 10px;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .menubox {
+        width: 100%;
+    }
+    .dropmore .dropdown .dropdown-menu {
+        transform: translate3d(-178px, 22px, 0px);
+    }
+    .menubox>ul {
+        justify-content: space-between;
+        width: 100%;
+        float: initial;
+        white-space: nowrap;
+    }
+    .menubox>ul>li {
+        position: relative;
+        width: 33%;
+        text-align: center;
+    }
+    .ligbtm {
+        display: none;
+    }
+    .bgsl {
+        display: block;
+    }
+    .pl0 {
+        padding-left: 15px;
+    }
+    .stopmd {
+        display: block;
+    }
+    .tktlist>li {
+        display: block;
+    }
+    .inuot_bx,
+    .prishow {
+        width: 100%;
+    }
+    .airnm>h6,
+    .tmingtk>ul>li>p,
+    .cnts {
+        font-size: 12px;
+    }
+    .bookprc>h5 {
+        font-size: 20px;
+    }
+    .list_fliter {
+        padding-bottom: 50px;
+    }
+    .bookprc .btnvw {
+        padding: 10px 22px;
+    }
+    .tooltip1 .tooltiptext {
+        width: 100px;
+        margin-left: -71px;
+    }
+    .tooltiptext>h6,
+    .tooltiptext>h6>strong {
+        font-size: 13px;
+    }
+    .tooltiptext>h6>span {
+        font-size: 11px;
+    }
+    .flexdrop,
+    .lglist {
+        display: block;
+    }
+    .flexdrop>h2>p {
+        top: 0;
+    }
+    .rightlist>h2 {
+        margin-bottom: 10px;
+    }
+    .list_hotel_img,
+    .list_hotel_txt {
+        width: 100%;
+    }
+    .list_hotel_img {
+        padding: 0;
+    }
+    .listbt_sml {
+        flex-wrap: wrap;
+    }
+    .iconsml {
+        width: 100%;
+    }
+    .listbt_sml>li>a {
+        font-size: 11px;
+    }
+    .listing_hd_hotel>h2 {
+        font-size: 16px;
+    }
+    .ht_pricelist {
+        display: block;
+    }
+    .pr_bx1 {
+        width: 100%;
+    }
+    .mapbox {
+        margin-top: 60px;
+    }
+    .mtmds {
+        margin-top: 20px;
+    }
+    .search_adult .dropslct .dropdown-menu {
+        width: 300px;
+    }
+    .hlp_mdn,
+    .mobile_lg_hd {
+        display: none;
+    }
+    .mobile_sml_hd {
+        display: inline-block;
+    }
+    .menubox>ul>li .btnds_menu {
+        padding: 8px 5px;
+        font-size: 11px;
+        height: 35px;
+        margin: 0 3px;
+    }
+    .lgzoomimg img {
+        width: 100%;
+    }
+    .dts_heading>h1,
+    .to_list>span {
+        font-size: 13px;
+    }
+    .topdrt {
+        flex-wrap: wrap;
+    }
+    .drp_txt {
+        margin-bottom: 10px;
+    }
+    .flxfvf .leftlogo_rv,
+    .flxfvf .righttxt_rv {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .flxfvf .sle>h6 {
+        font-size: 12px;
+    }
+    .flxfvf .tmrv_rt {
+        margin-top: 0;
+        border-top: none;
+        padding-top: 0;
+        font-size: 12px;
+    }
+    .tmrv_rt>h5 {
+        font-size: 13px;
+    }
+    .flxfvf .dts_heading {
+        display: flex;
+    }
+    .flxfvf .heading_cpl>h4 {
+        margin-bottom: 10px;
+    }
+    .md_none {
+        display: none;
+    }
+    .ckrv li {
+        display: block;
+    }
+    .lefttxt_enhane {
+        width: 100%;
+    }
+    .add_incs {
+        flex-wrap: wrap;
+    }
+    .righttxt_enhane {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+    .dropmore .dropdown>button {
+        font-size: 24px;
+    }
+    .destinationbox>a>span>img {
+        width: 100%;
+    }
+    .widthn50 {
+        width: 48%;
+    }
+}
+
+@media screen and (min-width: 340px) and (max-width: 640px) {
+    .menubox>ul>li .btnds_menu {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .img_hover:hover img {
+        transform: initial;
+    }
+    .uptxt_cs {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+    .formbox_visa {
+        padding: 15px;
+    }
+    .textcontact {
+        flex-wrap: wrap;
+    }
+    .airul>li,
+    .whicnt {
+        width: 100%;
+    }
+    .whicnt {
+        margin-bottom: 10px;
+    }
+    .flx_md li span {
+        font-size: 13px;
+    }
+    .sbt1 {
+        font-size: 12px;
+    }
+    .booking_box,
+    .flightbox {
+        width: 100%;
+    }
+    .bottom_f {
+        margin-top: 40px;
+    }
+    .pt_ft {
+        padding-top: 30px;
+    }
+    .cb1>label {
+        font-size: 12px;
+    }
+    .sb_news {
+        padding: 13px 18px;
+    }
+    .nav_f>ul>li>a,
+    .cnt_footer>a {
+        font-size: 16px;
+        line-height: 34px;
+    }
+    .icon_f {
+        top: 0;
+    }
+    .listoption>ul {
+        column-gap: 10px;
+    }
+    .listoption>ul>li>span {
+        text-align: center;
+        margin: auto;
+    }
+    .listoption>ul>li>h6 {
+        margin-top: 5px;
+    }
+    .booking_cm_txt>span {
+        font-size: 13px;
+    }
+    .detailscm>h3,
+    .tkdwn {
+        font-size: 15px;
+    }
+    .list_ds>li>label,
+    .list_ds>li>span {
+        font-size: 13px;
+    }
+    .list_ds>li {
+        display: block;
+    }
+    .list_ds>li>label {
+        width: 100%;
+    }
+    .list_ds>li>label::before {
+        display: none;
+    }
+    .list_ds>li>span {
+        padding-left: 0;
+    }
+    .datebx_rv>span,
+    .colps_rv>h6 {
+        font-size: 13px;
+    }
+    .dotvr::before {
+        top: 4px;
+    }
+    .tbrtvr>h4 {
+        font-size: 14px;
+    }
+    .time_rv {
+        display: block;
+    }
+    .tmrv_rt {
+        margin-top: 10px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+    }
+    .colps_rv {
+        padding: 10px;
+    }
+    .dts_heading>h1,
+    .to_list>span {
+        font-size: 15px;
+    }
+    .to_list>ul>li,
+    .Review_book>ul>li {
+        font-size: 11px;
+    }
+    .dts_heading {
+        flex-wrap: wrap;
+    }
+    .dts_heading>span {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    .fortr>h2 {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .tab_nav .nav-tabs .nav-link {
+        font-size: 0.875rem;
+    }
+}
+
+@media screen and (min-width: 220px) and (max-width: 340px) {
+    .dflex_js {
+        flex-wrap: wrap;
+    }
+    .dflex_js>li:first-child {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .gapbox,
+    .topheader,
+    .modifyhead .search_box {
+        padding: 0 5px;
+    }
+    .imglgsin {
+        width: 10px;
+        margin: 0 0px;
+    }
+    .sbt1>label,
+    .modifyhead .sbt1>label {
+        padding: 15px 6px;
+        font-size: 11px;
+        margin-left: 5px;
+    }
+    .flx_md li span {
+        font-size: 11px;
+    }
+}

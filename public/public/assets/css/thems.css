@@ -1,0 +1,474 @@
+﻿body.Black .imgblack {
+    display: none;
+}
+
+body.Black .imagewhite {
+    display: block;
+}
+
+body.Black,
+body.Black header {
+    background: #000;
+    color: #d9d9d9;
+}
+
+body.Black h1,
+body.Black h2,
+body.Black h3,
+body.Black h4,
+body.Black h5,
+body.Black h6,
+body.Black p,
+body.Black a,
+body.Black span,
+body.Black .nav_f>ul>li>a,
+body.Black .lidr_pc,
+body.Black .listbt_sml>li:last-child>a {
+    color: #d9d9d9;
+}
+
+body.Black .excng_bx_w {
+    fill: #d9d9d9;
+}
+
+body.Black .filtercnt .panel-heading a::after {
+    border-color: #d9d9d9;
+}
+
+body.Black .dropmore .dropdown>button,
+body.Black .menubox>ul>li>a,
+body.Black .tab_nav .nav-tabs .nav-link,
+body.Black .sbt1>label,
+body.Black .heading_left_area h5,
+body.Black .cb1>label,
+body.Black .fli_name,
+body.Black .email_box>label,
+body.Black .ml_btn {
+    color: #d9d9d9;
+}
+
+body.Black .menubox>ul>li .btnds_menu,
+body.Black .search_box,
+body.Black .tab_nav .nav-tabs .nav-item.show .nav-link,
+body.Black .tab_nav .nav-tabs .nav-link.active,
+body.Black .activetb,
+body.Black .sbt1,
+body.Black .tabsearh_input,
+body.Black footer,
+body.Black .input_src,
+body.Black .dropmore .dropdown .dropdown-menu,
+body.Black .daterangepicker,
+body.Black .search_adult .dropslct .dropdown-menu,
+body.Black .plane_list,
+body.Black .packege_src>input,
+body.Black .pmt,
+body.Black .modal-content,
+body.Black .login_input,
+body.Black .ar_tv,
+body.Black .modifyhead .container_pd,
+body.Black .filterbx,
+body.Black .bgsl,
+body.Black .tktlist>li,
+body.Black .tbsort_ls .nav-tabs>li>a,
+body.Black .prishow,
+body.Black .frmbg,
+body.Black .formbox_visa,
+body.Black .visainp,
+body.Black .breadcrumb,
+body.Black .bgblue,
+body.Black .bg_ylc,
+body.Black .birdcnt,
+body.Black .whicnt,
+body.Black .contact_form,
+body.Black .uptxt_cs,
+body.Black .rvbg,
+body.Black .greenbg,
+body.Black .listbooking-rv>ul>li,
+body.Black .leftlogo_rv,
+body.Black .colps_rv,
+body.Black .to_list>span,
+body.Black .btmlist_to,
+body.Black .whitebrd,
+body.Black .slcbs>select,
+body.Black .form-input,
+body.Black .inpse input,
+body.Black .slcbs,
+body.Black .instxs,
+body.Black .upcrt,
+body.Black .theme_two_box_content,
+body.Black .destinationbox>a,
+body.Black .trip_pop_list>li,
+body.Black .formtrip_txt,
+body.Black .pdbox_rg,
+body.Black .bookingrfs,
+body.Black .tbds_c tr th,
+body.Black .uktxt,
+body.Black .bookingbg {
+    background: #000;
+    color: #d9d9d9;
+}
+
+body.Black .flx_md li,
+body.Black .uptxt_cs {
+    border-color: #4c4242;
+}
+
+body.Black .mdbtn .mod_bt,
+body.Black .mdf_ms,
+body.Black .bookprc .btnvw,
+body.Black .loadbtn .lotds,
+body.Black .iconsml>li {
+    background: #fff;
+    color: #000;
+}
+
+body.Black .iconsml>li>span {
+    color: #000;
+}
+
+body.Black .tbsort_ls .nav-tabs>li>.active .textcps>h4,
+body.Black .tbsort_ls .nav-tabs>li>.active .textcps>span,
+body.Black .table,
+body.Black .edt_bt,
+body.Black .drop_pr>button>i {
+    color: #fff;
+}
+
+body.Black .tbsort_ls .nav-tabs>li>.active,
+body.Black .tbsort_ls .nav-tabs>li>.active:focus,
+body.Black .tbsort_ls .nav-tabs>li>.active:hover {
+    color: #fff;
+    background-color: initial;
+}
+
+body.Black .plane_list>span,
+body.Black .plane_list>ul>li:hover,
+body.Black .largehead,
+body.Black .icnv,
+body.Black .tybox_d {
+    background: #1a1a1a;
+}
+
+body.Black .daterangepicker .calendar-table {
+    border: none;
+    border-radius: 4px;
+    background-color: #000;
+}
+
+body.Black .dropdown-item:focus,
+body.Black .dropdown-item:hover {
+    background: rgb(45, 44, 44);
+    color: #d9d9d9;
+}
+
+body.Black .tab_nav .nav-tabs .nav-item.show .nav-link,
+body.Black .tab_nav .nav-tabs .nav-link.active {
+    border-color: #4c4242 #4c4242 #000;
+}
+
+body.Black .menubox>ul>li .btnds_menu,
+body.Black .helptxt,
+body.Black .input_src,
+body.Black .dropmore .dropdown .dropdown-menu,
+body.Black .packege_src>input,
+body.Black .visainp {
+    border: 1px solid #4c4242;
+}
+
+body.Black .plane_list>ul>li {
+    border-bottom: 1px solid #4c4242;
+}
+
+body.Black .tab_nav .nav-tabs,
+body.Black header,
+body.Black .heading_left_area h2 span {
+    border-bottom: 1px solid #4c4242;
+}
+
+body.Black .section_heading_center h2:after {
+    background: #4c4242;
+}
+
+body.Black .input_src::placeholder,
+body.Black input::placeholder,
+body.Black textarea::placeholder,
+body.Black select::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #d9d9d9;
+    opacity: 1;
+    /* Firefox */
+}
+
+body.Black .input_src:-ms-input-placeholder,
+body.Black input:-ms-input-placeholder,
+body.Black textarea:-ms-input-placeholder,
+body.Black select:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #d9d9d9;
+}
+
+body.Black .input_src::-ms-input-placeholder,
+body.Black input::-ms-input-placeholder,
+body.Black textarea::-ms-input-placeholder,
+body.Black select::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #d9d9d9;
+}
+
+
+/*=======white=======*/
+
+body.white {
+    background: white;
+    color: black;
+}
+
+
+/*=====dark blue======*/
+
+body.darkblue {
+    background: #343b53;
+    color: white;
+}
+
+body.darkblue .imgblack {
+    display: none;
+}
+
+body.darkblue .imagewhite {
+    display: block;
+}
+
+body.darkblue,
+body.darkblue header {
+    background: #343b53;
+    color: #d9d9d9;
+}
+
+body.darkblue h1,
+body.darkblue h2,
+body.darkblue h3,
+body.darkblue h4,
+body.darkblue h5,
+body.darkblue h6,
+body.darkblue p,
+body.darkblue a,
+body.darkblue span,
+body.darkblue .nav_f>ul>li>a,
+body.darkblue .lidr_pc,
+body.darkblue .listbt_sml>li:last-child>a {
+    color: #d9d9d9;
+}
+
+body.darkblue .dropmore .dropdown>button,
+body.darkblue .menubox>ul>li>a,
+body.darkblue .tab_nav .nav-tabs .nav-link,
+body.darkblue .sbt1>label,
+body.darkblue .heading_left_area h5,
+body.darkblue .cb1>label,
+body.darkblue .fli_name,
+body.darkblue .email_box>label,
+body.darkblue .ml_btn {
+    color: #d9d9d9;
+}
+
+body.darkblue .filtercnt .panel-heading a::after {
+    border-color: #d9d9d9;
+}
+
+body.darkblue .menubox>ul>li .btnds_menu,
+body.darkblue .search_box,
+body.darkblue .tab_nav .nav-tabs .nav-item.show .nav-link,
+body.darkblue .tab_nav .nav-tabs .nav-link.active,
+body.darkblue .activetb,
+body.darkblue .sbt1,
+body.darkblue .tabsearh_input,
+body.darkblue footer,
+body.darkblue .input_src,
+body.darkblue .dropmore .dropdown .dropdown-menu,
+body.darkblue .daterangepicker,
+body.darkblue .search_adult .dropslct .dropdown-menu,
+body.darkblue .plane_list,
+body.darkblue .packege_src>input,
+body.darkblue .pmt,
+body.darkblue .modal-content,
+body.darkblue .login_input,
+body.darkblue .ar_tv,
+body.darkblue .modifyhead .container_pd,
+body.darkblue .filterbx,
+body.darkblue .bgsl,
+body.darkblue .tktlist>li,
+body.darkblue .tbsort_ls .nav-tabs>li>a,
+body.darkblue .prishow,
+body.darkblue .frmbg,
+body.darkblue .formbox_visa,
+body.darkblue .visainp,
+body.darkblue .breadcrumb,
+body.darkblue .bgblue,
+body.darkblue .bg_ylc,
+body.darkblue .birdcnt,
+body.darkblue .whicnt,
+body.darkblue .contact_form,
+body.darkblue .uptxt_cs,
+body.darkblue .rvbg,
+body.darkblue .greenbg,
+body.darkblue .listbooking-rv>ul>li,
+body.darkblue .leftlogo_rv,
+body.darkblue .colps_rv,
+body.darkblue .to_list>span,
+body.darkblue .btmlist_to,
+body.darkblue .whitebrd,
+body.darkblue .slcbs>select,
+body.darkblue .form-input,
+body.darkblue .inpse input,
+body.darkblue .slcbs,
+body.darkblue .instxs,
+body.darkblue .upcrt,
+body.darkblue .theme_two_box_content,
+body.darkblue .destinationbox>a,
+body.darkblue .trip_pop_list>li,
+body.darkblue .formtrip_txt,
+body.darkblue .pdbox_rg,
+body.darkblue .bookingrfs,
+body.darkblue .tbds_c tr th,
+body.darkblue .uktxt,
+body.darkblue .bookingbg {
+    background: #343b53;
+    color: #d9d9d9;
+}
+
+body.darkblue .flx_md li {
+    border-color: #4c4242;
+}
+
+body.darkblue .mdbtn .mod_bt,
+body.darkblue .mdf_ms,
+body.darkblue .bookprc .btnvw,
+body.darkblue .loadbtn .lotds,
+body.darkblue .iconsml>li {
+    background: #fff;
+    color: #000;
+}
+
+body.darkblue .iconsml>li>span {
+    color: #000;
+}
+
+body.darkblue .tbsort_ls .nav-tabs>li>.active .textcps>h4,
+body.darkblue .tbsort_ls .nav-tabs>li>.active .textcps>span,
+body.darkblue .table,
+body.darkblue .edt_bt,
+body.darkblue .drop_pr>button>i {
+    color: #fff;
+}
+
+body.darkblue .tbsort_ls .nav-tabs>li>.active,
+body.darkblue .tbsort_ls .nav-tabs>li>.active:focus,
+body.darkblue .tbsort_ls .nav-tabs>li>.active:hover {
+    color: #fff;
+    background-color: initial;
+}
+
+body.darkblue .plane_list>span,
+body.darkblue .plane_list>ul>li:hover,
+body.darkblue .largehead,
+body.darkblue .icnv,
+body.darkblue .tybox_d {
+    background: #384264;
+}
+
+body.darkblue .daterangepicker .calendar-table {
+    border: none;
+    border-radius: 4px;
+    background-color: #343b53;
+}
+
+body.Bldarkblueack .dropdown-item:focus,
+body.darkblue .dropdown-item:hover {
+    background: rgb(45, 44, 44);
+    color: #d9d9d9;
+}
+
+body.darkblue .tab_nav .nav-tabs .nav-item.show .nav-link,
+body.darkblue .tab_nav .nav-tabs .nav-link.active {
+    border-color: #4c4242 #4c4242 #343b53;
+}
+
+body.darkblue .menubox>ul>li .btnds_menu,
+body.darkblue .helptxt,
+body.darkblue .input_src,
+body.darkblue .dropmore .dropdown .dropdown-menu,
+body.darkblue .packege_src>input {
+    border: 1px solid #4c4242;
+}
+
+body.darkblue .plane_list>ul>li {
+    border-bottom: 1px solid #4c4242;
+}
+
+body.darkblue .tab_nav .nav-tabs,
+body.darkblue header,
+body.darkblue .heading_left_area h2 span {
+    border-bottom: 1px solid #4c4242;
+}
+
+body.darkblue .input_src::placeholder,
+body.darkblue input::placeholder,
+body.darkblue textarea::placeholder,
+body.darkblue select::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #d9d9d9;
+    opacity: 1;
+    /* Firefox */
+}
+
+body.darkblue .input_src:-ms-input-placeholder,
+body.darkblue input:-ms-input-placeholder,
+body.darkblue textarea:-ms-input-placeholder,
+body.darkblue select:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #d9d9d9;
+}
+
+body.darkblue .input_src::-ms-input-placeholder,
+body.darkblue input::-ms-input-placeholder,
+body.darkblue textarea::-ms-input-placeholder,
+body.darkblue select::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #d9d9d9;
+}
+
+body.darkblue .excng_bx_w {
+    fill: #d9d9d9;
+}
+
+
+/*======switch========*/
+
+#switcher {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#switcher li {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 30px;
+    border: 3px solid black;
+}
+
+#BlackButton {
+    background: #000;
+}
+
+#whiteButton {
+    background: #fff;
+}
+
+#darkblue {
+    background: #343b53;
+}
