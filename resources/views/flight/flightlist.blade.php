@@ -1387,6 +1387,7 @@
                             <ul class="tktlist">
                                 @foreach($flights as $fly)
                                 @php
+                                // dd($fly->FS_id);
                                 $Traveldate=date_create($fly->FS_date);
                                 $Arivaldate=date_create($fly->FS_arrival);
 
@@ -1494,8 +1495,11 @@
                                         <div class="prishow">
                                             <div class="tbfare">
                                                 <div class="bookprc">
+                                                    @php
+                                                        $fliId = Crypt::encryptString($fly->FS_id);
+                                                    @endphp
                                                     <h5>$ {{number_format($fly->FS_price)}}</h5>
-                                                    <a href="#" type="button" class="btnvw">
+                                                    <a href="{{ url('flight-booking'). '/'  . $fliId }}" type="button" class="btnvw">
                                                         <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
                                                 </div>
                                             </div>
@@ -1509,7 +1513,9 @@
                             <button type="button" class="lotds">LOAD MORE RESULTS </button>
                         </div>
                     </div>
-                    <div class="tab-pane  fade" id="Fastest">
+
+
+                    {{-- <div class="tab-pane  fade" id="Fastest">
                         <div class="listticket">
                             <ul class="tktlist">
                                 <li class="trip" style="display: list-item;">
@@ -1772,7 +1778,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
         </div>

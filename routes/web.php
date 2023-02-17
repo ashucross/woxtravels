@@ -31,6 +31,7 @@ Route::get('/privacy-policy', [StaticController::class, 'privacypolicy'])->name(
 Route::get('/airport-list', [FlightController::class, 'airport'])->name('search-airport');
 Route::post('/flight-search', [FlightController::class, 'flightSearch'])->name('flight-search');
 Route::get('/flight-search', [FlightController::class, 'flightList'])->name('flight-list');
+Route::get('/flight-booking/{id?}', [FlightController::class, 'flightBooking'])->name('flight-booking');
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 

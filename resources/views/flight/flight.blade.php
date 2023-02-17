@@ -41,7 +41,7 @@
                                                     <span class="iconint">
                                                         <i class="fa fa-map-marker"></i>
                                                     </span>
-                                                    <input type="text" slug="autocomplete-source" name="sourceName" id="sourceName" token="source" class="airport-search input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                                    <input type="text" slug="autocomplete-source" name="sourceName" id="sourceName" token="source" autocomplete="off" class="airport-search input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
                                                     <input type="hidden" name="sourceCode" id="sourceCode" />
                                                     <div class="dropdown-menu drp_plane">
                                                         <div class="plane_list">
@@ -81,7 +81,7 @@
                                                     <span class="iconint">
                                                         <i class="fa fa-map-marker"></i>
                                                     </span>
-                                                    <input type="text" slug="autocomplete-destination" name="destinationName" id="destinationName" token="destination" class="airport-search input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                                    <input type="text" slug="autocomplete-destination" autocomplete="off" name="destinationName" id="destinationName" token="destination" class="airport-search input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
                                                     <input type="hidden" name="destinationCode" id="destinationCode" />
                                                     <div class="dropdown-menu drp_plane">
                                                         <div class="plane_list">
@@ -1283,7 +1283,7 @@
 
 </div>
 </div>
-                
+
     </div>
 </section>
 <!-- Top destinations -->
