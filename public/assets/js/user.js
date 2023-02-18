@@ -261,6 +261,50 @@ jQuery(document).ready(($) => {
         }
     });
 });
+    $(".quantity").on("click", ".minus", function(e) {
+        let _Token = $(this).attr('slug');
+        let _Adult = parseInt($("#" + _Token + "-qnty-adult").val());
+        let _Child = parseInt($("#" + _Token + "-qnty-child").val());
+        let _Infant = parseInt($("#" + _Token + "-qnty-infant").val());
+        let _Total = _Adult + _Child;
+        let $input = $(this).next("input.qty");
+        var val = parseInt($input.val());
+        let slugId = $input.attr("id");
+        let vall = 0;
+        //alert(_Adult);
+        switch (slugId) {
+            case _Token + "-qnty-adult":
+                if (_Total <= 9 && _Adult <= 9) {
+                    if (_Adult - 1 < _Infant) {
+                        $("#" + _Token + "-qnty-infant").val("0");
+                    }
+                } else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-child":
+                if (_Total <= 9 && _Child <= 9) {} else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-infant":
+                if (_Infant <= _Adult) {} else {
+                    toastr["error"](
+                        "Error!",
+                        "only " + _Adult + " infant is allowed with adult"
+                    );
+                }
+                break;
+        }
+
+        if (slugId == _Token + "-qnty-adult") {
+            vall = 1;
+        }
+        if (val > vall) {
+            $input.val(val - 1).change();
+        }
+    });
+});
 
 // --------Calculation End
 

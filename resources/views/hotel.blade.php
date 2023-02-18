@@ -16,14 +16,16 @@
                <div class="tab-pane  active" id="Hotel">
                   <div class="tabsearh_input rds">
                      <div class="boxsearching ">
+                        <form method="post" id='searchHot' action='{{url("search_hotel")}}'>
+                           @csrf
                         <div class="d-flex justify-content-between">
                            <div class="search_des d-flex justify-content-between ">
                               <div class="Fromwhere position-relative">
                                  <!-- <h3 class="search_title">Destination</h3> -->
                                  <div class="position-relative">
                                     <span class="iconint"><i class="fa fa-map-marker"></i></span>
-                                    <input type="text" class="input_src leftri input_hgt" placeholder="Where are you going?" data-toggle="dropdown" />
-                                    <div class="dropdown-menu drp_plane">
+                                    <input type="text" class="input_src leftri input_hgt" required name="location" placeholder="Where are you going?" data-toggle="dropdown" />
+                                   <!--  <div class="dropdown-menu drp_plane">
                                        <div class="plane_list">
                                           <span>Top Cities</span>
                                           <ul>
@@ -50,7 +52,7 @@
                                              </li>
                                           </ul>
                                        </div>
-                                    </div>
+                                    </div> -->
                                  </div>
                               </div>
                            </div>
@@ -58,7 +60,7 @@
                               <!-- <h3 class="search_title">Check-In&nbsp;-&nbsp;Check-Out</h3> -->
                               <div class="position-relative ">
                                  <span class="iconint"><i class="fa fa-calendar"></i></span>
-                                 <input aut type="text" name="ckein" placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
+                                 <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
                               </div>
                            </div>
                            <!-- <div class="search_date widthn50">
@@ -87,7 +89,7 @@
                               <!-- <h3 class="search_title">Travelers</h3> -->
                               <div class="position-relative " data-toggle="dropdown">
                                  <span class="iconint"><i class="fa fa-user-o"></i></span>
-                                 <input aut type="text" value="2 adults - 10 children - 1 room" class="input_src input_hgt ups arrowus">
+                                 <input name='adults' type="text" value="" class="input_src input_hgt ups arrowus">
                                  <!-- <span class="ar_tv"><i class="ml-2 fa fa-angle-down"></i></span> -->
                                  <div class="dropslct">
                                     <div class="dropdown-menu dropdown-menu-right hiclk">
@@ -108,10 +110,10 @@
                                                 <span>Child:
                                                 <span class="agetxt">Ages 0 - 17</span>
                                                 </span>
-                                                <div id='myform' method='POST' class='quantity' action='#'>
-                                                   <input type='button' value='-' class='qtyminus minus' field='quantity' />
-                                                   <input type='text' name='quantity' value='0' class='qty' />
-                                                   <input type='button' value='+' class='qtyplus plus' field='quantity' />
+                                                <div id='myform' method='POST' class='quantity' slug="oneway"  action='#'>
+                                                   <input type='button' value='-' slug="child_"  class='qtyminus minus' field='quantity' />
+                                                   <input type='text' name='quantity' id='child_val' value='0' class='qty' />
+                                                   <input type='button' value='+' slug="child_"  class='qtyplus plus' field='quantity' />
                                                 </div>
                                              </div>
                                              <div class="d-flex box_child flex-wrap">
@@ -195,6 +197,7 @@
                            <button type="submit" class="btn-grad ftbtn_src"><i class="fa fa-paper-plane-o mr-2"
                               aria-hidden="true"></i>Search </button>
                         </div>
+                        </form>
                      </div>
                   </div>
                </div>
@@ -323,24 +326,28 @@
                </div>
             </div>
             <div class="row">
+               @if(!empty($hotelsdata)) 
+               @foreach($hotelsdata->hotels as $hotel)
                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">
                         <a href="hotel-details.html">
                         <img src="{{asset('public/assets/images/hotel1.png')}}" alt="img">
                         </a>
-                        <p><i class="fas fa-map-marker-alt"></i>New beach, Thailand</p>
+                        <p><i class="fas fa-map-marker-alt"></i>{{$hotel->name->content ?? ''}}</p>
                      </div>
                      <div class="theme_two_box_content">
-                        <h4><a href="hotel-details.html">Kantua hotel, Thailand</a></h4>
-                        <p><span class="review_rating">4.8/5 Excellent</span> <span class="review_count">(1214
-                           reviewes)</span>
+                        <h4><a href="hotel-details.html">{{$hotel->name->content ?? ''}}, {{$hotel->city->content ?? ''}}</a></h4>
+                        <p><span class="review_rating"><!-- 4.8/5 Excellent -->Ranking : {{$hotel->ranking ?? ''}}</span> <!-- <span class="review_count">(1214
+                           reviewes)</span> -->
                         </p>
-                        <h3>$99.00 <span>Price starts from</span></h3>
+                        <h3><!-- $99.00 <span>Price starts from</span> --></h3>
                      </div>
                   </div>
                </div>
-               <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+               @endforeach
+               @endif
+               <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">
                         <a href="hotel-details.html">
@@ -464,7 +471,7 @@
                         <h3>$99.00 <span>Price starts from</span></h3>
                      </div>
                   </div>
-               </div>
+               </div> -->
             </div>
          </div>
       </section>
@@ -595,11 +602,77 @@
       </section>
 @endsection
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 <script>
 $(document).ready(function(){
    $(".hiclk").click(function(event) {
         event.stopPropagation();
     });
+
+    $("#searchHot").validate({
+            rules: {
+                location: "required",
+                checkin: "required",
+                adults_total: "required",
+            },
+
+            messages: {
+                location: "Please choose from location",
+                checkin: "Please choose checin-checkout dates",
+                adults_total: "Please choose atleast one adult",
+            },
+            submitHandler: function(form) {
+                /*Ajax Request Header setup*/
+                
+            },
+        });
+
+        $(".quantity").on("click", ".minus", function(e) {
+        let _Token = $(this).attr('slug');
+        let _Adult = parseInt($("#" + _Token + "-qnty-adult").val());
+        let _Child = parseInt($("#" + _Token + "-qnty-child").val());
+        let _Infant = parseInt($("#" + _Token + "-qnty-infant").val());
+        let _Total = _Adult + _Child;
+        let $input = $(this).next("input.qty");
+        var val = parseInt($input.val());
+        let slugId = $input.attr("id");
+        let vall = 0;
+        //alert(_Adult);
+        switch (slugId) {
+            case _Token + "-qnty-adult":
+                if (_Total <= 9 && _Adult <= 9) {
+                    if (_Adult - 1 < _Infant) {
+                        $("#" + _Token + "-qnty-infant").val("0");
+                    }
+                } else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-child":
+                if (_Total <= 9 && _Child <= 9) {} else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-infant":
+                if (_Infant <= _Adult) {} else {
+                    toastr["error"](
+                        "Error!",
+                        "only " + _Adult + " infant is allowed with adult"
+                    );
+                }
+                break;
+        }
+
+        if (slugId == _Token + "-qnty-adult") {
+            vall = 1;
+        }
+        if (val > vall) {
+            $input.val(val - 1).change();
+        }
+    });
+    
+
 })
    </script>
 @endsection

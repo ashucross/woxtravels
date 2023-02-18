@@ -32,6 +32,66 @@ class StayController extends Controller
             '_Insurance' => '',
             '_Car' => '',
         );
-        return view('hotel', compact('data'));
+        $hotelsdata = [];
+        $signature = getsignature(); 
+    //    dd($signature);
+        /*  
+        dd($signature);
+        if($signature['status'] == 200){
+            $gethotels = getHotel($signature['data']); 
+            $hotelsdata = $gethotels['data']; 
+        }else{
+            return ([
+                'status'=>$signature['status']
+            ]);
+        } */
+        return view('hotel', compact('data','hotelsdata'));
+    }
+    public function search_hotel(Request $request)
+    {
+        $data = array(
+            '_MetaTitle' => 'Search Hotels',
+            '_MetaKeywords' => '',
+            '_MetaDescription' => '',
+            '_Flight' => '',
+            '_Hotel' => 'active',
+            '_Packages' => '',
+            '_Visa' => '',
+            '_Insurance' => '',
+            '_Car' => '',
+        );
+        // $signature = getsignature(); 
+        // $hotels = getHotel('669ad1966e6b598405df744b20aa628dafab1b14f3fe3126301d9066100467a4');
+        return view('search_hotel', compact('data','hotels'));
+    }
+    public function hotelDetails(Request $request)
+    {
+        $data = array(
+            '_MetaTitle' => 'Hotel Detail',
+            '_MetaKeywords' => '',
+            '_MetaDescription' => '',
+            '_Flight' => '',
+            '_Hotel' => 'active',
+            '_Packages' => '',
+            '_Visa' => '',
+            '_Insurance' => '',
+            '_Car' => '',
+        );
+        return view('hotelDetails', compact('data'));
+    }
+    public function book_now(Request $request)
+    {
+        $data = array(
+            '_MetaTitle' => 'Book Now',
+            '_MetaKeywords' => '',
+            '_MetaDescription' => '',
+            '_Flight' => '',
+            '_Hotel' => 'active',
+            '_Packages' => '',
+            '_Visa' => '',
+            '_Insurance' => '',
+            '_Car' => '',
+        );
+        return view('book_now', compact('data'));
     }
 }

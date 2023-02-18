@@ -9,4 +9,4 @@
 <link rel="stylesheet" href="{{asset('public/assets/css/Responsive.css')}}">
 <link rel="stylesheet" href="{{asset('public/assets/css/thems.css')}}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-<link rel="shortcut icon" href="{{asset('public/assets/images/favicon.ico.png')}}" type="image/x-icon" />
+<link rel="shortcut icon" href="{{asset('public/assets/images/favicon.ico.png')}}" type="image/x-icon" /> 

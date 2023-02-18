@@ -1742,6 +1742,421 @@ header {
 }
 
 
+.price_right>h3 {
+    color: #d20f0f;
+    font-size: 13px;
+}
+
+.pd15 {
+    padding: 15px;
+}
+
+.detail_hotel {
+    column-gap: 20px;
+}
+
+.rst_dtls {
+    width: calc(100% - 300px);
+}
+
+.dtls_sp {
+    width: 300px;
+}
+
+.clklist>li>h6 {
+    color: #000;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0 0 2px;
+}
+
+.clklist>li>h3 {
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 5px;
+}
+
+.clklist>li>h4 {
+    color: #000;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clklist>li>h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #525252;
+    padding: 10px 20px 0;
+    border-top: 1px dashed #000;
+}
+
+.clklist>li>a {
+    color: #19478a;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.clklist>li>span {
+    font-size: 12px;
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border: 1px solid #bdd3e5;
+    background: #e7f4ff;
+    height: 26px;
+    padding: 0 7px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.clklist>li>span>svg {
+    width: 10px;
+    margin-right: 5px;
+}
+
+.sm_ds {
+    color: #525252;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.clklist1>li>h3 {
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    margin: 0 0 5px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.clklist1>li>h4 {
+    font-size: 18px;
+    color: #000;
+    font-weight: 700;
+    line-height: 16px;
+    margin-bottom: 5px;
+}
+
+.clklist1>li>h4>span {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.clklist1>li>a {
+    font-size: 12px;
+    color: #19478a;
+    font-weight: 400;
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    margin-left: 10px;
+    text-decoration: none;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+
+.clklist1>li>a:hover {
+    color: #066fe7;
+}
+
+.clklist1>li>a::before {
+    content: '';
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background: #9aa7c2;
+}
+
+.clklist1>li>a::after {
+    content: '';
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    position: absolute;
+    background: #066fe7;
+    transition: all .5s ease;
+}
+
+.clklist1>li>a:hover:after {
+    width: 100%;
+}
+
+.dts_heading1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+.dts_heading1>h1,
+.dts_heading1>h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+}
+
+.undr {
+    text-decoration: underline;
+}
+
+.error_info {
+    color: #b84a01;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 3px;
+}
+
+.slideform #faq .card .card-header .btn-header-link::before,
+.fare_ic #farenew .card .card-header .btn-header-link::before {
+    content: "\f107";
+    font-family: 'FontAwesome';
+    font-weight: 900;
+    float: left;
+    margin-right: 10px;
+}
+
+.slideform #faq .card .card-header .btn-header-link.collapsed:before {
+    content: "\f106";
+}
+
+.fare_ic #farenew .card .card-header .btn-header-link::before {
+    content: "\f107";
+}
+
+.fare_ic #farenew .card .card-header .btn-header-link.collapsed:before {
+    content: "\f105";
+}
+
+.fare_ic .card-header {
+    padding: 0;
+}
+
+.fare_ic .card-header>a {
+    display: block;
+    text-align: left;
+    padding: 10px 10px 10px 10px;
+}
+
+.detailspop_sm .modal-title,
+.detailspop_lg .modal-title {
+    font-weight: 700;
+}
+
+.prs>p {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.prs>ul {
+    column-gap: 20px;
+}
+
+.prs>ul>li {
+    position: relative;
+    padding: 0px 17px;
+}
+
+.prs>ul>li::before {
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    background: #000;
+    content: '';
+    border-radius: 50px;
+}
+
+.wid3>li {
+    width: 30%;
+    font-size: 15px;
+}
+
+.detailspop_sm .modal-dialog {
+    max-width: 700px;
+}
+
+.detailspop_lg .modal-dialog {
+    max-width: 900px;
+}
+
+.wid2>li {
+    width: 48%;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.prs {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.prs::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.prs::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.prs::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.prs::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.fare_ic .card-header>a:hover {
+    color: #000;
+}
+
+.fare_ic .card-body {
+    padding: 0px 10px;
+}
+
+.fare_ic .card-header {
+    background: none;
+    border: none;
+    outline: none !important;
+    box-shadow: initial;
+}
+
+.fare_ic .card-header>a::before {
+    position: absolute;
+    left: 13px;
+}
+
+.fare_ic .card-header>a>h5 {
+    margin-left: 20px;
+}
+
+.fare_ic .card-header>a>h5,
+.fare_ic .card-header>a>span {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.fare_ic .btn.focus,
+.fare_ic .btn:focus {
+    outline: 0;
+    box-shadow: inherit;
+}
+
+.slideform .card-header {
+    padding: 0;
+}
+
+.slideform .card-header>a {
+    display: block;
+    text-align: left;
+    padding: 10px 23px;
+}
+
+.prce {
+    padding: 1px 0px 10px 21px
+}
+
+.prce>span {
+    font-size: 14px;
+}
+
+.totalpd {
+    padding: 15px 15px;
+    font-weight: 700;
+}
+
+.totalpd>h6 {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.adbox {
+    column-gap: 20px;
+}
+
+.adbox .droptitle {
+    margin-right: 0;
+    width: 120px;
+}
+
+.adbox {
+    margin-bottom: 15px;
+}
+
+.adbox>h2 {
+    width: 70px;
+}
+
+.add_details .adbox:last-child {
+    margin-bottom: 0;
+}
+
+.slideform .btn:hover {
+    color: #000;
+}
+
+.inpse1 .form-input {
+    width: 230px;
+}
+
+.cj_data {
+    margin: 20px 0 10px 0px;
+}
+
+.cj_data>label {
+    font-size: 15px;
+}
+
+.titxt {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.enh_txt>h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 7px;
+    text-transform: uppercase;
+}
+
+.enh_txt>h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 5px 0 10px;
+    text-transform: uppercase;
+}
+
+.enh_txt>p {
+    font-size: 13px!important;
+    font-weight: 400;
+    color: #363636;
+    line-height: 22px;
+    margin: 0 0 10px;
+}
+
+
 /*=====Popular Flight=====*/
 
 .allheading>h2>span {
