@@ -49,7 +49,7 @@
                                                             <ul id="autocomplete-source">
 
                                                             </ul>
-                                                            <span>Top Cities</span>
+                                                            {{-- <span>Top Cities</span>
                                                             <ul>
                                                                 <li>
                                                                     <div class="fli_name">
@@ -60,7 +60,7 @@
                                                                         <span>India</span>
                                                                     </div>
                                                                 </li>
-                                                            </ul>
+                                                            </ul> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +89,7 @@
                                                             <ul id="autocomplete-destination">
 
                                                             </ul>
-                                                            <span>Top Cities</span>
+                                                            {{-- <span>Top Cities</span>
                                                             <ul>
                                                                 <li>
                                                                     <div class="fli_name">
@@ -100,7 +100,7 @@
                                                                         <span>India</span>
                                                                     </div>
                                                                 </li>
-                                                            </ul>
+                                                            </ul> --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,7 +130,7 @@
                                                         </div>
                                                         <div class="cabin_box d-flex justify-content-between">
                                                             <div class="cb1">
-                                                                <input type="radio" id="Economy" name="Cabin" value="Economy" selected>
+                                                                <input type="radio" id="Economy" name="Cabin" value="Economy" checked>
                                                                 <label for="Economy">Economy </label>
                                                             </div>
                                                             <div class="cb1">

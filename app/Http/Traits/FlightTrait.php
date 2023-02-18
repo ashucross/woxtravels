@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Traits;
+
 use Illuminate\Http\Request;
 use App\Models\Airport;
 use App\Models\FlightSearch;
@@ -98,7 +99,6 @@ trait FlightTrait
             } else {
                 $url = $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
             }
-
             // API Call
             $curlF = curl_init();
             curl_setopt_array($curlF, array(
@@ -119,9 +119,8 @@ trait FlightTrait
             ));
 
             $response = curl_exec($curlF);
-            //curl_close($curlF);
+            curl_close($curlF);
             $dataArray = json_decode($response, true);
-            //dd($dataArray);
             // Multi row insert start
             $flights = array();
             if ($request->session()->has('token')) {
@@ -134,7 +133,7 @@ trait FlightTrait
             $request->session()->put('destination', $destiName);
 
             foreach ($dataArray['data'] as $data) {
-                // dd($data);
+
                 $noOfStops = count($data['itineraries'][0]['segments']);
                 if ($retD != '') {
                     $returnnoOfStops = count($data['itineraries'][1]['segments']);
@@ -168,7 +167,8 @@ trait FlightTrait
                         'FS_returncancelchangerule' => '',
 
                         'FS_return' => 1,
-                        'FS_sessionid' => $tokenId
+                        'FS_sessionid' => $tokenId,
+                        'flight_uniq_id' => $data['id']
                     );
                 } else {
                     $returnnoOfStops = count($data['itineraries'][0]['segments']);
@@ -192,9 +192,10 @@ trait FlightTrait
                     );
                 }
             }
+            // die;
             FlightSearch::where('FS_sessionid', $tokenId)->delete();
             FlightSearch::insert($flights);
-            // Multi row insert end
+
             $request->session()->put('flights', $dataArray);
             return response(["status" => 200, "message" => 'record found', 'airports' => $dataArray], 200);
         } catch (\Exception $e) {
@@ -238,7 +239,8 @@ trait FlightTrait
     }
 
 
-    public function flightBooking($id){
+    public function flightBooking($id)
+    {
         // dd($this->sessionId);
         $data = array(
             '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
@@ -255,6 +257,85 @@ trait FlightTrait
         $fly =  FlightSearch::where('FS_id', $id)->first();
         $flightName = $this->flightServices->getFlightName($fly->FS_airlines);
         $flightDetails = $this->flightServices->getFlightDetails($flightName->id);
-        return view('flight.review-booking', compact('data','fly', 'flightDetails', 'flightName'));
+        return view('flight.review-booking', compact('data', 'fly', 'flightDetails', 'flightName'));
+    }
+
+
+    public function flight_order(Request $request)
+    {
+
+        dd($request->all());
+        $id = Crypt::decryptString($id);
+        $fly =  FlightSearch::where('FS_id', $id)->first();
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://test.api.amadeus.com/v1/booking/flight-orders",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => json_encode(array(
+            "data" => array(
+              "type" => "flight-order",
+              "flightOffers" => array(
+                array(
+                  "id" => $flight_offer_id
+                )
+              ),
+              "travelers" => array(
+                array(
+                  "id" => "1",
+                  "dateOfBirth" => "1982-01-16",
+                  "name" => array(
+                    "firstName" => "John",
+                    "lastName" => "Doe"
+                  ),
+                  "gender" => "MALE",
+                  "contact" => array(
+                    "emailAddress" => "john.doe@example.com",
+                    "phones" => array(
+                      array(
+                        "deviceType" => "MOBILE",
+                        "countryCallingCode" => "33",
+                        "number" => "600000001"
+                      )
+                    )
+                  )
+                )
+              ),
+              "remarks" => array(
+                "general" => array(
+                  "type" => "SITI",
+                  "text" => "Please note that this booking was made via the Amadeus API"
+                )
+              ),
+              "contacts" => array(
+                array(
+                  "addresseeName" => "John Doe",
+                  "streetName" => "Baker Street",
+                  "buildingNumber" => "221B",
+                  "postalCode" => "NW1 6XE",
+                  "cityName" => "London",
+                  "countryCode" => "GB",
+                  "purpose" => "STAY"
+                )
+              )
+            )
+          )),
+          CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer ' . $this->Token . '',
+            "Content-Type: application/json"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        dd($response);
+        $err = curl_error($curl);
+
+
     }
 }

@@ -1387,7 +1387,7 @@
                             <ul class="tktlist">
                                 @foreach($flights as $fly)
                                 @php
-                                // dd($fly->FS_id);
+                                // dd($fly);
                                 $Traveldate=date_create($fly->FS_date);
                                 $Arivaldate=date_create($fly->FS_arrival);
 
