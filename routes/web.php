@@ -38,6 +38,7 @@ Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 Route::post('/search_hotel', [StayController::class, 'search_hotel'])->name('search_hotel');
 Route::get('/hotelDetails', [StayController::class, 'hotelDetails'])->name('hotelDetails');
 Route::get('/book_now', [StayController::class, 'book_now'])->name('book_now');
+Route::get('/loadMoredata', [StayController::class, 'loadMoredata'])->name('loadMoredata');
 
 Route::get('/packages', [AttractionController::class, 'index'])->name('packages');
 Route::get('/package-list/{destination}', [AttractionController::class, 'packageList'])->name('packages-list');

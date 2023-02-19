@@ -33,9 +33,11 @@ class StayController extends Controller
             '_Car' => '',
         );
         $hotelsdata = [];
+        $init = 1;
+        $pagination = 12;
         $signature = getsignature();  
         if($signature['status'] == 200){
-            $gethotels = getHotel($signature['data']); 
+            $gethotels = getHotel($signature['data'],$pagination,$init); 
             $hotelsdata = $gethotels['data'];
         }else{
             return ([
@@ -44,6 +46,21 @@ class StayController extends Controller
         } 
         return view('hotel', compact('data','hotelsdata'));
     }
+    public function loadMoredata(Request $request){
+        $pagination = $request->pagination;
+        $init = $request->init;
+        $signature = getsignature();  
+        if($signature['status'] == 200){
+            $gethotels = getHotel($signature['data'],$pagination,$init); 
+            $hotelsdata = $gethotels['data'];
+            $html = view('loadHotels', compact('hotelsdata'))->render();
+            return response()->json([
+                'status'=>200,
+                'html'=>$html
+            ]);
+        } 
+    }
+
     public function search_hotel(Request $request)
     {
         $data = array(

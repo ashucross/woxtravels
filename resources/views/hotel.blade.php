@@ -341,11 +341,11 @@ label#checkin-error{
             @if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0)
             @foreach($hotelsdata->hotels as $hotel)
             <?php $image = !empty($hotel->images) && count($hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata'.'/'.$hotel->images[0]->path : ''; ?>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12 loadmorediv">
                <div class="theme_common_box_two img_hover">
                   <div class="theme_two_box_img">
                      <a href="hotel-details.html">
-                        <img height='350px' src="{{!empty($image) ? $image : asset('public/assets/images/hotel1.png')}}" alt="img">
+                        <img height='280px' src="{{!empty($image) ? $image : asset('public/assets/images/hotel1.png')}}" alt="img">
                      </a>
                      <p><i class="fas fa-map-marker-alt"></i>{{$hotel->name->content ?? ''}}</p>
                   </div>
@@ -360,7 +360,8 @@ label#checkin-error{
             </div>
             @endforeach
             @endif
-         @endif
+         @endif 
+         
          <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">
@@ -487,6 +488,14 @@ label#checkin-error{
                   </div>
                </div> -->
       </div>
+      <div class="row ">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+               <div class="section_heading_center text-center">
+               <button  class="btn btn-primary loadmore"  >
+                        <i class="fa fa-reload-o mr-1"></i>Load More </a>
+               </div>
+            </div>
+         </div>
    </div>
 </section>
 
@@ -756,6 +765,23 @@ label#checkin-error{
       });
       $('.arrowus').click(function(){
          $('.dropslct').show();
+      });
+
+      var pagination = 12; 
+      $('.loadmore').click(function(){ 
+         $('.loadmore').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
+         pagination = parseInt(pagination) + 12;
+         var init = parseInt(pagination) - 11; 
+         $.ajax({
+            url: "{{url('loadMoredata')}}",
+            dataType:'json',
+            data:{pagination:pagination,init:init},
+            success: function(result){
+               $(".loadmorediv:last").after(result.html);
+               $('.loadmore').html('Load More');
+               $('.loadmore').attr('disabled',false);
+            }
+         });
       });
    })
 </script>

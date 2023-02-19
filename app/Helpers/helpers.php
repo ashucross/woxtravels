@@ -39,11 +39,11 @@ function getsignature(){
 }
 
 
-    function getHotel($data){
+    function getHotel($data,$pagination,$init){
         $signature = $data;
         $apiKey = env('HOTEL_API_KEY');
         $Secret = env('HOTEL_SECRET_KEY');   
-        $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=12&useSecondaryLanguage=false"; 
+        $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=".$init."&to=".$pagination."&useSecondaryLanguage=false"; 
         try{ 
             $curl = curl_init(); 
             curl_setopt_array($curl, array(
