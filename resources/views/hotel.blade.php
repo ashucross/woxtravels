@@ -2,6 +2,18 @@
 @section('styles')
 <!-- page specific style code here-->
 <!-- page specific style code here-->
+<style>
+label#location-error {
+    font-size: 14px;
+    margin-left: 12px;
+    color: #ff4d4d;
+}
+label#checkin-error{
+   font-size: 14px;
+    margin-left: 12px;
+    color: #ff4d4d;
+}
+</style>
 @endsection
 @section('pageContent')
 
@@ -111,14 +123,14 @@
                                                 <span class="agetxt">Ages 0 - 17</span>
                                              </span>
                                              <div id='myform' method='POST' class='quantity1'  action='#'>
-                                                <input type='button'  slug='oneway' value='-'  class='minus' field='quantity' />
-                                                <input type='text' name='quantity' id="oneway-qnty-child"  id='child_val' value='0' class='qty' />
-                                                <input type='button'  slug='oneway' value='+'  class='plus' field='quantity' />
+                                                <input type='button'  slug='oneway' value='-'  class='minus child_minus' field='quantity' />
+                                                <input type='text' name='quantity' id="oneway-qnty-child"    value='0' class='qty' />
+                                                <input type='button'  slug='oneway' value='+'  class='plus child_added' field='quantity' />
                                              </div>
                                           </div>
                                           <div class="d-flex box_child flex-wrap">
                                              <div class="childxd child_ages">
-                                                <select>
+                                                <select class="form-control" name="childages[]">
                                                    <option hidden>
                                                       Age needed
                                                    </option>
@@ -185,7 +197,7 @@
                                        </div>
                                     </div>
                                     <div class="btntv">
-                                       <button type="submit" class="btn-grad ftbtn_src">Done</button>
+                                       <button type="submit" class="btn-grad ftbtn_src set-adults-val">Done</button>
                                     </div>
                                  </div>
                               </div>
@@ -326,25 +338,28 @@
       </div>
       <div class="row">
          @if(!empty($hotelsdata))
-         @foreach($hotelsdata->hotels as $hotel)
-         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="theme_common_box_two img_hover">
-               <div class="theme_two_box_img">
-                  <a href="hotel-details.html">
-                     <img src="{{asset('public/assets/images/hotel1.png')}}" alt="img">
-                  </a>
-                  <p><i class="fas fa-map-marker-alt"></i>{{$hotel->name->content ?? ''}}</p>
-               </div>
-               <div class="theme_two_box_content">
-                  <h4><a href="hotel-details.html">{{$hotel->name->content ?? ''}}, {{$hotel->city->content ?? ''}}</a></h4>
-                  <p><span class="review_rating"><!-- 4.8/5 Excellent -->Ranking : {{$hotel->ranking ?? ''}}</span> <!-- <span class="review_count">(1214
-                           reviewes)</span> -->
-                  </p>
-                  <h3><!-- $99.00 <span>Price starts from</span> --></h3>
+            @if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0)
+            @foreach($hotelsdata->hotels as $hotel)
+            <?php $image = !empty($hotel->images) && count($hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata'.'/'.$hotel->images[0]->path : ''; ?>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+               <div class="theme_common_box_two img_hover">
+                  <div class="theme_two_box_img">
+                     <a href="hotel-details.html">
+                        <img height='350px' src="{{!empty($image) ? $image : asset('public/assets/images/hotel1.png')}}" alt="img">
+                     </a>
+                     <p><i class="fas fa-map-marker-alt"></i>{{$hotel->name->content ?? ''}}</p>
+                  </div>
+                  <div class="theme_two_box_content">
+                     <h4><a href="hotel-details.html">{{$hotel->name->content ?? ''}}, {{$hotel->city->content ?? ''}}</a></h4>
+                     <p><span class="review_rating"><!-- 4.8/5 Excellent -->Ranking : {{$hotel->ranking ?? ''}}</span> <!-- <span class="review_count">(1214
+                              reviewes)</span> -->
+                     </p>
+                     <h3><!-- $99.00 <span>Price starts from</span> --></h3>
+                  </div>
                </div>
             </div>
-         </div>
-         @endforeach
+            @endforeach
+            @endif
          @endif
          <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
@@ -617,8 +632,8 @@
          },
 
          messages: {
-            location: "Please choose from location",
-            checkin: "Please choose checin-checkout dates",
+            location: "Please enter location",
+            checkin: "Please choose Checkin-Checkout dates",
             adults_total: "Please choose atleast one adult",
          },
          submitHandler: function(form) {
@@ -639,7 +654,7 @@
         switch (slugId) {
             case _Token + "-qnty-adult":
                 if (_Total + 1 <= 9 && _Adult + 1 <= 9) {
-                    $input.val(val + 1).change();
+                    $input.val(val + 1).change(); 
                 } else {
                     toastr["error"]("Error!", "Only 9 passenger is allowed");
                 }
@@ -708,15 +723,39 @@
          }
       });
 
-      $('.oneway-qnty-child').change(function(){
-         if($(this).val() > 0){
-            $('.child_ages').remove();
-            for(var i=0;i<=$(this).val();i++){
-              var s =  $('.child_ages:last').clone();
-               s.appendAfter($(this));
-            }
+      $('.child_added').click(function(){ 
+         if($('#oneway-qnty-child').val() > 0){ 
+            $('.child_ages:last').clone().insertAfter($('.child_ages:last'));  
          }
-
+      });
+      $('.child_minus').click(function(){ 
+         if($('#oneway-qnty-child').val() > 1){ 
+            $('.child_ages:last').remove();  
+         }
+      });
+      $('.set-adults-val').click(function(e){
+         e.preventDefault();
+         let _Adult = parseInt($("#oneway-qnty-adult").val());
+         let _Child = parseInt($("#oneway-qnty-child").val());
+         let _Room = parseInt($("#oneway-qnty-room").val());
+         let _Total = _Adult + _Child;
+         if(_Total == 0){
+            toastr["error"](
+               "Error!",
+               "Atleast 1 person is required"
+            );
+         }
+         if(_Room == 0){
+            toastr["error"](
+               "Error!",
+               "Atleast 1 room is required"
+            );
+         }
+         $('.arrowus').val('Adults : '+_Adult+', Child : '+_Child+', Room : '+_Room);
+         $('.dropslct').hide();
+      });
+      $('.arrowus').click(function(){
+         $('.dropslct').show();
       });
    })
 </script>

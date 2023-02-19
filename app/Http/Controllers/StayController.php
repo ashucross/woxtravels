@@ -33,18 +33,15 @@ class StayController extends Controller
             '_Car' => '',
         );
         $hotelsdata = [];
-        $signature = getsignature(); 
-    //    dd($signature);
-        /*  
-        dd($signature);
+        $signature = getsignature();  
         if($signature['status'] == 200){
             $gethotels = getHotel($signature['data']); 
-            $hotelsdata = $gethotels['data']; 
+            $hotelsdata = $gethotels['data'];
         }else{
             return ([
                 'status'=>$signature['status']
             ]);
-        } */
+        } 
         return view('hotel', compact('data','hotelsdata'));
     }
     public function search_hotel(Request $request)
