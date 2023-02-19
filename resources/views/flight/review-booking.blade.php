@@ -1,5 +1,10 @@
 @extends('homeLayout')
 @section('styles')
+<style>
+    .error{
+  color:red;
+}
+</style>
 <!-- page specific style code here-->
 <!-- page specific style code here-->
 @endsection
@@ -624,7 +629,7 @@
                     <a href="#" class="cntds" data-toggle="modal" data-target="#login">Login</a>
                 </div>
             </div>
-            <form action="" id="flightbooking-form" class="needs-validation" method="POST" novalidate>
+            <form action="" id="flightbooking-form" method="POST" >
                 {{ csrf_field() }}
                 <input type="sdaf" name="flight_id" value="{{ $fly->FS_id }}">
                 @php
@@ -660,7 +665,8 @@
                                 <label>Phone Number</label>
                                 <div class="form-group">
                                     <input type="text" id="contact_number" class="" placeholder="Phone Number"
-                                        name="mobile_number" required>
+                                        name="mobile_number"
+                                        >
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -948,164 +954,23 @@
         e.preventDefault();
         // alert(check_traveller_information());
         // if(check_traveller_information()){
-        //     var strData = $("#flightbooking-form").serializeArray();
-        //       $.ajax({
-        //         type  : "POST",
-        //         url   : '{{url('flight_order')}}',
-        //         data  : strData,
-        //         dataType: "json",
-        //         success: function(data){
-        //           window.location.href = data.booking_url;
-        //         }
-        //       });
+            var strData = $("#flightbooking-form").serializeArray();
+              $.ajax({
+                type  : "POST",
+                url   : '{{url('flight_order')}}',
+                data  : strData,
+                dataType: "json",
+                success: function(data){
+                  window.location.href = data.booking_url;
+                }
+              });
         //    }
     })
 });
 
 
 
-// adapted from https://www.codeply.com/go/mhkMGnGgZo/bootstrap-4-validation-example
 
-$("#flightbooking-form").submit(function(event) {
-
-// make selected form variable
-var vForm = $(this);
-
-/*
-If not valid prevent form submit
-https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity
-*/
-if (vForm[0].checkValidity() === false) {
-    alert("DSfklsdf");
-  event.preventDefault()
-  event.stopPropagation()
-} else {
-
-  // Replace alert with ajax submit here...
-  alert("your form is valid and ready to send");
-
-}
-
-// Add bootstrap 4 was-validated classes to trigger validation messages
-vForm.addClass('was-validated');
-
-
-});
-
-
-function check_traveller_information() {
-        var alpha_filter  = /^[a-zA-Z ]+$/;
-        <?php
-        $Passenegrcount = $adult + $Child + $Infant;
-          $ADT = 0; $CHD = 0; $INF = 0;
-          for($a=0;$a<$Passenegrcount;$a++){
-            if($a < $adult){
-              $name = 'adult';
-              $p = ++$ADT;
-            }else if($a >= $adult && ($a < ($adult + $Child))){
-              $name = 'child';
-              $p = ++$CHD;
-            }elseif($a >= ($adult + $Child)){
-              $name = 'infant';
-              $p = ++$INF;
-            }
-        ?>
-            var title   = document.getElementsByName('title<?php echo $name; ?>[]');
-            var fname   = document.getElementsByName('first_name<?php echo $name; ?>[]');
-            var last_name   = document.getElementsByName('last_name<?php echo $name; ?>[]');
-            var date_of_birth     = document.getElementsByName('date_of_birth<?php echo $name; ?>[]');
-            var date_of_month     = document.getElementsByName('date_of_month<?php echo $name; ?>[]');
-            var date_of_birst_Day     = document.getElementsByName('gender<?php echo $name; ?>[]');
-            var gender     = document.getElementsByName('gender<?php echo $name; ?>[]');
-            var nationality   = document.getElementsByName('nationality<?php echo $name; ?>[]');
-
-
-
-            var passport_number   = document.getElementsByName('passport_number<?php echo $name; ?>[]');
-            var passport_Issued_Date   = document.getElementsByName('passport_Issued_Date<?php echo $name; ?>[]');
-            var passport_Issued_month   = document.getElementsByName('passport_Issued_month<?php echo $name; ?>[]');
-            var passport_Issued_day   = document.getElementsByName('passport_Issued_month<?php echo $name; ?>[]');
-            var parsportExpire_year   = document.getElementsByName('parsportExpire_year<?php echo $name; ?>[]');
-            var parsportExpire_month   = document.getElementsByName('parsportExpire_month<?php echo $name; ?>[]');
-            var parsportExpire_day   = document.getElementsByName('parsportExpire_day<?php echo $name; ?>[]');
-
-
-            var contact_email   = document.getElementById('contact_email').value;
-            console.log(contact_email);
-            localStorage.setItem('Contact email ', contact_email);
-            var contact_number   = document.getElementById('contact_number').value;
-            localStorage.setItem('Contact number', contact_number);
-
-
-            for (var i = 0; i < <?php echo $p; ?>; i++){
-                localStorage.setItem(salutation[i].getAttribute('data-id'), salutation[i].value);
-                localStorage.setItem(passport_no[i].getAttribute('data-id'), passport_no[i].value);
-                localStorage.setItem(nationality[i].getAttribute('data-id'), nationality[i].value);
-                localStorage.setItem(passport_exp[i].getAttribute('data-id'), passport_exp[i].value);
-                localStorage.setItem(passport_country[i].getAttribute('data-id'), passport_country[i].value);
-
-              if (fname[i].value==''){
-                $('#errorfname<?php echo $name.$a; ?>').html('Please enter first name');
-                fname[i].style.borderColor = "Red";
-                fname[i].focus();
-                return false;
-              }else if(!(fname[i].value.match(alpha_filter))){
-                $('#errorfname<?php echo $name.$a; ?>').html('Invalid first name');
-                fname[i].style.borderColor = "Red";
-                return false;
-              }else{
-                $('#errorfname<?php echo $name.$a; ?>').html('');
-                 localStorage.setItem(fname[i].getAttribute('data-id'), fname[i].value);
-                fname[i].style.borderColor = "green";
-              }
-
-              if (mname[i].value!=''){
-                if(!(mname[i].value.match(alpha_filter))){
-                  $('#errormname<?php echo $name.$a; ?>').html('Invalid middle name');
-                  mname[i].style.borderColor = "Red";  mname[i].focus();return false;
-                }else{
-                  $('#errormname<?php echo $name.$a; ?>').html('');
-                  localStorage.setItem(mname[i].getAttribute('data-id'), mname[i].value);
-                  mname[i].style.borderColor = "green";
-                }
-              }
-              if (lname[i].value==''){
-                $('#errorlname<?php echo $name.$a; ?>').html('Please enter last name');
-                lname[i].style.borderColor = "Red"; lname[i].focus();return false;
-              }else if(!(lname[i].value.match(alpha_filter))){
-                $('#errorlname<?php echo $name.$a; ?>').html('Invalid last name');
-                 lname[i].style.borderColor = "Red"; lname[i].focus(); return false;
-              }else{
-                $('#errorlname<?php echo $name.$a; ?>').html('');
-                localStorage.setItem(lname[i].getAttribute('data-id'), lname[i].value);
-                lname[i].style.borderColor = "green";
-              }
-
-              if (dob[i].value == ''){
-                $('#errordate_of_birth_<?php echo $name.$a; ?>').html('Please enter date of birth');
-                dob[i].style.borderColor = "Red"; dob[i].focus();return false;
-              }else{
-                $('#errordate_of_birth_<?php echo $name.$a; ?>').html('');
-                localStorage.setItem(dob[i].getAttribute('data-id'), dob[i].value);
-                dob[i].style.borderColor = "green";
-              }
-
-            //   if ($('input[name=gender_<?php echo $name.'_'.$a; ?>]:checked').length > 0) {
-            //     $('#errordate_of_gender_<?php echo $name.$a; ?>').html('');
-            //   }else{
-            //       localStorage.setItem(gender[i].getAttribute('data-id'), gender[i].value);
-            //     $('#errordate_of_gender_<?php echo $name.$a; ?>').html('Please select gender');
-            //     return false;
-            //   }
-
-
-
-            }
-        <?php
-          }
-        ?>
-        return true;
-      }
 
 
 

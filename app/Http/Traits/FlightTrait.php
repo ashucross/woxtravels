@@ -168,7 +168,9 @@ trait FlightTrait
 
                         'FS_return' => 1,
                         'FS_sessionid' => $tokenId,
-                        'flight_uniq_id' => $data['id']
+                        'flight_uniq_id' => $data['id'],
+                        'complete_data' => json_encode($data)
+
                     );
                 } else {
                     $returnnoOfStops = count($data['itineraries'][0]['segments']);
@@ -263,79 +265,51 @@ trait FlightTrait
 
     public function flight_order(Request $request)
     {
-
-        dd($request->all());
-        $id = Crypt::decryptString($id);
-        $fly =  FlightSearch::where('FS_id', $id)->first();
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://test.api.amadeus.com/v1/booking/flight-orders",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => json_encode(array(
-            "data" => array(
-              "type" => "flight-order",
-              "flightOffers" => array(
-                array(
-                  "id" => $flight_offer_id
-                )
-              ),
-              "travelers" => array(
-                array(
-                  "id" => "1",
-                  "dateOfBirth" => "1982-01-16",
-                  "name" => array(
-                    "firstName" => "John",
-                    "lastName" => "Doe"
-                  ),
-                  "gender" => "MALE",
-                  "contact" => array(
-                    "emailAddress" => "john.doe@example.com",
-                    "phones" => array(
-                      array(
-                        "deviceType" => "MOBILE",
-                        "countryCallingCode" => "33",
-                        "number" => "600000001"
-                      )
-                    )
-                  )
-                )
-              ),
-              "remarks" => array(
-                "general" => array(
-                  "type" => "SITI",
-                  "text" => "Please note that this booking was made via the Amadeus API"
-                )
-              ),
-              "contacts" => array(
-                array(
-                  "addresseeName" => "John Doe",
-                  "streetName" => "Baker Street",
-                  "buildingNumber" => "221B",
-                  "postalCode" => "NW1 6XE",
-                  "cityName" => "London",
-                  "countryCode" => "GB",
-                  "purpose" => "STAY"
-                )
-              )
-            )
-          )),
-          CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer ' . $this->Token . '',
-            "Content-Type: application/json"
-          ),
-        ));
-
-        $response = curl_exec($curl);
-        dd($response);
-        $err = curl_error($curl);
+        var_dump($request->all());
+        die;
+        // $id = Crypt::decryptString($id);
+        $fly =  FlightSearch::where('FS_id', $request->flight_id)->first();
+        // echo "<pre>";
+        $firstName = [];
+        $name = [];
+        for ($i = 0; $i < count($request->first_nameadult); $i++) {
+            $firstName['id'] = $i+1;
+            $firstName['dateOfBirth'] = $i+1;
+            $firstName['name']['firstName']  = $request->first_nameadult[$i];
+            $firstName['name']['lastName']  = $request->last_nameadult[$i];
+            $firstName['gender'] = $request->genderadult[$i];
+            $firstName['contact']['emailAddress']  = $request->contact_email;
+            $firstName['contact']['phones']['deviceType']  = 'MOBILE';
+            $firstName['contact']['phones']['countryCallingCode']  = '91';
+            $firstName['contact']['phones']['number']  = $request->mobile_number;
+            $name[] = $firstName;
+        }
 
 
+        //    for()
+
+        if (!empty($fly)) {
+            $dep_info = json_decode($fly->FS_flightInformation);
+            $complete_data = json_decode($fly->complete_data);
+
+
+            // dump($fly);die;
+            // $request_body=
+
+            $feamounte = [];
+            $fee = [];
+
+            $travelers =
+
+
+                $request_body = [
+                    'data' => [
+                        $complete_data,
+                        $firstName,
+
+                    ],
+                ];
+        }
+        // dd();
     }
 }
