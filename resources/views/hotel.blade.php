@@ -3,16 +3,11 @@
 <!-- page specific style code here-->
 <!-- page specific style code here-->
 <style>
-label#location-error {
+label#location-error,#checkin-error,#adults-error {
     font-size: 14px;
     margin-left: 12px;
     color: #ff4d4d;
-}
-label#checkin-error{
-   font-size: 14px;
-    margin-left: 12px;
-    color: #ff4d4d;
-}
+} 
 </style>
 @endsection
 @section('pageContent')
@@ -637,17 +632,17 @@ label#checkin-error{
          rules: {
             location: "required",
             checkin: "required",
-            adults_total: "required",
+            adults: "required",
          },
 
          messages: {
             location: "Please enter location",
             checkin: "Please choose Checkin-Checkout dates",
-            adults_total: "Please choose atleast one adult",
+            adults: "Please choose atleast one adult",
          },
          submitHandler: function(form) {
             /*Ajax Request Header setup*/
-
+            form.submit();
          },
       });
 

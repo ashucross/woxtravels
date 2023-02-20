@@ -12,7 +12,7 @@ function getsignature(){
             CURLOPT_URL => $endpoint,
             CURLOPT_HTTPHEADER => ['Accept:application/json' , 'Api-key:'.$apiKey.'', 'X-Signature:'.$signature.'']
         )); 
-        $resp = curl_exec($curl);  
+        $resp = curl_exec($curl); 
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 200:  # OK
@@ -63,6 +63,62 @@ function getsignature(){
                     ]); 
                     break;
                     default:
+                    return ([
+                        'status'=>$http_code,
+                        'data'=>''
+                    ]); 
+                }
+            } 
+            curl_close($curl); 
+        } catch (Exception $ex) {
+            return ([
+                'status'=>'error',
+                'message'=>"Error while sending request, reason: %s\n",$ex->getMessage()
+            ]);  
+        } 
+    }
+
+    function searchHotel($data){
+        $signature = $data;
+        $apiKey = env('HOTEL_API_KEY');
+        $Secret = env('HOTEL_SECRET_KEY');   
+        $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels"; 
+        $post = [
+            'stay' => ([
+                "checkIn"=> "2023-06-15",
+                "checkOut"=> "2023-06-16"
+            ]),
+            "occupancies"=> array([ 
+                "rooms"=> 1,
+                "adults"=> 1,
+                "children"=> 0 
+            ]),
+            "destination"=> ([
+                "code"=> "MCO"
+            ])
+        ];  
+       
+                
+        try{ 
+            $curl = curl_init(); 
+            curl_setopt_array($curl, array(
+                CURLOPT_POST => true,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => $endpoint,
+                CURLOPT_HTTPHEADER => ['Accept:application/json' , 'Api-key:'.$apiKey.'', 'X-Signature:'.$signature.'','Content-Type:application/json'],
+                CURLOPT_POSTFIELDS => json_encode($post)
+            )); 
+            $resp = curl_exec($curl);  
+            if (!curl_errno($curl)) {
+                switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                    case 200:  # OK
+                    $hotels = json_decode($resp); 
+                    return ([
+                        'status'=>200,
+                        'data'=>$hotels
+                    ]); 
+                    break;
+                    default: 
                     return ([
                         'status'=>$http_code,
                         'data'=>''

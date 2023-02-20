@@ -36,6 +36,7 @@ class StayController extends Controller
         $init = 1;
         $pagination = 12;
         $signature = getsignature();  
+        
         if($signature['status'] == 200){
             $gethotels = getHotel($signature['data'],$pagination,$init); 
             $hotelsdata = $gethotels['data'];
@@ -62,7 +63,7 @@ class StayController extends Controller
     }
 
     public function search_hotel(Request $request)
-    {
+    { 
         $data = array(
             '_MetaTitle' => 'Search Hotels',
             '_MetaKeywords' => '',
@@ -74,9 +75,20 @@ class StayController extends Controller
             '_Insurance' => '',
             '_Car' => '',
         );
-        // $signature = getsignature(); 
-        // $hotels = getHotel('669ad1966e6b598405df744b20aa628dafab1b14f3fe3126301d9066100467a4');
-        return view('search_hotel', compact('data','hotels'));
+        $hotels = [];
+        $params = $request->all() ?? '';
+        // dd($params);
+        $signature = getsignature();  
+        
+        if($signature['status'] == 200){
+            $gethotels = searchHotel($signature['data']);  
+            $hotelsdata = $gethotels['data']->hotels ?? []; 
+        }else{
+            return ([
+                'status'=>$signature['status']
+            ]);
+        }
+        return view('search_hotel', compact('data','hotelsdata','params'));
     }
     public function hotelDetails(Request $request)
     {
