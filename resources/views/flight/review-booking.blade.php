@@ -1,9 +1,9 @@
 @extends('homeLayout')
 @section('styles')
 <style>
-    .error{
-  color:red;
-}
+    .error {
+        color: red;
+    }
 </style>
 <!-- page specific style code here-->
 <!-- page specific style code here-->
@@ -515,22 +515,15 @@
             // dd($flights);
             @endphp
             @php
-            $Traveldate=date_create($fly->FS_date);
-            $Arivaldate=date_create($fly->FS_arrival);
-            $RTraveldate=date_create($fly->FS_returndeparture);
-            $RArivaldate=date_create($fly->FS_returnarrival);
-            $source = json_Decode($fly->FS_search);
-
-            $sourceName = $source->sourceName;
-            $destiName = $source->destiName;
-
+            $Traveldate=date_create($fly->itineraries[0]->segments[0]->departure->at);
             @endphp
             <div class="listbooking-rv ">
                 <ul>
                     <li>
                         <div class="dts_heading ">
                             <h1 class="mtprew1">Flight Details</h1>
-                            <span> <a href="#"><i class="fa fa-plane"></i>Change Flight</a></span>
+                            <span> <a href="{{ url()->previous() }}"><i class="fas fa-plane"></i>Change
+                                    Flight</a></span>
                         </div>
                         <div class="flexws">
                             <div class="leftlogo_rv">
@@ -539,48 +532,70 @@
                                         <h4>Departure <span>{{date_format($Traveldate,"M d Y")}}</span></h4>
                                         <div class="airlogo_rv">
                                             <span class="logowt">
+
+                                                @php $file =
+                                                getFileName($fly->itineraries[0]->segments[0]->carrierCode) @endphp
+                                                @if($file)
+                                                <img src="{{$file}}" class="img-res"
+                                                    alt="{{$fly->itineraries[0]->segments[0]->carrierCode}}">
+                                                @else
                                                 <img src="{{asset('public/assets/images/AI.gif')}}" class="img-res"
                                                     alt="AI">
+                                                @endif
                                             </span>
-                                            <span>{{$fly->FS_airlines}}</span>
+
+                                            @php $airPlane = json_encode($dictionaries) @endphp
+                                            @php $namePlane = json_decode(json_encode($dictionaries->carriers),true)
+                                            @endphp
+
+                                            <span>{{ $fly->itineraries[0]->segments[0]->carrierCode }}</span>
                                         </div>
                                     </div>
+
                                     <div class="datetm_rv">
                                         <div class="tbrtvr">
+                                            @php $city = json_decode(json_encode($dictionaries->locations),true) @endphp
+                                            @php $depaturecountryDetails =
+                                            getCountryName($city[$fly->itineraries[0]->segments[0]->departure->iataCode]["countryCode"],$fly->itineraries[0]->segments[0]->departure->iataCode);
+                                            @endphp
+
                                             <h4>
-                                                <span>({{$fly->FS_departLocation}})</span>
+                                                <span>({{$depaturecountryDetails->city_code }})</span>
                                             </h4>
                                             <span class="blnspan">
                                                 <span class="btsr">BAH</span>
                                             </span>
+                                            @php $arrivalcountryDetails =
+                                            getCountryName($city[$fly->itineraries[0]->segments[0]->arrival->iataCode]["countryCode"],$fly->itineraries[0]->segments[0]->arrival->iataCode);
+                                            @endphp
+
                                             <h4>
-                                                <span>({{$fly->FS_arrivalLocation}})</span>
+                                                <span>({{ $arrivalcountryDetails->city_code}})</span>
                                             </h4>
                                         </div>
                                     </div>
+
                                     <div class="stopb">
-                                        <span>{{$fly->FS_stops}}&nbsp;Stop</span>
+                                        <span>{{ (count($fly->itineraries[0]->segments) - 1)}}&nbsp;Stop</span>
+
                                     </div>
                                 </div>
+                                @php $craft = json_decode(json_encode($dictionaries->aircraft),true) @endphp
                                 <div class="righttxt_rv d-flex ">
                                     <div class="timebox d-flex">
-                                        <h4>{{date_format($Traveldate,"H:i : A")}}</h4>
+                                        <h4>{{ date('H:i A', strtotime($fly->itineraries[0]->segments[0]->departure->at)
+                                            )}}</h4>
                                         <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                                        <h4>{{date_format($Arivaldate,"H:i : A")}}</h4>
+                                        <h4>{{ date('H:i A', strtotime($fly->itineraries[0]->segments[0]->arrival->at)
+                                            )}}</h4>
+                                        </span>
+
                                     </div>
-                                    @php
-                                    $A = $fly->FS_duration;
-                                    $X = ["PT", "H", "M"];
-                                    $Y = ["", "h ", "m"];
 
-                                    $A_ = $fly->FS_returnduration;
-                                    $X_ = ["PT", "H", "M"];
-                                    $Y_ = ["", "h ", "m"];
-
-                                    @endphp
                                     <div class="tmrv_rt">
-                                        <h5><span>Total journey duration</span>&nbsp;:&nbsp;{{str_replace($X, $Y, $A)}}
-                                        </h5>
+                                        <h5><span>Total journey duration</span>&nbsp;:&nbsp;{{
+                                            strtolower(str_replace('H','H ',substr($fly->itineraries[0]->duration,
+                                            2)))}}</h5>
                                     </div>
                                     <div class="sle">
                                         <h6 data-toggle="collapse" data-target="#ShowFlight1">Details&nbsp;<i
@@ -600,12 +615,12 @@
                                     </div>
                                 </div>
                                 <div class="to_list">
-                                    <span>{{ $sourceName }} to {{ $destiName }}</span>
+                                    {{-- <span>{{ $sourceName }} to {{ $destiName }}</span> --}}
                                     @php
                                     // dd($fly);
                                     @endphp
                                     <ul>
-                                        <li>{{ $flightName->name }}</li>
+                                        {{-- <li>{{ $flightName->name }}</li> --}}
                                         <li>Cabin (S) </li>
                                         <li>Operating Airline (AIR INDIA)</li>
                                         <li>Marketing Airline (AIR INDIA)</li>
@@ -629,20 +644,19 @@
                     <a href="#" class="cntds" data-toggle="modal" data-target="#login">Login</a>
                 </div>
             </div>
-            <form action="" id="flightbooking-form" method="POST" >
+            <form action="" id="flightbooking-form" method="POST">
                 {{ csrf_field() }}
-                <input type="sdaf" name="flight_id" value="{{ $fly->FS_id }}">
-                @php
-                $adult = $source->adult;
-                $Child = $source->Child ?? '';
-                $Infant = $source->Infant ?? '';
-                @endphp
+                {{-- <input type="sdaf" name="flight_id" value="{{ $fly->FS_id }}"> --}}
                 <div class="Review_book whitebrd">
+                    @foreach($ticketDetails as $key => $value)
+
+                    @php $a =0;
+                    $name = strtolower($value['name']);@endphp
                     <div class="text_tvs">
                         <h4>Traveler Details&nbsp;<span>
-                                (&nbsp;{{ $adult }} - ADULT&nbsp; @if(!empty($Child)) {{ $Child }} - Child &nbsp; @endif
-                                @if(!empty($Child)) {{ $Infant }} - Infant) @endif
-                            </span>
+                                (&nbsp;{{ $value['total']}} - {{$value['name']}}&nbsp;)
+                            </span></h4>
+                        </span>
                         </h4>
                         <p>Enter traveler name(s) and date(s) of birth exactly as shown on the passport or other
                             goverment-issued photo ID to be used on this trip.
@@ -650,7 +664,7 @@
                     </div>
 
                     @include('flight.userDetails')
-
+                    @endforeach
                     <div class="row pdrs">
                         <div class="col-sm-12">
                             <div class="txtal">
@@ -665,8 +679,7 @@
                                 <label>Phone Number</label>
                                 <div class="form-group">
                                     <input type="text" id="contact_number" class="" placeholder="Phone Number"
-                                        name="mobile_number"
-                                        >
+                                        name="mobile_number">
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -957,7 +970,7 @@
             var strData = $("#flightbooking-form").serializeArray();
               $.ajax({
                 type  : "POST",
-                url   : '{{url('flight_order')}}',
+                url   : '{{url('flight/booking')}}',
                 data  : strData,
                 dataType: "json",
                 success: function(data){

@@ -1385,16 +1385,21 @@
                     <div id="Cheapest" class="tab-pane  active">
                         <div class="listticket">
                             <ul class="tktlist">
-                                @foreach($flightresult['data'] as $searchFlight)
+                                @foreach($flights as $fly)
                                 @php
-                                    // dd($searchFlight);
+                                // dd($fly);
+                                $Traveldate=date_create($fly->FS_date);
+                                $Arivaldate=date_create($fly->FS_arrival);
+
+                                $RTraveldate=date_create($fly->FS_returndeparture);
+                                $RArivaldate=date_create($fly->FS_returnarrival);
+
                                 @endphp
-                                {{-- @if(count($searchFlight['itineraries']) == 1) --}}
-                                <li class="flight-li trip airlines-{{$searchFlight['itineraries'][0]['segments'][0]['carrierCode']}}" price="{{number_format($searchFlight['price']['total'])}}">
+
+                                <li class="flight-li trip airlines-{{$fly->FS_airlines}}" price="{{number_format($fly->FS_price)}}">
                                     <div class="largehead">
-                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp;<span> {{ date('M d Y',
-                                            strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
-                                            }}</h4>
+                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp; <span> {{date_format($Traveldate,"M d Y")}}</span>
+                                        </h4>
                                     </div>
                                     <div class="flexlist">
                                         <div class="inuot_bx">
@@ -1403,84 +1408,49 @@
                                                     <li>
                                                         <div class="airnm">
                                                             <span>
-                                                                @php $file =
-                                                                getFileName($searchFlight['itineraries'][0]["segments"][0]['carrierCode']);
-                                                                // dd($file);
-                                                                @endphp
-                                                                @if($file)
-                                                                <img src="{{$file}}" class="img-res"
-                                                                    alt="{{$searchFlight['itineraries'][0]["segments"][0]['carrierCode']}}">
-                                                                @else
-                                                                {{-- <i class="fas fa-plane"></i><i class="fas fa-plane"></i> --}}
-                                                                @endif
+                                                                <img src="{{asset('public/assets/images/airline/'.$fly->FS_airlines.'.gif')}}" class="img-res" alt="{{$fly->FS_airlines}}">
                                                             </span>
-                                                            <h6>{{
-                                                                $flightresult['dictionaries']['carriers'][$searchFlight['itineraries'][0]["segments"][0]['carrierCode']]}}
-                                                            </h6>
+                                                            <h6>{{$fly->FS_airlines}}</h6>
                                                         </div>
                                                     </li>
-                                                    @php $depaturecountryDetails =
-                                                    getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']]["countryCode"],$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']);
-                                                    @endphp
                                                     <li class="tooltip1">
-                                                        <p> {{ date('H:i',
-                                                            strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
-                                                            }}&nbsp;<span>({{$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']}})</span>
-                                                        </p><span class="blkts">{{
-                                                            $depaturecountryDetails->country_name}} ({{
-                                                            $depaturecountryDetails->city_name}})</span>
+                                                        <p> {{date_format($Traveldate,"H:i")}}&nbsp; <span>({{$fly->FS_departLocation}})</span>
+                                                        </p>
+                                                        <span class="blkts">India ({{$fly->FS_departLocation}})</span>
                                                         <div class="tooltiptext">
-                                                            <h6><strong>{{ date('H:i',
-                                                                    strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
-                                                                    }} .</strong> {{ date('M-d-Y',
-                                                                strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
-                                                                }}
-                                                                <span>
-                                                                    {{ $depaturecountryDetails->country_name}} ({{
-                                                                    $depaturecountryDetails->city_name}})
-                                                                </span>
+                                                            <h6>
+                                                                <strong>{{date_format($Traveldate,"H:i")}} .</strong> {{date_format($Traveldate,"M d Y")}} <span> India ({{$fly->FS_departLocation}}) </span>
                                                             </h6>
                                                         </div>
                                                     </li>
-                                                    <li><span class="blkts cnts">{{ strtolower(str_replace('H','H
-                                                            ',substr($searchFlight['itineraries'][0]["duration"],
-                                                            2)))}}</span>
+                                                    <li>
+                                                        @php
+                                                        $A = $fly->FS_duration;
+                                                        $X = ["PT", "H", "M"];
+                                                        $Y = ["", "h ", "m"];
+
+                                                        $A_ = $fly->FS_returnduration;
+                                                        $X_ = ["PT", "H", "M"];
+                                                        $Y_ = ["", "h ", "m"];
+
+                                                        @endphp
+                                                        <span class="blkts cnts">{{str_replace($X, $Y, $A)}}</span>
                                                         <span class="hrst"></span>
-                                                        <span
-                                                            class="blkts cnts">{{(count($searchFlight['itineraries'][0]["segments"])
-                                                            -1)}} Stop</span>
+                                                        <span class="blkts cnts">{{$fly->FS_stops}} Stop</span>
                                                     </li>
-                                                    @php $arrivalcountryDetails =
-                                                    getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']]["countryCode"],$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']);
-                                                    @endphp
-                                                   <li class="tooltip1">
-
-                                                    <p>
-
-                                                        {{ date('H:i',
-                                                        strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                        }}&nbsp;<span>({{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}})</span>
-                                                    </p>
-                                                    <span class="blkts">{{ $arrivalcountryDetails->country_name ??
-                                                        Null }} ({{ $arrivalcountryDetails->city_name ?? Null
-                                                        }})</span>
-                                                    <div class="tooltiptext">
-                                                        <h6><strong>
-                                                                {{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}}
-                                                                {{ date('H:i',
-                                                                strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                                }} .</strong> {{ date('M-d-y',
-                                                            strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                            }}
-                                                            <span>{{ $arrivalcountryDetails->country_name ?? Null }}
-                                                                ({{ $arrivalcountryDetails->city_name ?? Null }})
-                                                            </span>
-                                                        </h6>
-                                                    </div>
-                                                </li>
+                                                    <li class="tooltip1 text-right">
+                                                        <p> {{date_format($Arivaldate,"H:i")}}&nbsp; <span>({{$fly->FS_arrivalLocation}})</span>
+                                                        </p>
+                                                        <span class="blkts">India ({{$fly->FS_arrivalLocation}})</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong> {{$fly->FS_arrivalLocation}} {{date_format($Arivaldate,"H:i")}} .</strong> {{date_format($Arivaldate,"M-d-y")}} <span>India ({{$fly->FS_arrivalLocation}}) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
                                                 </ul>
-                                                {{-- @if($fly->FS_return==1) --}}
-                                                {{-- <ul class="dflex_js mbs">
+                                                @if($fly->FS_return==1)
+                                                <ul class="dflex_js mbs">
                                                     <li>
                                                         <div class="airnm">
                                                             <span>
@@ -1514,28 +1484,23 @@
                                                             </h6>
                                                         </div>
                                                     </li>
-                                                </ul> --}}
-                                                {{-- @endif --}}
+                                                </ul>
+                                                @endif
                                                 <div class="bagbx">
                                                     <span>
-                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; {{
-                                                            $searchFlight["travelerPricings"][0]["fareDetailsBySegment"][0]["includedCheckedBags"]["weight"]
-                                                            ?? '' }} kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked
-                                                            baggage</span>
+                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; 25 kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage </span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="prishow">
                                             <div class="tbfare">
                                                 <div class="bookprc">
-                                                    <h5>{{ $searchFlight["price"]["currency"] .',
-                                                        '.$searchFlight["price"]['total']}}</h5>
-                                                    <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='.Request::get('px'))}}"
-                                                        type="button" class="btnvw"><i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now</a>
-                                                    {{-- <span id="fltid">Flight Details<i
-                                                            class="fa fa-angle-down"></i></span> --}}
-
-
+                                                    @php
+                                                        $fliId = Crypt::encryptString($fly->FS_id);
+                                                    @endphp
+                                                    <h5>$ {{number_format($fly->FS_price)}}</h5>
+                                                    <a href="{{ url('flight-booking'). '/'  . $fliId }}" type="button" class="btnvw">
+                                                        <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1548,6 +1513,272 @@
                             <button type="button" class="lotds">LOAD MORE RESULTS </button>
                         </div>
                     </div>
+
+
+                    {{-- <div class="tab-pane  fade" id="Fastest">
+                        <div class="listticket">
+                            <ul class="tktlist">
+                                <li class="trip" style="display: list-item;">
+                                    <div class="largehead">
+                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp; <span> Sep 21 2022</span>
+                                        </h4>
+                                    </div>
+                                    <div class="flexlist">
+                                        <div class="inuot_bx">
+                                            <div class="tmingtk ">
+                                                <ul class="dflex_js mbs">
+                                                    <li>
+                                                        <div class="airnm">
+                                                            <span>
+                                                                <img src="https://travel24hr.com/img/airline/AI.jpg')}}" class="img-res" alt="AI">
+                                                            </span>
+                                                            <h6>AIR INDIA</h6>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tooltip1">
+                                                        <p> 06:10&nbsp; <span>(DEL)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Delhi)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong>06:10 .</strong> Sep-21-2022 <span> India (Delhi) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <span class="blkts cnts">2h 45m</span>
+                                                        <span class="hrst"></span>
+                                                        <span class="blkts cnts">0 Stop</span>
+                                                    </li>
+                                                    <li class="tooltip1 text-right">
+                                                        <p> 08:55&nbsp; <span>(BLR)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Bangalore)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong> BLR 08:55 .</strong> Sep-21-22 <span>India (Bangalore) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="bagbx">
+                                                    <span>
+                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; 25 kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="prishow">
+                                            <div class="tbfare">
+                                                <div class="bookprc">
+                                                    <h5>NGN, 41325.00</h5>
+                                                    <a href="#" type="button" class="btnvw">
+                                                        <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane  fade" id="Earliest">
+                        <div class="listticket">
+                            <ul class="tktlist">
+                                <li class="trip" style="display: list-item;">
+                                    <div class="largehead">
+                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp; <span> Sep 21 2022</span>
+                                        </h4>
+                                    </div>
+                                    <div class="flexlist">
+                                        <div class="inuot_bx">
+                                            <div class="tmingtk ">
+                                                <ul class="dflex_js mbs">
+                                                    <li>
+                                                        <div class="airnm">
+                                                            <span>
+                                                                <img src="https://travel24hr.com/img/airline/AI.jpg')}}" class="img-res" alt="AI">
+                                                            </span>
+                                                            <h6>AIR INDIA</h6>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tooltip1">
+                                                        <p> 06:10&nbsp; <span>(DEL)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Delhi)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong>06:10 .</strong> Sep-21-2022 <span> India (Delhi) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <span class="blkts cnts">2h 45m</span>
+                                                        <span class="hrst"></span>
+                                                        <span class="blkts cnts">0 Stop</span>
+                                                    </li>
+                                                    <li class="tooltip1 text-right">
+                                                        <p> 08:55&nbsp; <span>(BLR)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Bangalore)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong> BLR 08:55 .</strong> Sep-21-22 <span>India (Bangalore) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="bagbx">
+                                                    <span>
+                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; 25 kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="prishow">
+                                            <div class="tbfare">
+                                                <div class="bookprc">
+                                                    <h5>NGN, 41325.00</h5>
+                                                    <a href="#" type="button" class="btnvw">
+                                                        <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane  fade" id="Latest">
+                        <div class="listticket">
+                            <ul class="tktlist">
+                                <li class="trip">
+                                    <div class="largehead">
+                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp; <span> Sep 21 2022</span>
+                                        </h4>
+                                    </div>
+                                    <div class="flexlist">
+                                        <div class="inuot_bx">
+                                            <div class="tmingtk ">
+                                                <ul class="dflex_js mbs">
+                                                    <li>
+                                                        <div class="airnm">
+                                                            <span>
+                                                                <img src="https://travel24hr.com/img/airline/AI.jpg')}}" class="img-res" alt="AI">
+                                                            </span>
+                                                            <h6>AIR INDIA</h6>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tooltip1">
+                                                        <p> 06:10&nbsp; <span>(DEL)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Delhi)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong>06:10 .</strong> Sep-21-2022 <span> India (Delhi) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <span class="blkts cnts">2h 45m</span>
+                                                        <span class="hrst"></span>
+                                                        <span class="blkts cnts">0 Stop</span>
+                                                    </li>
+                                                    <li class="tooltip1 text-right">
+                                                        <p> 08:55&nbsp; <span>(BLR)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Bangalore)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong> BLR 08:55 .</strong> Sep-21-22 <span>India (Bangalore) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="bagbx">
+                                                    <span>
+                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; 25 kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="prishow">
+                                            <div class="tbfare">
+                                                <div class="bookprc">
+                                                    <h5>NGN, 41325.00</h5>
+                                                    <a href="#" type="button" class="btnvw">
+                                                        <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane  fade" id="Baggage">
+                        <div class="listticket">
+                            <ul class="tktlist">
+                                <li class="trip" style="display: list-item;">
+                                    <div class="largehead">
+                                        <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp; <span> Sep 21 2022</span>
+                                        </h4>
+                                    </div>
+                                    <div class="flexlist">
+                                        <div class="inuot_bx">
+                                            <div class="tmingtk ">
+                                                <ul class="dflex_js mbs">
+                                                    <li>
+                                                        <div class="airnm">
+                                                            <span>
+                                                                <img src="https://travel24hr.com/img/airline/AI.jpg')}}" class="img-res" alt="AI">
+                                                            </span>
+                                                            <h6>AIR INDIA</h6>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tooltip1">
+                                                        <p> 06:10&nbsp; <span>(DEL)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Delhi)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong>06:10 .</strong> Sep-21-2022 <span> India (Delhi) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <span class="blkts cnts">2h 45m</span>
+                                                        <span class="hrst"></span>
+                                                        <span class="blkts cnts">0 Stop</span>
+                                                    </li>
+                                                    <li class="tooltip1 text-right">
+                                                        <p> 08:55&nbsp; <span>(BLR)</span>
+                                                        </p>
+                                                        <span class="blkts">India (Bangalore)</span>
+                                                        <div class="tooltiptext">
+                                                            <h6>
+                                                                <strong> BLR 08:55 .</strong> Sep-21-22 <span>India (Bangalore) </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="bagbx">
+                                                    <span>
+                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; 25 kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="prishow">
+                                            <div class="tbfare">
+                                                <div class="bookprc">
+                                                    <h5>NGN, 41325.00</h5>
+                                                    <a href="#" type="button" class="btnvw">
+                                                        <i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> --}}
                 </div>
             </section>
         </div>

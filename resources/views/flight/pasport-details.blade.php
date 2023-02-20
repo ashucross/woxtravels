@@ -7,7 +7,7 @@
     <div class="col-sm-4">
         <div class="inpse ">
             <label>Passport Number<span class="stres">*</span></label>
-            <input type="text" class="form-input" name="passport_number{{  $name }}[]"
+            <input type="text" class="form-input" name="{{ $name }}[{{$a}}][passport_number]'"
                 placeholder="Passport Number">
         </div>
     </div>
@@ -16,7 +16,7 @@
             <label>Passport issued Date<span class="erfr">*</span></label>
             <div class="dttrhee">
                 <div class="sltnox slcbs">
-                    <select id="passport_Issued_Date{{ $name.$a  }}" name="passport_Issued_Date{{  $name }}[]" onchange="change_year(this)">
+                    <select id="passport_Issued_Date{{ $name.$a  }}" name="{{ $name }}[{{$a}}][passport_Issued_Date]" onchange="change_year(this)">
                         <option hidden data-ioshidden value="">year</option>
                         <option value="1930">1930</option>
                         <option value="1931">1931</option>
@@ -114,7 +114,7 @@
                     </select>
                 </div>
                 <div class="sltnox slcbs">
-                    <select id="passport_Issued_month{{ $name.$a  }}" name="passport_Issued_month{{  $name }}[]" onchange="change_month(this)">
+                    <select id="passport_Issued_month{{ $name.$a  }}" name="{{ $name }}[{{$a}}][passport_Issued_month]" onchange="change_month(this)">
                         <option hidden data-ioshidden value="">month</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -131,7 +131,7 @@
                     </select>
                 </div>
                 <div class="sltnox slcbs">
-                    <select id="passport_Issued_day{{ $name.$a  }}" name="passport_Issued_day{{  $name }}[]">
+                    <select id="passport_Issued_day{{ $name.$a  }}" name="{{ $name }}[{{$a}}][passport_Issued_day]">
                         <option hidden data-ioshidden value="">day</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -174,7 +174,7 @@
             <label>Passport Expiry Date<span class="erfr">*</span></label>
             <div class="dttrhee">
                 <div class="sltnox slcbs">
-                    <select id="parsportExpire_year{{ $name.$a  }}" name="parsportExpire_year{{  $name }}[]" onchange="change_year(this)">
+                    <select id="parsportExpire_year{{ $name.$a  }}" name="{{ $name }}[{{$a}}][parsportExpire_year]" onchange="change_year(this)">
                         <option value="year" hidden>year</option>
                         <option value="1930">1930</option>
                         <option value="1931">1931</option>
@@ -272,7 +272,7 @@
                     </select>
                 </div>
                 <div class="sltnox slcbs">
-                    <select id="parsportExpire_month{{ $name.$a  }}" name="parsportExpire_month{{  $name }}[]" onchange="change_month(this)">
+                    <select id="parsportExpire_month{{ $name.$a  }}" name="{{ $name }}[{{$a}}][parsportExpire_month]" onchange="change_month(this)">
                         <option value="month" hidden>month</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -289,7 +289,7 @@
                     </select>
                 </div>
                 <div class="sltnox slcbs">
-                    <select id="parsportExpire_day{{ $name.$a  }}" name="parsportExpire_day{{  $name }}[]">
+                    <select id="parsportExpire_day{{ $name.$a  }}" name="{{ $name }}[{{$a}}][parsportExpire_day]">
                         <option value="day" hidden>day</option>
                         <option value="1">1</option>
                         <option value="2">2</option>

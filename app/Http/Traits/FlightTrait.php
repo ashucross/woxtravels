@@ -7,10 +7,13 @@ use App\Models\Airport;
 use App\Models\FlightSearch;
 use App\Helpers\Eweblink;
 use Illuminate\Support\Facades\Session;
-use DB;
+// use DB;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use App\Services\FlightServices;
+use App\Http\Requests\Flight\FlightBookingRequest;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait FlightTrait
 {
@@ -207,7 +210,7 @@ trait FlightTrait
 
     public function flightList(Request $request)
     {
-        // dd($this->sessionId);
+        // dd();
         $data = array(
             '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
             '_MetaKeywords' => '',
@@ -220,8 +223,22 @@ trait FlightTrait
             '_Car' => '',
         );
         $tokenId = $request->session()->get('token');
-        $flights =  FlightSearch::where('FS_sessionid', $tokenId)->get();
+        // $flights =  FlightSearch::where('FS_sessionid', $tokenId)->get();
         // Get
+        $flightresult = Session::get('flights');
+        $n = 10;
+		$flights["data"]  = array_slice($flightresult["data"],0, -$n);
+		$flights["meta"] = $flightresult["meta"];
+		$flights["dictionaries"] =$flightresult["dictionaries"];
+		 $flights["top_data"] = array_slice($flightresult["data"], -$n);
+		//  dd( $flightresult["top_data"]);
+		$calenderresult="";//file_get_contents();
+		if (array_key_exists('errors', $flightresult)) {
+			return redirect()->back()->withErrors([
+				'title'=>$flightresult['errors'][0]['title'],
+				'detail'=>$flightresult['errors'][0]['detail']
+			]);
+		}
         $Location = array(
             'source' => $request->session()->get('source'),
             'destination' => $request->session()->get('destination'),
@@ -237,11 +254,65 @@ trait FlightTrait
             '1+stop' => FlightSearch::select(DB::raw('MIN(FS_price) as price'))->where('FS_sessionid', $tokenId)->where('FS_stops', '>', 1)->get(),
         );
         // dd($flights);
-        return view('flight.flightlist', compact('data', 'flights', 'price', 'Stops', 'Airlines', 'Location'));
+        return view('flight.flightlist', compact('data', 'flightresult', 'price', 'Stops', 'Airlines', 'Location'));
     }
 
 
-    public function flightBooking($id)
+    public function flightDetails(){
+        $data = json_decode(request()->get('data'));
+
+
+        // dd($data->lastTicketingDate);
+        $dictionaries = json_decode(request()->get('dictionaries'));
+
+        $passangers = '1-0-0';
+        // $passangers = request()->get('px');
+        $sessionData['data'] = $data;
+        $sessionData['dictionaries'] = $dictionaries;
+        $sessionData['passengers'] = $passangers;
+
+        $explodepass = explode('-', $passangers);
+        // $passenger['ADULT' ]= $explodepass[0];
+        // $passenger['CHILD' ]= $explodepass[1];
+        // $passenger['HELD_INFANT'] = $explodepass[2];
+        $ticketsDetailsPricing =  collect($data->travelerPricings)->unique('travelerType')->values();
+        // $ticketsDetailsPricing = collect(->values());
+        // dd(	$ticketsDetailsPricing);
+        foreach($ticketsDetailsPricing as $key=>$price){
+
+                $details[] = [
+                    'name'=> $price->travelerType,
+                    'travelerId'=>$price->travelerId,
+                    'total'=>$explodepass[$key],
+                    'amount' => $price->price->total*$explodepass[$key],
+                    'currency'=> $price->price->currency
+                ];
+
+
+        }
+        $collection = Collect($details);
+        // dd($collection);
+        $totalAmount = $collection->sum('amount');
+        $totalPassenger = $collection->sum('total');
+        $sessionData['ticket_details'] = $collection;
+        // Session::put('data',$sessionData);
+
+        $total = [
+            'total_amount'=>$totalAmount,
+            'total_passenger'=>$totalPassenger,
+            'currency'=> $details[0]['currency']
+        ];
+        $sessionData['total']=$total;
+        $ticketDetails = $details;
+         Session::put('data',$sessionData);
+        $userFlight = Session::get('data');
+        // dd($userFlight);die;
+
+      return redirect()->route('flightReview');
+    }
+
+
+    public function flightReview()
     {
         // dd($this->sessionId);
         $data = array(
@@ -255,61 +326,176 @@ trait FlightTrait
             '_Insurance' => '',
             '_Car' => '',
         );
-        $id = Crypt::decryptString($id);
-        $fly =  FlightSearch::where('FS_id', $id)->first();
-        $flightName = $this->flightServices->getFlightName($fly->FS_airlines);
-        $flightDetails = $this->flightServices->getFlightDetails($flightName->id);
-        return view('flight.review-booking', compact('data', 'fly', 'flightDetails', 'flightName'));
+        $userFlight = Session::get('data');
+        if($userFlight){
+            $ticketDetails = 	$userFlight['ticket_details'];
+            $total = $userFlight['total'];
+            $dictionaries = $userFlight['dictionaries'];
+            $fly = $userFlight['data'];
+            $locations = collect( DB::table('airports')->orderBy('country_name','asc')->get())->unique('country_name');
+            // return view('Frontend.flights.review',compact('data','dictionaries','ticketDetails','total','locations'));
+            return view('flight.review-booking', compact('fly', 'data','dictionaries','ticketDetails','total','locations'));
+        }
+        return redirect()->to('/');
+        // $id = Crypt::decryptString($id);
+        // $fly =  FlightSearch::where('FS_id', $id)->first();
+        // dump($fly);die;
+        // $flightName = $this->flightServices->getFlightName($fly->FS_airlines);
+        // $flightDetails = $this->flightServices->getFlightDetails($flightName->id);
     }
 
 
-    public function flight_order(Request $request)
+
+
+    public function bookingFlight(FlightBookingRequest $request)
     {
-        var_dump($request->all());
-        die;
-        // $id = Crypt::decryptString($id);
-        $fly =  FlightSearch::where('FS_id', $request->flight_id)->first();
-        // echo "<pre>";
-        $firstName = [];
-        $name = [];
-        for ($i = 0; $i < count($request->first_nameadult); $i++) {
-            $firstName['id'] = $i+1;
-            $firstName['dateOfBirth'] = $i+1;
-            $firstName['name']['firstName']  = $request->first_nameadult[$i];
-            $firstName['name']['lastName']  = $request->last_nameadult[$i];
-            $firstName['gender'] = $request->genderadult[$i];
-            $firstName['contact']['emailAddress']  = $request->contact_email;
-            $firstName['contact']['phones']['deviceType']  = 'MOBILE';
-            $firstName['contact']['phones']['countryCallingCode']  = '91';
-            $firstName['contact']['phones']['number']  = $request->mobile_number;
-            $name[] = $firstName;
+
+        $data = $request->except('__token');
+        // if(auth()->guard('agents')->user()){
+        //     return $this->bookingInfo($request,$data);
+        // }
+        // if(auth()->user()){
+        // }
+        return $this->bookingInfo($request, $data);
+
+        return response()->json(['succcess' => false, 'message' => 'Please login'], 401);
+    }
+
+    public function bookingInfo($request, $data)
+    {
+        $travelers = [];
+
+        if ((array_key_exists("adult", $data))) {
+            foreach ($data['adult']  as $key => $adult) {
+                //    dd($adult);
+                $travelers[] = $this->getTravelerDetails($adult);
+            }
         }
 
 
-        //    for()
-
-        if (!empty($fly)) {
-            $dep_info = json_decode($fly->FS_flightInformation);
-            $complete_data = json_decode($fly->complete_data);
-
-
-            // dump($fly);die;
-            // $request_body=
-
-            $feamounte = [];
-            $fee = [];
-
-            $travelers =
-
-
-                $request_body = [
-                    'data' => [
-                        $complete_data,
-                        $firstName,
-
-                    ],
-                ];
+        if ((array_key_exists("child", $data))) {
+            foreach ($data['child']  as $key => $child) {
+                $travelers[] = $this->getTravelerDetails($child);
+            }
         }
-        // dd();
+
+        if ((array_key_exists("held_infant", $data))) {
+            foreach ($data['held_infant']  as $key => $infant) {
+                $travelers[] = $this->getTravelerDetails($infant);
+            }
+        }
+
+        $userFlight = Session::get('data');
+        Session::put('travelers', $travelers);
+        $total = $userFlight['total'];
+
+        $travele = $this->ticketBooking($travelers);
+        var_dump($travele);die;
+        // $traveler = json_decode($travele, true);
+
+
+
+        // Log::info($traveler);
+        // if (array_key_exists('errors', $traveler)) {
+        //     $errors =  ucfirst(str_replace("_", " ", $traveler["errors"][0]["detail"]));
+
+        //     return response()->json(['errors' => true, 'errors' => explode(',', $errors)], 400);
+        // }
+        // $dataInput['flight_details'] = $traveler;
+        // $result = bookingsDetails($dataInput);
+        // $dataOutput = addBookingsDetails($result);
+
+        // $booking = BookingDetail::create($dataOutput);
+        // $contact = [
+        //     'email' => $request->get('email'),
+        //     'contact' => $request->get('phone')
+        // ];
+
+        // return response()->json(['success' => true, 'contact' => $contact, 'total' => $total, 'booking_id' => $booking->id], 200);
+    }
+
+
+    public function ticketBooking($travelers){
+        $userFlight = Session::get('data');
+        $input['type'] ="flight-order";
+        $input['flightOffers'] = [$userFlight['data']];
+        $input['travelers'] = $travelers;
+     //    dd($input['travelers']);
+     //    dd($input);
+         $data1['data'] = $input;
+        $url = "https://test.api.amadeus.com/v1/booking/flight-orders";
+
+           $curl = curl_init($url);
+           curl_setopt($curl, CURLOPT_URL, $url);
+           curl_setopt($curl, CURLOPT_POST, true);
+           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+           $headers = array(
+              "Accept: application/json",
+              'Authorization: Bearer ' . $this->Token . '',
+              "Content-Type: application/json",
+           );
+           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+           curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data1));
+
+           //for debug only!
+           curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+           curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+           $resp = curl_exec($curl);
+           curl_close($curl);
+
+
+        //    $accessresponse = json_decode( $resp, true);
+           return $resp;
+    }
+
+
+
+
+    public function getTravelerDetails($data)
+    {
+        $dob = $data['date_of_birth'] . '-' . $data['date_of_month'] . '-' . $data['date_of_birst_Day'];
+        // var_dump(Carbon::createFromFormat('d/m/Y', $dob)->format('Y-m-d'));die;
+        $result = [
+            "id" => $data['travelerId'],
+            "dateOfBirth" => "2020-03-01",
+            // "dateOfBirth" => Carbon::createFromFormat('d/m/Y', $data['dob'])->format('Y-m-d'),
+            "name" => [
+                "firstName" => $data['first_name'],
+                "lastName" => $data['last_name']
+            ],
+            // "gender"=> $data['gender'],
+            "gender" => $data['gender'],
+            "contact" => [
+                "emailAddress" => $_POST['contact_email'],
+                "phones" => [
+                    [
+                        "deviceType" => "MOBILE",
+                        "countryCallingCode" => "91",
+                        "number" => $_POST['mobile_number'],
+                    ]
+                ]
+            ],
+
+            "documents" => [
+                [
+                    "documentType" => "PASSPORT",
+                    "birthPlace"=> "Bahrain",
+                    "issuanceLocation"=> "Bahrain",
+                    "issuanceDate" => "2020-03-01",
+                    "number" => $data['passport_number'],
+                    "expiryDate" =>  "2025-04-14",
+                    // "expiryDate" =>  Carbon::createFromFormat('d/m/Y', $data['parsportExpire_year'])->format('Y-m-d'),
+                    "issuanceCountry" => "ES",
+                    "validityCountry" => "ES",
+                    "nationality" => "ES",
+                    "holder" => true
+                ]
+            ]
+        ];
+
+        return $result;
     }
 }
