@@ -1,4 +1,9 @@
-@for( $i = 0; $i<$value['total']; $i++ ) @php ++$a @endphp @php ++$a @endphp
+@for( $i = 0; $i < $value['total']; $i++ ) @php ++$a @endphp @php ++$a
+@endphp
+
+@php
+    // dd($value);
+@endphp
 <hr style="width:100%;">
     <div class="row pdrs">
         <div class="col-sm-4 ">

@@ -522,7 +522,7 @@
                     <li>
                         <div class="dts_heading ">
                             <h1 class="mtprew1">Flight Details</h1>
-                            <span> <a href="{{ url()->previous() }}"><i class="fas fa-plane"></i>Change
+                            <span> <a href="{{ url()->previous() }}"><i class="fa fa-plane"></i>Change
                                     Flight</a></span>
                         </div>
                         <div class="flexws">
@@ -963,22 +963,67 @@
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
-    $("#booking-details").click(function(e){
-        e.preventDefault();
-        // alert(check_traveller_information());
-        // if(check_traveller_information()){
-            var strData = $("#flightbooking-form").serializeArray();
-              $.ajax({
-                type  : "POST",
-                url   : '{{url('flight/booking')}}',
-                data  : strData,
-                dataType: "json",
-                success: function(data){
-                  window.location.href = data.booking_url;
-                }
-              });
-        //    }
-    })
+    $("#flightbooking-form").on('submit',function(event){
+       event.preventDefault();
+       var strData = $("#flightbooking-form").serializeArray();
+       $('.loading-div').css('display','block');
+       submitFlight(strData);
+
+   })
+
+   function submitFlight(strData){
+        $.ajax({
+            url   : '{{url('flight/booking')}}',
+        type:"POST",
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data:strData,
+        dataType:'json',
+        success:function(response){
+            console.log(response);
+            $('.loading-div').css('display','none');
+            localStorage.removeItem("travelers-details");
+            if(response.success == true){
+              $('#contact_email').val(response.contact.email);
+              $('#contact_phone').val(response.contact.contact);
+             $('#amount').val(response.total.total_amount);
+             $('#currency').val(response.total.currency);
+              $('#payment').modal('show');
+              $('#bookingId').val(response.booking_id);
+               $('#contact_email-e').text(response.contact.email);
+              $('#contact_phone-p').text(response.contact.contact);
+             $('#amount-a').text(response.total.total_amount);
+             $('#currency-c').text(response.total.currency);
+              $('#payment').modal('show');
+              $('#bookingId').val(response.booking_id);
+            }
+
+        },
+        error: function(response) {
+            $('.loading-div').css('display','none');
+              if (response.status === 400) {
+                   alert(response.responseJSON.errors);
+              }
+                if (response.status === 401){
+                  localStorage.setItem('travelers-details',form)
+                    $('#login').modal('show');
+              }
+                    if (response.status === 422) {
+                        var errors = $.parseJSON(response.responseText);
+                        $.each(errors.errors, function(key, value) {
+                             $(".form-input").each(function(){
+                                if($(this).attr("id") == key){
+                               //  $(this).addClass("errors");
+                                  $(this).after('<span class="errors">' + value + '</span>')
+                                }
+                            });
+
+                        });
+
+                    }
+        }
+
+       });
+   }
 });
 
 

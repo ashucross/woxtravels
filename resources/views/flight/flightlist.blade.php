@@ -75,7 +75,10 @@
                                             <span class="iconint">
                                                 <i class="fa fa-map-marker"></i>
                                             </span>
-                                            <input type="text" slug="round-autocomplete-source" name="sourceName" id="round-sourceName" token="round-source" class="airport-search input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                            <input type="text" slug="round-autocomplete-source" name="sourceName"
+                                                id="round-sourceName" token="round-source"
+                                                class="airport-search input_src leftri input_hgt"
+                                                placeholder="City or Airport" data-toggle="dropdown" />
                                             <input type="hidden" name="sourceCode" id="round-sourceCode" />
                                             <div class="dropdown-menu drp_plane">
                                                 <div class="plane_list">
@@ -99,11 +102,16 @@
                                             </div>
                                         </div>
                                         <span class="excng_bx">
-                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;" xml:space="preserve">
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;"
+                                                xml:space="preserve">
                                                 <g>
-                                                    <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9c0.3-0.3,0-0.4-0.1-0.6c-1.3-1.1-2.6-2.2-3.9-3.3C29,5.4,26,2.8,23,0.3c-0.1-0.1-0.2-0.3-0.4-0.2c-0.2,0.1-0.1,0.3-0.1,0.5c0,13.9,0,27.7,0,41.6c0,1.3,0,2.6,0,4c0,0.4,0.1,0.5,0.5,0.5c0.7,0,1.4,0,2.1,0c0.4,0,0.6-0.1,0.6-0.6c0-3.6,0-7.2,0-10.8c0-9.3,0-18.6,0-28C25.6,7.1,25.6,7,25.6,6.7z" />
+                                                    <path class="excng_bx_w"
+                                                        d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9c0.3-0.3,0-0.4-0.1-0.6c-1.3-1.1-2.6-2.2-3.9-3.3C29,5.4,26,2.8,23,0.3c-0.1-0.1-0.2-0.3-0.4-0.2c-0.2,0.1-0.1,0.3-0.1,0.5c0,13.9,0,27.7,0,41.6c0,1.3,0,2.6,0,4c0,0.4,0.1,0.5,0.5,0.5c0.7,0,1.4,0,2.1,0c0.4,0,0.6-0.1,0.6-0.6c0-3.6,0-7.2,0-10.8c0-9.3,0-18.6,0-28C25.6,7.1,25.6,7,25.6,6.7z" />
 
-                                                    <path class="excng_bx_w" d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6c-0.4,0.5-0.4,0.5,0.1,1c1.4,1.2,2.8,2.4,4.2,3.6c2.9,2.4,5.8,4.9,8.7,7.3c0.1,0.1,0.2,0.3,0.4,0.2c0.2-0.1,0.1-0.3,0.1-0.5c0-9.5,0-19,0-28.5c0-5.7,0-11.3,0-17c0-0.7,0-0.7-0.7-0.7c-0.6,0-1.3,0-1.9,0c-0.5,0-0.6,0.1-0.6,0.6c0,4.1,0,8.2,0,12.4c0,8.8,0,17.6,0,26.3C10.9,39.6,10.9,39.8,10.8,40z" />
+                                                    <path class="excng_bx_w"
+                                                        d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6c-0.4,0.5-0.4,0.5,0.1,1c1.4,1.2,2.8,2.4,4.2,3.6c2.9,2.4,5.8,4.9,8.7,7.3c0.1,0.1,0.2,0.3,0.4,0.2c0.2-0.1,0.1-0.3,0.1-0.5c0-9.5,0-19,0-28.5c0-5.7,0-11.3,0-17c0-0.7,0-0.7-0.7-0.7c-0.6,0-1.3,0-1.9,0c-0.5,0-0.6,0.1-0.6,0.6c0,4.1,0,8.2,0,12.4c0,8.8,0,17.6,0,26.3C10.9,39.6,10.9,39.8,10.8,40z" />
 
                                                 </g>
                                             </svg>
@@ -115,7 +123,11 @@
                                             <span class="iconint">
                                                 <i class="fa fa-map-marker"></i>
                                             </span>
-                                            <input type="text" slug="round-autocomplete-destination" name="destinationName" id="round-destinationName" token="round-destination" class="airport-search input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                            <input type="text" slug="round-autocomplete-destination"
+                                                name="destinationName" id="round-destinationName"
+                                                token="round-destination"
+                                                class="airport-search input_src rightri input_hgt"
+                                                placeholder="City or Airport" data-toggle="dropdown" />
                                             <input type="hidden" name="destinationCode" id="round-destinationCode" />
                                             <div class="dropdown-menu drp_plane">
                                                 <div class="plane_list">
@@ -146,7 +158,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input aut="" type="text" name="ckein" placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
+                                        <input aut="" type="text" name="ckein" placeholder="Check-In - Check-Out"
+                                            class="ckein input_src  input_hgt ">
                                     </div>
                                 </div>
                                 <div class="search_adult width50">
@@ -155,7 +168,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-user-o"></i>
                                         </span>
-                                        <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups" data-toggle="dropdown">
+                                        <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups"
+                                            data-toggle="dropdown">
 
                                         <div class="dropslct">
                                             <div class="dropdown-menu dropdown-menu-right">
@@ -164,19 +178,23 @@
                                                 </div>
                                                 <div class="cabin_box d-flex justify-content-between">
                                                     <div class="cb1">
-                                                        <input type="radio" id="Economy" name="Cabin" value="Economy" selected>
+                                                        <input type="radio" id="Economy" name="Cabin" value="Economy"
+                                                            selected>
                                                         <label for="Economy">Economy </label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Premium economy" name="Cabin" value="Premium economy">
+                                                        <input type="radio" id="Premium economy" name="Cabin"
+                                                            value="Premium economy">
                                                         <label for="Premium economy">Premium economy</label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Business " name="Cabin" value="Business ">
+                                                        <input type="radio" id="Business " name="Cabin"
+                                                            value="Business ">
                                                         <label for="Business ">Business </label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Firstclass " name="Cabin" value="First class">
+                                                        <input type="radio" id="Firstclass " name="Cabin"
+                                                            value="First class">
                                                         <label for="Firstclass ">First class </label>
                                                     </div>
                                                 </div>
@@ -185,9 +203,12 @@
                                                         <div class=" d-flex justify-content-between align-items-center">
                                                             <span>Adult: </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="round" field='quantity' />
-                                                                <input type='text' id="round-qnty-adult" name='qnty_adult' value='1' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="round" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="round" field='quantity' />
+                                                                <input type='text' id="round-qnty-adult"
+                                                                    name='qnty_adult' value='1' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="round" field='quantity' />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -196,16 +217,20 @@
                                                             <span>Child: <span class="agetxt">Ages 2 to 9</span>
                                                             </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="round" field='quantity' />
-                                                                <input type='text' name='qntyChild' id="round-qnty-child" value='0' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="round" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="round" field='quantity' />
+                                                                <input type='text' name='qntyChild'
+                                                                    id="round-qnty-child" value='0' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="round" field='quantity' />
                                                             </div>
                                                         </div>
                                                         <div class="d-flex box_child flex-wrap">
                                                             <div class="childxd">
                                                                 <select name="child_1_age">
                                                                     <option>Child 1 age</option>
-                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}
+                                                                        </option>
                                                                         @endfor
 
                                                                 </select>
@@ -213,7 +238,8 @@
                                                             <div class="childxd">
                                                                 <select name="child_2_age">
                                                                     <option>Child 2 age</option>
-                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}
+                                                                        </option>
                                                                         @endfor
 
                                                                 </select>
@@ -225,9 +251,12 @@
                                                             <span>Infant: <span class="agetxt">Ages 2 -12</span>
                                                             </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="round" field='quantity' />
-                                                                <input type='text' name='qntyInfant' id="round-qnty-infant" value='0' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="round" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="round" field='quantity' />
+                                                                <input type='text' name='qntyInfant'
+                                                                    id="round-qnty-infant" value='0' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="round" field='quantity' />
                                                             </div>
                                                         </div>
                                                         <div class="d-flex box_child flex-wrap">
@@ -271,7 +300,10 @@
                                             <span class="iconint">
                                                 <i class="fa fa-map-marker"></i>
                                             </span>
-                                            <input type="text" slug="autocomplete-source-oneway" name="sourceName" id="source-onewayName" token="source-oneway" class="airport-search input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                            <input type="text" slug="autocomplete-source-oneway" name="sourceName"
+                                                id="source-onewayName" token="source-oneway"
+                                                class="airport-search input_src leftri input_hgt"
+                                                placeholder="City or Airport" data-toggle="dropdown" />
                                             <input type="hidden" name="sourceCode" id="source-onewayCode" />
                                             <div class="dropdown-menu drp_plane">
                                                 <div class="plane_list">
@@ -295,11 +327,16 @@
                                             </div>
                                         </div>
                                         <span class="excng_bx">
-                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;" xml:space="preserve">
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;"
+                                                xml:space="preserve">
                                                 <g>
-                                                    <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9c0.3-0.3,0-0.4-0.1-0.6c-1.3-1.1-2.6-2.2-3.9-3.3C29,5.4,26,2.8,23,0.3c-0.1-0.1-0.2-0.3-0.4-0.2c-0.2,0.1-0.1,0.3-0.1,0.5c0,13.9,0,27.7,0,41.6c0,1.3,0,2.6,0,4c0,0.4,0.1,0.5,0.5,0.5c0.7,0,1.4,0,2.1,0c0.4,0,0.6-0.1,0.6-0.6c0-3.6,0-7.2,0-10.8c0-9.3,0-18.6,0-28C25.6,7.1,25.6,7,25.6,6.7z" />
+                                                    <path class="excng_bx_w"
+                                                        d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9c0.3-0.3,0-0.4-0.1-0.6c-1.3-1.1-2.6-2.2-3.9-3.3C29,5.4,26,2.8,23,0.3c-0.1-0.1-0.2-0.3-0.4-0.2c-0.2,0.1-0.1,0.3-0.1,0.5c0,13.9,0,27.7,0,41.6c0,1.3,0,2.6,0,4c0,0.4,0.1,0.5,0.5,0.5c0.7,0,1.4,0,2.1,0c0.4,0,0.6-0.1,0.6-0.6c0-3.6,0-7.2,0-10.8c0-9.3,0-18.6,0-28C25.6,7.1,25.6,7,25.6,6.7z" />
 
-                                                    <path class="excng_bx_w" d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6c-0.4,0.5-0.4,0.5,0.1,1c1.4,1.2,2.8,2.4,4.2,3.6c2.9,2.4,5.8,4.9,8.7,7.3c0.1,0.1,0.2,0.3,0.4,0.2c0.2-0.1,0.1-0.3,0.1-0.5c0-9.5,0-19,0-28.5c0-5.7,0-11.3,0-17c0-0.7,0-0.7-0.7-0.7c-0.6,0-1.3,0-1.9,0c-0.5,0-0.6,0.1-0.6,0.6c0,4.1,0,8.2,0,12.4c0,8.8,0,17.6,0,26.3C10.9,39.6,10.9,39.8,10.8,40z" />
+                                                    <path class="excng_bx_w"
+                                                        d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6c-0.4,0.5-0.4,0.5,0.1,1c1.4,1.2,2.8,2.4,4.2,3.6c2.9,2.4,5.8,4.9,8.7,7.3c0.1,0.1,0.2,0.3,0.4,0.2c0.2-0.1,0.1-0.3,0.1-0.5c0-9.5,0-19,0-28.5c0-5.7,0-11.3,0-17c0-0.7,0-0.7-0.7-0.7c-0.6,0-1.3,0-1.9,0c-0.5,0-0.6,0.1-0.6,0.6c0,4.1,0,8.2,0,12.4c0,8.8,0,17.6,0,26.3C10.9,39.6,10.9,39.8,10.8,40z" />
 
                                                 </g>
                                             </svg>
@@ -311,7 +348,11 @@
                                             <span class="iconint">
                                                 <i class="fa fa-map-marker"></i>
                                             </span>
-                                            <input type="text" slug="autocomplete-destination-oneway" name="destinationName" id="destination-onewayName" token="destination-oneway" class="airport-search input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                            <input type="text" slug="autocomplete-destination-oneway"
+                                                name="destinationName" id="destination-onewayName"
+                                                token="destination-oneway"
+                                                class="airport-search input_src rightri input_hgt"
+                                                placeholder="City or Airport" data-toggle="dropdown" />
                                             <input type="hidden" name="destinationCode" id="destination-onewayCode" />
                                             <div class="dropdown-menu drp_plane">
                                                 <div class="plane_list">
@@ -342,7 +383,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input aut="" type="text" name="ckein" placeholder="" class="daterange1 input_src  input_hgt">
+                                        <input aut="" type="text" name="ckein" placeholder=""
+                                            class="daterange1 input_src  input_hgt">
                                     </div>
                                 </div>
                                 <div class="search_adult width50">
@@ -351,7 +393,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-user-o"></i>
                                         </span>
-                                        <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups" data-toggle="dropdown">
+                                        <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups"
+                                            data-toggle="dropdown">
 
                                         <div class="dropslct">
                                             <div class="dropdown-menu dropdown-menu-right">
@@ -360,19 +403,23 @@
                                                 </div>
                                                 <div class="cabin_box d-flex justify-content-between">
                                                     <div class="cb1">
-                                                        <input type="radio" id="Economy" name="Cabin" value="Economy" selected>
+                                                        <input type="radio" id="Economy" name="Cabin" value="Economy"
+                                                            selected>
                                                         <label for="Economy">Economy </label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Premium economy" name="Cabin" value="Premium economy">
+                                                        <input type="radio" id="Premium economy" name="Cabin"
+                                                            value="Premium economy">
                                                         <label for="Premium economy">Premium economy</label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Business " name="Cabin" value="Business ">
+                                                        <input type="radio" id="Business " name="Cabin"
+                                                            value="Business ">
                                                         <label for="Business ">Business </label>
                                                     </div>
                                                     <div class="cb1">
-                                                        <input type="radio" id="Firstclass " name="Cabin" value="First class">
+                                                        <input type="radio" id="Firstclass " name="Cabin"
+                                                            value="First class">
                                                         <label for="Firstclass ">First class </label>
                                                     </div>
                                                 </div>
@@ -381,9 +428,12 @@
                                                         <div class=" d-flex justify-content-between align-items-center">
                                                             <span>Adult: </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="oneway" field='quantity' />
-                                                                <input type='text' id="oneway-qnty-adult" name='qnty_adult' value='1' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="oneway" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="oneway" field='quantity' />
+                                                                <input type='text' id="oneway-qnty-adult"
+                                                                    name='qnty_adult' value='1' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="oneway" field='quantity' />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -392,16 +442,20 @@
                                                             <span>Child: <span class="agetxt">Ages 2 to 9</span>
                                                             </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="oneway" field='quantity' />
-                                                                <input type='text' name='qntyChild' id="oneway-qnty-child" value='0' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="oneway" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="oneway" field='quantity' />
+                                                                <input type='text' name='qntyChild'
+                                                                    id="oneway-qnty-child" value='0' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="oneway" field='quantity' />
                                                             </div>
                                                         </div>
                                                         <div class="d-flex box_child flex-wrap">
                                                             <div class="childxd">
                                                                 <select name="child_1_age">
                                                                     <option>Child 1 age</option>
-                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}
+                                                                        </option>
                                                                         @endfor
 
                                                                 </select>
@@ -409,7 +463,8 @@
                                                             <div class="childxd">
                                                                 <select name="child_2_age">
                                                                     <option>Child 2 age</option>
-                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                                    @for($i=2;$i<13;$i++) <option value="{{$i}}">{{$i}}
+                                                                        </option>
                                                                         @endfor
 
                                                                 </select>
@@ -421,9 +476,12 @@
                                                             <span>Infant: <span class="agetxt">Ages 2 -12</span>
                                                             </span>
                                                             <div id='myform' method='POST' class='quantity' action='#'>
-                                                                <input type='button' value='-' class='qtyminus minus' slug="oneway" field='quantity' />
-                                                                <input type='text' name='qntyInfant' id="oneway-qnty-infant" value='0' class='qty' />
-                                                                <input type='button' value='+' class='qtyplus plus' slug="oneway" field='quantity' />
+                                                                <input type='button' value='-' class='qtyminus minus'
+                                                                    slug="oneway" field='quantity' />
+                                                                <input type='text' name='qntyInfant'
+                                                                    id="oneway-qnty-infant" value='0' class='qty' />
+                                                                <input type='button' value='+' class='qtyplus plus'
+                                                                    slug="oneway" field='quantity' />
                                                             </div>
                                                         </div>
                                                         <div class="d-flex box_child flex-wrap">
@@ -464,7 +522,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-map-marker"></i>
                                         </span>
-                                        <input type="text" class="input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                        <input type="text" class="input_src leftri input_hgt"
+                                            placeholder="City or Airport" data-toggle="dropdown" />
                                         <div class="dropdown-menu drp_plane">
                                             <div class="plane_list">
                                                 <span>Top Cities</span>
@@ -564,7 +623,10 @@
                                         </div>
                                     </div>
                                     <span class="excng_bx">
-                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;" xml:space="preserve">
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;"
+                                            xml:space="preserve">
                                             <g>
                                                 <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9
 
@@ -602,7 +664,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-map-marker"></i>
                                         </span>
-                                        <input type="text" class="input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                        <input type="text" class="input_src rightri input_hgt"
+                                            placeholder="City or Airport" data-toggle="dropdown" />
                                         <div class="dropdown-menu drp_plane">
                                             <div class="plane_list">
                                                 <span>Top Cities</span>
@@ -727,7 +790,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-map-marker"></i>
                                         </span>
-                                        <input type="text" class="input_src leftri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                        <input type="text" class="input_src leftri input_hgt"
+                                            placeholder="City or Airport" data-toggle="dropdown" />
                                         <div class="dropdown-menu drp_plane">
                                             <div class="plane_list">
                                                 <span>Top Cities</span>
@@ -827,7 +891,10 @@
                                         </div>
                                     </div>
                                     <span class="excng_bx">
-                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;" xml:space="preserve">
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;"
+                                            xml:space="preserve">
                                             <g>
                                                 <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9
 
@@ -865,7 +932,8 @@
                                         <span class="iconint">
                                             <i class="fa fa-map-marker"></i>
                                         </span>
-                                        <input type="text" class="input_src rightri input_hgt" placeholder="City or Airport" data-toggle="dropdown" />
+                                        <input type="text" class="input_src rightri input_hgt"
+                                            placeholder="City or Airport" data-toggle="dropdown" />
                                         <div class="dropdown-menu drp_plane">
                                             <div class="plane_list">
                                                 <span>Top Cities</span>
@@ -993,7 +1061,8 @@
                                     <span class="iconint">
                                         <i class="fa fa-user-o"></i>
                                     </span>
-                                    <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups" data-toggle="dropdown">
+                                    <input aut type="text" value="1 Adult - Economy" class="input_src input_hgt ups"
+                                        data-toggle="dropdown">
                                     <!-- <span class="ar_tv"><i class="ml-2 fa fa-angle-down"></i></span> -->
                                     <div class="dropslct">
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -1002,19 +1071,23 @@
                                             </div>
                                             <div class="cabin_box d-flex justify-content-between">
                                                 <div class="cb1">
-                                                    <input type="radio" id="Economy" name="fav_language" value="Economy">
+                                                    <input type="radio" id="Economy" name="fav_language"
+                                                        value="Economy">
                                                     <label for="Economy">Economy </label>
                                                 </div>
                                                 <div class="cb1">
-                                                    <input type="radio" id="Premium economy" name="fav_language" value="Premium economy">
+                                                    <input type="radio" id="Premium economy" name="fav_language"
+                                                        value="Premium economy">
                                                     <label for="Premium economy">Premium economy</label>
                                                 </div>
                                                 <div class="cb1">
-                                                    <input type="radio" id="Business " name="fav_language" value="Business ">
+                                                    <input type="radio" id="Business " name="fav_language"
+                                                        value="Business ">
                                                     <label for="Business ">Business </label>
                                                 </div>
                                                 <div class="cb1">
-                                                    <input type="radio" id="Firstclass " name="fav_language" value="First class ">
+                                                    <input type="radio" id="Firstclass " name="fav_language"
+                                                        value="First class ">
                                                     <label for="Firstclass ">First class </label>
                                                 </div>
                                             </div>
@@ -1023,9 +1096,11 @@
                                                     <div class=" d-flex justify-content-between align-items-center">
                                                         <span>Adult: </span>
                                                         <div id='myform' method='POST' class='quantity' action='#'>
-                                                            <input type='button' value='-' class='qtyminus minus' field='quantity' />
+                                                            <input type='button' value='-' class='qtyminus minus'
+                                                                field='quantity' />
                                                             <input type='text' name='quantity' value='0' class='qty' />
-                                                            <input type='button' value='+' class='qtyplus plus' field='quantity' />
+                                                            <input type='button' value='+' class='qtyplus plus'
+                                                                field='quantity' />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1034,9 +1109,11 @@
                                                         <span>Child: <span class="agetxt">Ages 2 to 9</span>
                                                         </span>
                                                         <div id='myform' method='POST' class='quantity' action='#'>
-                                                            <input type='button' value='-' class='qtyminus minus' field='quantity' />
+                                                            <input type='button' value='-' class='qtyminus minus'
+                                                                field='quantity' />
                                                             <input type='text' name='quantity' value='0' class='qty' />
-                                                            <input type='button' value='+' class='qtyplus plus' field='quantity' />
+                                                            <input type='button' value='+' class='qtyplus plus'
+                                                                field='quantity' />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex box_child flex-wrap">
@@ -1079,9 +1156,11 @@
                                                         <span>Infant: <span class="agetxt">Ages 2 -12</span>
                                                         </span>
                                                         <div id='myform' method='POST' class='quantity' action='#'>
-                                                            <input type='button' value='-' class='qtyminus minus' field='quantity' />
+                                                            <input type='button' value='-' class='qtyminus minus'
+                                                                field='quantity' />
                                                             <input type='text' name='quantity' value='0' class='qty' />
-                                                            <input type='button' value='+' class='qtyplus plus' field='quantity' />
+                                                            <input type='button' value='+' class='qtyplus plus'
+                                                                field='quantity' />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex box_child flex-wrap">
@@ -1209,10 +1288,17 @@
                                     <ul class="check-boxes-custom list-checkboxes">
                                         @foreach($Airlines as $_airlines)
                                         <li>
-                                            <label for="{{$_airlines->FS_airlines}}" class="label-container checkbox-default">{{$_airlines->FS_airlines}} <input name="flight" class="flightfilter" slug="airlines-{{$_airlines->FS_airlines}}" id="{{$_airlines->FS_airlines}}" type="checkbox" checked value="{{$_airlines->FS_airlines}}">
+                                            <label for="{{$_airlines->FS_airlines}}"
+                                                class="label-container checkbox-default">{{$_airlines->FS_airlines}}
+                                                <input name="flight" class="flightfilter"
+                                                    slug="airlines-{{$_airlines->FS_airlines}}"
+                                                    id="{{$_airlines->FS_airlines}}" type="checkbox" checked
+                                                    value="{{$_airlines->FS_airlines}}">
                                                 <span class="checkmark"></span>
                                             </label>
-                                            <span class="lsprc"> from <i class="fa fa-usd ml-1 mr-1"></i>{{number_format($_airlines->price)}} </span>
+                                            <span class="lsprc"> from <i
+                                                    class="fa fa-usd ml-1 mr-1"></i>{{number_format($_airlines->price)}}
+                                            </span>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -1225,7 +1311,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#FLEXIBILITY" aria-expanded="true">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#FLEXIBILITY"
+                                    aria-expanded="true">
                                     <div class="txtftr">
                                         <h6>FLEXIBILITY</h6>
                                         <span>Clear</span>
@@ -1238,12 +1325,16 @@
                                 <div class="checkftr">
                                     <ul class="check-boxes-custom list-checkboxes">
                                         <li>
-                                            <label for="Refundable1" class="label-container checkbox-default">Refundable <input name="flight" class="flightfilter" id="Refundable1" type="checkbox" value="1">
+                                            <label for="Refundable1" class="label-container checkbox-default">Refundable
+                                                <input name="flight" class="flightfilter" id="Refundable1"
+                                                    type="checkbox" value="1">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
-                                            <label for="NonRefundable1" class="label-container checkbox-default">Non Refundable <input name="flight" class="flightfilter" id="NonRefundable1" type="checkbox" value="0">
+                                            <label for="NonRefundable1" class="label-container checkbox-default">Non
+                                                Refundable <input name="flight" class="flightfilter" id="NonRefundable1"
+                                                    type="checkbox" value="0">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </li>
@@ -1313,8 +1404,10 @@
                             <a class="nav-link active" data-toggle="tab" href="#Cheapest">
                                 <div class="tbcps d-flex align-items-center">
                                     <div class="cleapimg">
-                                        <img src="{{asset('public/assets/images/Cheapest-gray.svg')}}" class="img-res cgray">
-                                        <img src="{{asset('public/assets/images/Cheapest-color.svg')}}" class="img-res ccolor" style="display: none;">
+                                        <img src="{{asset('public/assets/images/Cheapest-gray.svg')}}"
+                                            class="img-res cgray">
+                                        <img src="{{asset('public/assets/images/Cheapest-color.svg')}}"
+                                            class="img-res ccolor" style="display: none;">
                                     </div>
                                     <div class="textcps">
                                         <h4>Cheapest</h4>
@@ -1327,8 +1420,10 @@
                             <a class="nav-link" data-toggle="tab" href="#Fastest">
                                 <div class="tbcps d-flex align-items-center">
                                     <div class="cleapimg">
-                                        <img src="{{asset('public/assets/images/Fastest-gray.svg')}}" class="img-res cgray">
-                                        <img src="{{asset('public/assets/images/Fastest-color.svg')}}" class="img-res ccolor" style="display: none;">
+                                        <img src="{{asset('public/assets/images/Fastest-gray.svg')}}"
+                                            class="img-res cgray">
+                                        <img src="{{asset('public/assets/images/Fastest-color.svg')}}"
+                                            class="img-res ccolor" style="display: none;">
                                     </div>
                                     <div class="textcps">
                                         <h4>Fastest</h4>
@@ -1341,8 +1436,10 @@
                             <a class="nav-link" data-toggle="tab" href="#Earliest">
                                 <div class="tbcps d-flex align-items-center">
                                     <div class="cleapimg">
-                                        <img src="{{asset('public/assets/images/Earliest-gray.svg')}}" class="img-res cgray">
-                                        <img src="{{asset('public/assets/images/Earliest-color.svg')}}" class="img-res ccolor" style="display: none;">
+                                        <img src="{{asset('public/assets/images/Earliest-gray.svg')}}"
+                                            class="img-res cgray">
+                                        <img src="{{asset('public/assets/images/Earliest-color.svg')}}"
+                                            class="img-res ccolor" style="display: none;">
                                     </div>
                                     <div class="textcps">
                                         <h4>Earliest</h4>
@@ -1355,8 +1452,10 @@
                             <a class="nav-link" data-toggle="tab" href="#Latest">
                                 <div class="tbcps d-flex align-items-center">
                                     <div class="cleapimg">
-                                        <img src="{{asset('public/assets/images/Latest-gray.svg')}}" class="img-res cgray">
-                                        <img src="{{asset('public/assets/images/Latest-color.svg')}}" class="img-res ccolor" style="display: none;">
+                                        <img src="{{asset('public/assets/images/Latest-gray.svg')}}"
+                                            class="img-res cgray">
+                                        <img src="{{asset('public/assets/images/Latest-color.svg')}}"
+                                            class="img-res ccolor" style="display: none;">
                                     </div>
                                     <div class="textcps">
                                         <h4>Latest</h4>
@@ -1369,8 +1468,10 @@
                             <a class="nav-link" data-toggle="tab" href="#Baggage">
                                 <div class="tbcps d-flex align-items-center">
                                     <div class="cleapimg">
-                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}" class="img-res cgray">
-                                        <img src="{{asset('public/assets/images/Baggage-color.svg')}}" class="img-res ccolor" style="display: none;">
+                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}"
+                                            class="img-res cgray">
+                                        <img src="{{asset('public/assets/images/Baggage-color.svg')}}"
+                                            class="img-res ccolor" style="display: none;">
                                     </div>
                                     <div class="textcps">
                                         <h4>Baggage</h4>
@@ -1387,14 +1488,15 @@
                             <ul class="tktlist">
                                 @foreach($flightresult['data'] as $searchFlight)
                                 @php
-                                    // dd($searchFlight);
+                                // dd($searchFlight);
                                 @endphp
                                 {{-- @if(count($searchFlight['itineraries']) == 1) --}}
-                                <li class="flight-li trip airlines-{{$searchFlight['itineraries'][0]['segments'][0]['carrierCode']}}" price="{{number_format($searchFlight['price']['total'])}}">
+                                <li class="flight-li trip airlines-{{$searchFlight['itineraries'][0]['segments'][0]['carrierCode']}}"
+                                    price="{{number_format($searchFlight['price']['total'])}}">
                                     <div class="largehead">
                                         <h4>Departure Journey &nbsp;&nbsp;|&nbsp;&nbsp;<span> {{ date('M d Y',
-                                            strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
-                                            }}</h4>
+                                                strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
+                                                }}</h4>
                                     </div>
                                     <div class="flexlist">
                                         <div class="inuot_bx">
@@ -1411,7 +1513,8 @@
                                                                 <img src="{{$file}}" class="img-res"
                                                                     alt="{{$searchFlight['itineraries'][0]["segments"][0]['carrierCode']}}">
                                                                 @else
-                                                                {{-- <i class="fas fa-plane"></i><i class="fas fa-plane"></i> --}}
+                                                                {{-- <i class="fas fa-plane"></i><i
+                                                                    class="fas fa-plane"></i> --}}
                                                                 @endif
                                                             </span>
                                                             <h6>{{
@@ -1453,75 +1556,124 @@
                                                     @php $arrivalcountryDetails =
                                                     getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']]["countryCode"],$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']);
                                                     @endphp
-                                                   <li class="tooltip1">
+                                                    <li class="tooltip1 text-right">
 
-                                                    <p>
+                                                        <p>
 
-                                                        {{ date('H:i',
-                                                        strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                        }}&nbsp;<span>({{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}})</span>
-                                                    </p>
-                                                    <span class="blkts">{{ $arrivalcountryDetails->country_name ??
-                                                        Null }} ({{ $arrivalcountryDetails->city_name ?? Null
-                                                        }})</span>
-                                                    <div class="tooltiptext">
-                                                        <h6><strong>
-                                                                {{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}}
-                                                                {{ date('H:i',
-                                                                strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                                }} .</strong> {{ date('M-d-y',
+                                                            {{ date('H:i',
                                                             strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
-                                                            }}
-                                                            <span>{{ $arrivalcountryDetails->country_name ?? Null }}
-                                                                ({{ $arrivalcountryDetails->city_name ?? Null }})
-                                                            </span>
-                                                        </h6>
-                                                    </div>
-                                                </li>
+                                                            }}&nbsp;<span>({{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}})</span>
+                                                        </p>
+                                                        <span class="blkts">{{ $arrivalcountryDetails->country_name ??
+                                                            Null }} ({{ $arrivalcountryDetails->city_name ?? Null
+                                                            }})</span>
+                                                        <div class="tooltiptext">
+                                                            <h6><strong>
+                                                                    {{$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']}}
+                                                                    {{ date('H:i',
+                                                                    strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
+                                                                    }} .</strong> {{ date('M-d-y',
+                                                                strtotime($searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['at']))
+                                                                }}
+                                                                <span>{{ $arrivalcountryDetails->country_name ?? Null }}
+                                                                    ({{ $arrivalcountryDetails->city_name ?? Null }})
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                    </li>
                                                 </ul>
-                                                {{-- @if($fly->FS_return==1) --}}
-                                                {{-- <ul class="dflex_js mbs">
+
+
+
+                                                @if(isset($searchFlight['itineraries'][1]))
+                                                <ul class="dflex_js mbs">
                                                     <li>
                                                         <div class="airnm">
                                                             <span>
-                                                                <img src="{{asset('public/assets/images/airline/'.$fly->FS_airlines.'.gif')}}" class="img-res" alt="{{$fly->FS_airlines}}">
+                                                                @php $file =
+                                                                getFileName($searchFlight['itineraries'][1]["segments"][0]['carrierCode']);
+                                                                @endphp
+                                                                @if($file)
+                                                                <img src="{{$file}}" class="img-res"
+                                                                    alt="{{$searchFlight['itineraries'][1]["segments"][0]['carrierCode']}}">
+                                                                @else
+                                                                {{-- <i class="fas fa-plane"></i><i
+                                                                    class="fas fa-plane"></i> --}}
+                                                                @endif
                                                             </span>
-                                                            <h6>{{$fly->FS_airlines}}</h6>
+                                                            <h6>{{
+                                                                $flightresult['dictionaries']['carriers'][$searchFlight['itineraries'][1]["segments"][0]['carrierCode']]}}
+                                                            </h6>
                                                         </div>
                                                     </li>
+                                                    @php $depaturecountryDetails =
+                                                    getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][1]["segments"][0]['departure']['iataCode']]["countryCode"],$searchFlight['itineraries'][1]["segments"][0]['departure']['iataCode']);
+                                                    @endphp
                                                     <li class="tooltip1">
-                                                        <p> {{date_format($RTraveldate,"H:i")}}&nbsp; <span>({{$fly->FS_returndepartLocation}})</span>
-                                                        </p>
-                                                        <span class="blkts">India ({{$fly->FS_returndepartLocation}})</span>
+                                                        <p> {{ date('H:i',
+                                                            strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
+                                                            }}&nbsp;<span>({{$searchFlight['itineraries'][1]["segments"][0]['departure']['iataCode']}})</span>
+                                                        </p><span class="blkts">{{
+                                                            $depaturecountryDetails->country_name}} ({{
+                                                            $depaturecountryDetails->city_name}})</span>
                                                         <div class="tooltiptext">
-                                                            <h6>
-                                                                <strong>{{date_format($RTraveldate,"H:i")}} .</strong> {{date_format($RTraveldate,"M-d-y")}} <span> India ({{$fly->FS_returndepartLocation}}) </span>
+                                                            <h6><strong>{{ date('H:i',
+                                                                    strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
+                                                                    }} .</strong> {{ date('M-d-Y',
+                                                                strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
+                                                                }}
+                                                                <span>
+                                                                    {{ $depaturecountryDetails->country_name}} ({{
+                                                                    $depaturecountryDetails->city_name}})
+                                                                </span>
                                                             </h6>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <span class="blkts cnts">{{str_replace($X_, $Y_, $A_)}}</span>
+                                                    <li><span class="blkts cnts">{{ strtolower(str_replace('H','H
+                                                            ',substr($searchFlight['itineraries'][1]["duration"],
+                                                            2)))}}</span>
                                                         <span class="hrst"></span>
-                                                        <span class="blkts cnts">{{$fly->FS_returnstops}} Stop</span>
+                                                        <span
+                                                            class="blkts cnts">{{(count($searchFlight['itineraries'][1]["segments"])
+                                                            -1)}} Stop</span>
                                                     </li>
+                                                    @php $arrivalcountryDetails =
+                                                    getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['iataCode']]["countryCode"],$searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['iataCode']);
+                                                    @endphp
+
                                                     <li class="tooltip1 text-right">
-                                                        <p> {{date_format($RArivaldate,"H:i")}}&nbsp; <span>({{$fly->FS_returnarrivalLocation}})</span>
+                                                        <p>
+                                                            {{ date('H:i',
+                                                            strtotime($searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['at']))
+                                                            }}&nbsp;<span>({{$searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['iataCode']}})</span>
                                                         </p>
-                                                        <span class="blkts">India ({{$fly->FS_returnarrivalLocation}})</span>
-                                                        <div class="tooltiptext">
-                                                            <h6>
-                                                                <strong> {{$fly->FS_returnarrivalLocation}} {{date_format($RArivaldate,"H:i")}} .</strong> {{date_format($RArivaldate,"M-d-y")}} <span>India ({{$fly->FS_returnarrivalLocation}}) </span>
+                                                        <span class="blkts">{{ $arrivalcountryDetails->country_name ??
+                                                            Null }} ({{ $arrivalcountryDetails->city_name ?? Null
+                                                            }})</span>
+                                                         <div class="tooltiptext">
+                                                            <h6><strong>
+                                                                    {{$searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['iataCode']}}
+                                                                    {{ date('H:i',
+                                                                    strtotime($searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['at']))
+                                                                    }} .</strong> {{ date('M-d-y',
+                                                                strtotime($searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['at']))
+                                                                }}
+                                                                <span>{{ $arrivalcountryDetails->country_name ?? Null }}
+                                                                    ({{ $arrivalcountryDetails->city_name ?? Null }})
+                                                                </span>
                                                             </h6>
                                                         </div>
                                                     </li>
-                                                </ul> --}}
-                                                {{-- @endif --}}
+                                                </ul>
+                                                @endif
                                                 <div class="bagbx">
                                                     <span>
-                                                        <img src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp; {{
-                                                            $searchFlight["travelerPricings"][0]["fareDetailsBySegment"][0]["includedCheckedBags"]["weight"]
-                                                            ?? '' }} kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked
-                                                            baggage</span>
+                                                        <img
+                                                            src="{{asset('public/assets/images/Baggage-gray.svg')}}">&nbsp;
+                                                        {{
+                                                        $searchFlight["travelerPricings"][0]["fareDetailsBySegment"][0]["includedCheckedBags"]["weight"]
+                                                        ?? '' }} kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked
+                                                        baggage</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1531,7 +1683,8 @@
                                                     <h5>{{ $searchFlight["price"]["currency"] .',
                                                         '.$searchFlight["price"]['total']}}</h5>
                                                     <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='.Request::get('px'))}}"
-                                                        type="button" class="btnvw"><i class="fa fa-plane"></i>&nbsp;&nbsp;Book Now</a>
+                                                        type="button" class="btnvw"><i
+                                                            class="fa fa-plane"></i>&nbsp;&nbsp;Book Now</a>
                                                     {{-- <span id="fltid">Flight Details<i
                                                             class="fa fa-angle-down"></i></span> --}}
 
