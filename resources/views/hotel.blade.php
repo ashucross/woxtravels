@@ -1,13 +1,29 @@
 @extends('homeLayout')
-@section('styles')
+@section('styles') 
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css">
 <!-- page specific style code here-->
 <!-- page specific style code here-->
 <style>
+   span.select2-selection.select2-selection--single {
+    height: 64px;
+}
+.select2-selection__rendered {
+    margin-top: 14px;
+}
 label#location-error,#checkin-error,#adults-error {
     font-size: 14px;
     margin-left: 12px;
     color: #ff4d4d;
 } 
+ul#ui-id-1 {
+    width: 436.609px;
+    left: 102px;
+    top: 308px;
+    position: absolute;
+    height: 200px;
+    overflow-y: scroll;
+}
 </style>
 @endsection
 @section('pageContent')
@@ -29,9 +45,22 @@ label#location-error,#checkin-error,#adults-error {
                         <div class="search_des d-flex justify-content-between ">
                            <div class="Fromwhere position-relative">
                               <!-- <h3 class="search_title">Destination</h3> -->
+                             
                               <div class="position-relative">
                                  <span class="iconint"><i class="fa fa-map-marker"></i></span>
-                                 <input type="text" class="input_src leftri input_hgt" required name="location" placeholder="Where are you going?" data-toggle="dropdown" />
+                                 <div class="ui-widget">
+                                 <select type="text"  class="input_src leftri input_hgt country_select" required name="location" >
+                                    <option value=''>Select Country</option>
+                                    @if(!empty($countries))
+                                       @foreach($countries as $count)
+                                          <option value="{{$count->sortname ?? ''}}">{{$count->name ?? ''}}</option>
+                                       @endforeach
+                                    @endif
+                                 </select> 
+                                 
+                                 </div>
+                                 <!-- <input type="text" autocomplete="off"  class="input_src leftri input_hgt item_list" required name="location" placeholder="Where are you going?" data-toggle="dropdown" />
+                                 </div> -->
                                  <!--  <div class="dropdown-menu drp_plane">
                                        <div class="plane_list">
                                           <span>Top Cities</span>
@@ -65,10 +94,11 @@ label#location-error,#checkin-error,#adults-error {
                         </div>
                         <div class="search_date ht_width_dt">
                            <!-- <h3 class="search_title">Check-In&nbsp;-&nbsp;Check-Out</h3> -->
-                           <div class="position-relative ">
-                              <span class="iconint"><i class="fa fa-calendar"></i></span>
-                              <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
-                           </div>
+                           <span class="iconint"><i class="fa fa-map-marker"></i></span>
+                           <select type="text"  class="input_src leftri input_hgt item_list" required name="location" >
+                                    <option>Select Location</option>
+                                 </select>
+                          
                         </div>
                         <!-- <div class="search_date widthn50">
                               <h3 class="search_title">Check-Out</h3>
@@ -93,10 +123,15 @@ label#location-error,#checkin-error,#adults-error {
                               
                               </div> -->
                         <div class="search_adult ht_width_tr">
+                        <div class="position-relative ">
+                              <span class="iconint"><i class="fa fa-calendar"></i></span>
+                              <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
+                           </div>
+
                            <!-- <h3 class="search_title">Travelers</h3> -->
                            <div class="position-relative " data-toggle="dropdown">
                               <span class="iconint"><i class="fa fa-user-o"></i></span>
-                              <input name='adults' type="text" value="" class="input_src input_hgt ups arrowus">
+                              <input name='adults' placeholder='Adults' type="text" value="" class="input_src input_hgt ups arrowus">
                               <!-- <span class="ar_tv"><i class="ml-2 fa fa-angle-down"></i></span> -->
                               <div class="dropslct">
                                  <div class="dropdown-menu dropdown-menu-right hiclk">
@@ -621,9 +656,70 @@ label#location-error,#checkin-error,#adults-error {
 @endsection
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 <script>
    $(document).ready(function() {
+
+      $(".item_list").click(function(){
+         var country_select = $('.country_select').val();
+         // console.log(country_select);return;
+         if(country_select){ 
+            $('.item_list').html("<option>Loading...</option>");
+            $.ajax({
+            url: '{{url("getSuggestionitems")}}',
+            type: 'get',
+            dataType: "json",
+            data: {
+               search: country_select
+            },
+            success: function(data) {
+               $('.item_list').html();
+               $('.item_list').html(data.options);
+               $('.item_list').selectize();
+            }
+         });
+      }else{
+         toastr["error"]("Error!", "Please select country");
+      }
+   });
+   $('.country_select').selectize();
+
+      // $(".item_list").autocomplete({ 
+      //       source: function(request, response) { 
+      //           $.ajax({
+      //               url: '{{url("getSuggestionitems")}}',
+      //               type: 'get',
+      //               dataType: "json",
+      //               data: {
+      //                   search: 'IN'
+      //               },
+      //               success: function(data) {
+      //                   response(data);
+      //               }
+      //           });
+      //       },
+      //       select: function(event, ui) {  
+      //          $(".item_list").val(ui.item.data);
+      //          $(".item_list").attr('data-code',ui.item.code);
+      //           /*
+      //            $(this).parents('tr').find(".itemdesc").find("input").val(ui.item.description);
+      //           $(this).parents('tr').find(".itemrate").find("input").val(ui.item.rate);
+      //           setTimeout(()=>{
+      //               $(this).parents('tr').find(".invoice-select").find("input").val(ui.item.data);
+      //               console.log(ui.item.data)
+      //           },500) */
+      //       }
+      //   });
+      //   $(document).on('focus','.item_list',function() { 
+      //       $(this).autocomplete('search', '1')
+      //   });
+    });
+
+
       $(".hiclk").click(function(event) {
          event.stopPropagation();
       });
@@ -778,6 +874,6 @@ label#location-error,#checkin-error,#adults-error {
             }
          });
       });
-   })
+   
 </script>
 @endsection
