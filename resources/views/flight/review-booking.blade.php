@@ -968,9 +968,7 @@
        var strData = $("#flightbooking-form").serializeArray();
        $('.loading-div').css('display','block');
        submitFlight(strData);
-
    })
-
    function submitFlight(strData){
         $.ajax({
             url   : '{{url('flight/booking')}}',
@@ -1025,13 +1023,5 @@
        });
    }
 });
-
-
-
-
-
-
-
-
 </script>
 @endsection
