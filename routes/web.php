@@ -52,5 +52,9 @@ Route::get('/visa', [VisaController::class, 'index'])->name('visa');
 Route::get('/insurance', [InsuranceController::class, 'index'])->name('insurance');
 
 Route::get('/car-rentals', [CarrentalController::class, 'index'])->name('carrentals');
+Route::get('/payment', [FlightController::class, 'payment'])->name('payment');
+
+
+
 
 

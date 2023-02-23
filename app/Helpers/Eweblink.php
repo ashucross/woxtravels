@@ -18,7 +18,8 @@ class Eweblink
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => 'client_id=kQ8QvQGMS9WKLjN9xXLpNutDGbA1tYwE&client_secret=S9dJS4uesj1sqAWS&grant_type=client_credentials',
+                // CURLOPT_POSTFIELDS => 'client_id=kQ8QvQGMS9WKLjN9xXLpNutDGbA1tYwE&client_secret=S9dJS4uesj1sqAWS&grant_type=client_credentials',
+                CURLOPT_POSTFIELDS => 'client_id=2ZMwEqSDgc9EReVyeLW6UqqPZyhLJbRv&client_secret=j8a8QhAi4eYrtZyL&grant_type=client_credentials',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/x-www-form-urlencoded'
                 ),
