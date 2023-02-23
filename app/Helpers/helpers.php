@@ -139,13 +139,17 @@ function getSuggestionitems($data,$country){
         $airports = DB::table('airports')->where(['country_code'=>$country,'city_code'=>$city])->first();
         return $airports;
     }
+    function getdestinationName($code){
+        $destiantion = DB::table('hotel_destinations')->where(['code'=>$code,])->first();
+        return $destiantion->name ?? '';
+    }
 
-    function searchHotel($data){
+    function searchHotel($data,$params=null){
         $signature = $data;
         $apiKey = env('HOTEL_API_KEY');
         $Secret = env('HOTEL_SECRET_KEY');
         $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
-        $post = [
+       /*  $post = [
             'stay' => ([
                 "checkIn"=> "2023-06-15",
                 "checkOut"=> "2023-06-16"
@@ -154,15 +158,24 @@ function getSuggestionitems($data,$country){
                 "rooms"=> 1,
                 "adults"=> 1,
                 "children"=> 0
-            ]),
-            "filters"=> ([
-                  "searchFilterItems"=>([
-                    "type"=> "gps", "longitude"=> "2.6416219","latitude"=> "39.6392898",
-                    "type"=> "text","value"=> "beach"
-                  ]), 
-              ]),
+            ]), 
             "destination"=> ([
                 "code"=> "MCO"
+            ])
+        ]; */
+        $dates = explode('-',$params['checkin']); 
+        $post = [
+            'stay' => ([
+                "checkIn"=> date('Y-m-d',strtotime($dates[0])),
+                "checkOut"=>  date('Y-m-d',strtotime($dates[1]))
+            ]),
+            "occupancies"=> array([
+                "rooms"=> 1,
+                "adults"=> 1,
+                "children"=> 0
+            ]), 
+            "destination"=> ([
+                "code"=> $params['location']
             ])
         ];
 

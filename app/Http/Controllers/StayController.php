@@ -38,6 +38,19 @@ class StayController extends Controller
         $init = 1;
         $pagination = 12;
         $countries = Countries::get();
+        $cities = HotelDestination::get();
+    /*     $signature = getsignature();  
+        foreach($countries as $country){
+            $destination = getSuggestionitems($signature['data'],$country->sortname); 
+            foreach($destination['data']->destinations as $dest){
+                HotelDestination::updateOrCreate(['code'=>$dest->code,'country'=>$country->sortname],[
+                    'name'=>$dest->name->content ?? '',
+                    'code'=>$dest->code,
+                    'country'=>$country->sortname,
+                ]);
+            }
+
+        }echo 'done';die; */
         /* $signature = getsignature();  
         $gethotels = getSuggestionitems($signature['data'],'IN');
             dd($gethotels); */
@@ -63,7 +76,7 @@ class StayController extends Controller
                 'status'=>$signature['status']
             ]);
         }  */
-        return view('hotel', compact('data','hotelsdata','countries'));
+        return view('hotel', compact('data','hotelsdata','cities'));
     }
     public function loadMoredata(Request $request){
         $pagination = $request->pagination;
@@ -94,12 +107,12 @@ class StayController extends Controller
             '_Car' => '',
         );
         $hotels = [];
-        $params = $request->all() ?? '';
+        $params = $request->all() ?? ''; 
         // dd($params);
         $signature = getsignature();  
         
         if($signature['status'] == 200){
-            $gethotels = searchHotel($signature['data']);  
+            $gethotels = searchHotel($signature['data'],$params);  
             $hotelsdata = $gethotels['data']->hotels ?? []; 
         }else{
             return ([

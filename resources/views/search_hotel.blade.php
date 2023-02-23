@@ -44,7 +44,7 @@
 
                                 <span class="iconint"><i class="fa fa-map-marker"></i></span>
 
-                                <input type="text" value='{{$params["location"] ?? ""}}' class="input_src leftri input_hgt" placeholder="Where are you going?" data-toggle="dropdown" />
+                                <input type="text" value='{{getdestinationName($params["location"]) ?? ""}}' class="input_src leftri input_hgt" placeholder="Where are you going?" data-toggle="dropdown" />
 
 
 

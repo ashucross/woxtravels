@@ -16,6 +16,12 @@ label#location-error,#checkin-error,#adults-error {
     margin-left: 12px;
     color: #ff4d4d;
 } 
+.selectize-input {
+    border: none;
+}
+.selectize-control.single .selectize-input:after{
+display:none;
+}
 ul#ui-id-1 {
     width: 436.609px;
     left: 102px;
@@ -50,10 +56,10 @@ ul#ui-id-1 {
                                  <span class="iconint"><i class="fa fa-map-marker"></i></span>
                                  <div class="ui-widget">
                                  <select type="text"  class="input_src leftri input_hgt country_select" required name="location" >
-                                    <option value=''>Select Country</option>
-                                    @if(!empty($countries))
-                                       @foreach($countries as $count)
-                                          <option value="{{$count->sortname ?? ''}}">{{$count->name ?? ''}}</option>
+                                    <option value=''>Where are you going ?</option>
+                                    @if(!empty($cities))
+                                       @foreach($cities as $count)
+                                          <option value="{{$count->code ?? ''}}">{{$count->name ?? ''}}</option>
                                        @endforeach
                                     @endif
                                  </select> 
@@ -92,13 +98,18 @@ ul#ui-id-1 {
                               </div>
                            </div>
                         </div>
-                        <div class="search_date ht_width_dt">
-                           <!-- <h3 class="search_title">Check-In&nbsp;-&nbsp;Check-Out</h3> -->
+                        <!-- <div class="search_date ht_width_dt">
                            <span class="iconint"><i class="fa fa-map-marker"></i></span>
                            <select type="text"  class="input_src leftri input_hgt item_list" required name="location" >
                                     <option>Select Location</option>
                                  </select>
                           
+                        </div> -->
+                        <div class="search_date ht_width_dt">
+                        <div class="position-relative ">
+                              <span class="iconint"><i class="fa fa-calendar"></i></span>
+                              <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
+                           </div>
                         </div>
                         <!-- <div class="search_date widthn50">
                               <h3 class="search_title">Check-Out</h3>
@@ -123,10 +134,7 @@ ul#ui-id-1 {
                               
                               </div> -->
                         <div class="search_adult ht_width_tr">
-                        <div class="position-relative ">
-                              <span class="iconint"><i class="fa fa-calendar"></i></span>
-                              <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
-                           </div>
+                    
 
                            <!-- <h3 class="search_title">Travelers</h3> -->
                            <div class="position-relative " data-toggle="dropdown">
