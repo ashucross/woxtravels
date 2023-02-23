@@ -304,7 +304,7 @@ jQuery(document).ready(($) => {
             $input.val(val - 1).change();
         }
     });
-});
+// });
 
 // --------Calculation End
 
@@ -540,3 +540,5 @@ $(document).ready(function() {
         })
         .scroll();
 });
+
+

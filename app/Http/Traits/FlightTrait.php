@@ -104,6 +104,7 @@ trait FlightTrait
             } else {
                 $url = $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
             }
+
             // API Call
             $curlF = curl_init();
             curl_setopt_array($curlF, array(
@@ -126,6 +127,8 @@ trait FlightTrait
             $response = curl_exec($curlF);
             curl_close($curlF);
             $dataArray = json_decode($response, true);
+            $httpcode = curl_getinfo($curlF, CURLINFO_HTTP_CODE);
+            if($httpcode == 200){
             // Multi row insert start
             $flights = array();
             if ($request->session()->has('token')) {
@@ -204,7 +207,10 @@ trait FlightTrait
             FlightSearch::insert($flights);
 
             $request->session()->put('flights', $dataArray);
-            return response(["status" => 200, "message" => 'record found', 'airports' => $dataArray], 200);
+            return response(["status" => 200, "message" => 'Record found', 'airports' => $dataArray], 200);
+        }else{
+            return response(["status" => 400, "message" => 'No Record Found! Try Agian', 'airports' => []], 200);
+        }
         } catch (\Exception $e) {
             return response(["status" => 500, "statuscode" => 500, "message" => $e->getMessage()], 500);
         }
@@ -471,5 +477,108 @@ trait FlightTrait
         ];
 
         return $result;
+    }
+
+    public function payment()
+    {
+
+        // Define the API endpoint URL
+$url = 'https://credimax.gateway.mastercard.com/api/rest/version/65/merchant/E14737953/session';
+
+// Define the API request data as an array
+$data = array(
+    'apiOperation' => 'CREATE_CHECKOUT_SESSION',
+    'order' => array(
+        'amount' => '10.00',
+        'currency' => 'BHD',
+    ),
+    'interaction' => array(
+        'operation' => 'PURCHASE',
+    ),
+);
+
+// Convert the request data to JSON format
+$jsonData = json_encode($data);
+
+// Create a cURL handle for the API request
+$ch = curl_init();
+
+
+    // Set the cURL options
+    $url = $url;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Content-Type: application/json",
+        "Authorization: Basic " . base64_encode("E14737953:3026fa2c9cdd93fbd29989d5fab40810"),
+        'acceptVersions: 3DS1,3DS2'
+    ));
+
+    // Send the request and get the response
+    $response = curl_exec($ch);
+dd($response);
+    // Check for errors
+    if (curl_error($ch)) {
+        echo 'Error: ' . curl_error($ch);
+    } else {
+        echo 'Response: ' . $response;
+    }
+    die;
+
+
+
+
+        return view('flight.payment');
+
+
+        // Set your credentials
+        $merchant_id = "E14737953";
+        $api_password = "3026fa2c9cdd93fbd29989d5fab40810";
+        $orderid = "21";
+
+        // Set the request data
+        $data = array(
+            "apiOperation" => "CREATE_CHECKOUT_SESSION",
+            "order" => array(
+                "amount" => "10.00",
+                "currency" => "USD",
+                 "id"  => "25"
+            ),
+            "interaction" => array(
+                "operation" => "PURCHASE",
+                "returnUrl" => "https://example.com/return"
+            )
+        );
+
+        // Convert the data to JSON
+        $json_data = json_encode($data);
+
+        // Set the cURL options
+        $url = "https://credimax.gateway.mastercard.com/api/rest/version/61/merchant/$merchant_id/session";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Authorization: Basic " . base64_encode("$merchant_id:$api_password"),
+            'acceptVersions: 3DS1,3DS2'
+        ));
+
+        // Send the request and get the response
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if (curl_error($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        } else {
+            echo 'Response: ' . $response;
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
     }
 }
