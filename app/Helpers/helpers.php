@@ -144,6 +144,47 @@ function getSuggestionitems($data,$country){
         return $destiantion->name ?? '';
     }
 
+    function getHoteldetail($data,$hotel=null){
+        $signature = $data;
+        $apiKey = env('HOTEL_API_KEY');
+        $Secret = env('HOTEL_SECRET_KEY');
+        $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels/".$hotel->code."/details?language=ENG&useSecondaryLanguage=False";  
+
+        try{
+            $curl = curl_init();
+            curl_setopt_array($curl, array( 
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => $endpoint,
+                CURLOPT_HTTPHEADER => ['Accept:application/json' , 'Api-key:'.$apiKey.'', 'X-Signature:'.$signature.'','Content-Type:application/json'], 
+            ));
+            $resp = curl_exec($curl);
+            if (!curl_errno($curl)) {
+                switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                    case 200:  # OK
+                    $hoteldetail = json_decode($resp); 
+                    return ([
+                        'status'=>200,
+                        'data'=>$hotel,
+                        'hoteldetail'=>$hoteldetail,
+                    ]);
+                    break;
+                    default:
+                    return ([
+                        'status'=>$http_code,
+                        'data'=>'',
+                        'hoteldetail'=>'',
+                    ]);
+                }
+            }
+            curl_close($curl);
+        } catch (Exception $ex) {
+            return ([
+                'status'=>'error',
+                'message'=>"Error while sending request, reason: %s\n",$ex->getMessage()
+            ]);
+        }
+    }
+
     function searchHotel($data,$params=null){
         $signature = $data;
         $apiKey = env('HOTEL_API_KEY');
@@ -170,9 +211,9 @@ function getSuggestionitems($data,$country){
                 "checkOut"=>  date('Y-m-d',strtotime($dates[1]))
             ]),
             "occupancies"=> array([
-                "rooms"=> 1,
-                "adults"=> 1,
-                "children"=> 0
+                "rooms"=> (int)$params['rooms'],
+                "adults"=> (int)$params['adult'],
+                "children"=> (int)$params['child']
             ]), 
             "destination"=> ([
                 "code"=> $params['location']

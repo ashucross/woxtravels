@@ -1371,7 +1371,7 @@
         <div class="listingbx">
 
             <div class="rightlist flexdrop"> 
-                <h2>Paris, France&nbsp;&nbsp;:&nbsp;&nbsp;<span>1123 hotels available</span> 
+                <h2>{{getdestinationName($params["location"]) ?? ""}}&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{!empty($search_hotels) && count($search_hotels) > 0 ? count($search_hotels) : 0 }} hotels available</span> 
                     <p>Our best prices have now loaded</p> 
                 </h2> 
                 <div class="ratingdrop">  
@@ -1392,25 +1392,25 @@
 
 
 
-            <div class="largebox_listing"> 
-            @if(!empty($hotelsdata))
-            @if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0)
-            @foreach($hotelsdata->hotels as $hotel)
+            <div class="largebox_listing">  
+            @if(!empty($search_hotels) && count($search_hotels) > 0)
+            @foreach($search_hotels as $hotel) 
+            <?php $image = !empty($hotel->images)  ? $hotel->images : ''; ?>
                 <div class="lglist"> 
                     <div class="list_hotel_img"> 
                         <div class="lgzoomimg"> 
                             <a href="#"> 
-                                <img src="{{asset('/assets/images/Hera.jpg')}}" class="img-res" /> 
+                                <img src="{{!empty($image) ? $image : asset('public/assets/images/hotel1.png')}}" class="img-res" /> 
                             </a> 
                         </div> 
                     </div> 
                     <div class="list_hotel_txt"> 
                         <div class="listing_hd_hotel"> 
                             <h2><span>{{$hotel->name ?? ''}}</span> 
-                                <div class="startbx smallstar"> 
+                                <!-- <div class="startbx smallstar"> 
                                     <span>5&nbsp;-&nbsp;</span> 
                                     <i class="fa fa-star"></i> 
-                                </div> 
+                                </div>  -->
                             </h2> 
                             <ul class="listbt_sml"> 
                                 <li><a href="#">{{$hotel->categoryName ?? ''}}</a></li>
@@ -1418,32 +1418,39 @@
                             </ul> 
                             <ul class="iconsml">
                                 <li>
-                                    <span><img src="images/Pool.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/Pool.png')}}" class="img-res" /></span>
                                     <span>Pool</span>
                                 </li>
                                 <li>
-                                    <span><img src="images/FreeParking.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/FreeParking.png')}}" class="img-res" /></span>
                                     <span>Free Parking</span>
                                 </li>
                                 <li>
-                                    <span><img src="images/Spa.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/Spa.png')}}" class="img-res" /></span>
                                     <span>Spa</span>
                                 </li>
                                 <li>
-                                    <span><img src="images/Gym.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/Gym.png')}}" class="img-res" /></span>
                                     <span>Gym</span>
                                 </li>
                                 <li>
-                                    <span><img src="images/Restaurant.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/Restaurant.png')}}" class="img-res" /></span>
                                     <span>Restaurant</span>
                                 </li>
                                 <li>
-                                    <span><img src="images/Bar.png" class="img-res" /></span>
+                                    <span><img src="{{asset('public/assets/images/Bar.png')}}" class="img-res" /></span>
                                     <span>Bar</span>
                                 </li>
                             </ul>
                             <div class="green_ex">
-                                <span><i class="fa fa-star"></i>&nbsp;4.77 (48 reviews)</span>
+                                <span>
+                                    <?php $i = 0; 
+                                    $rank = (int)$hotel->ranking ?? 0;
+                                    for($i;$i<=$rank;$i++){ ?>
+                                        <i class="fa fa-star"></i>
+                                    <?php } ?>
+                                    <!-- &nbsp;4.77 (48 reviews) -->
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -1452,16 +1459,16 @@
                             <h3><!-- <i class="fa fa-dollar mr-1"></i> -->{{$hotel->currency ?? ''}} {{$hotel->minRate ?? ''}} - {{$hotel->maxRate ?? ''}}
                                 <span>per night</span>
                             </h3>
-                            <!-- <p>total <i class="fa fa-dollar mr-1"></i>30,000 for 3 nights Tax & fees Inclusive</p> -->
+                            <p>Chain : {{$hotel->chain ?? ''}}</p>
+                            <p>Website : {{$hotel->web ?? ''}}</p>
                         </div>
                         <div class="hotslc">
-                            <a href="{{url('hotelDetails')}}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5" aria-hidden="true"></i></a>
+                            <a href="{{url('hotelDetails'.'/'.$hotel->code)}}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
             @endforeach
-            @endif
-            @endif
+            @endif 
 
 
                 {{--<div class="lglist">

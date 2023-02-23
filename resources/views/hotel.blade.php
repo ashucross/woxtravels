@@ -148,9 +148,9 @@ ul#ui-id-1 {
                                           <div class=" d-flex justify-content-between align-items-center">
                                              <span>Adult:
                                              </span>
-                                             <div id='myform' method='POST' class='quantity1' action='#'>
+                                             <div  class='quantity1'  >
                                                 <input type='button' slug='oneway' value='-' class='minus' field='quantity' />
-                                                <input type='text' name='quantity' id="oneway-qnty-adult" value='0' class='qty' />
+                                                <input type='text' name='adult' id="oneway-qnty-adult" value='0' class='qty' />
                                                 <input type='button' slug='oneway' value='+' class='plus' field='quantity' />
                                              </div>
                                           </div>
@@ -160,9 +160,9 @@ ul#ui-id-1 {
                                              <span>Child:
                                                 <span class="agetxt">Ages 0 - 17</span>
                                              </span>
-                                             <div id='myform' method='POST' class='quantity1'  action='#'>
+                                             <div   class='quantity1'  action='#'>
                                                 <input type='button'  slug='oneway' value='-'  class='minus child_minus' field='quantity' />
-                                                <input type='text' name='quantity' id="oneway-qnty-child"    value='0' class='qty' />
+                                                <input type='text' name='child' id="oneway-qnty-child"    value='0' class='qty' />
                                                 <input type='button'  slug='oneway' value='+'  class='plus child_added' field='quantity' />
                                              </div>
                                           </div>
@@ -228,7 +228,7 @@ ul#ui-id-1 {
                                              </span>
                                              <div id='myform' method='POST' class='quantity1' action='#'>
                                                 <input type='button' value='-' slug="oneway" class='minus' field='quantity' />
-                                                <input type='text' name='quantity'  id="oneway-qnty-room" value='0' class='qty' />
+                                                <input type='text' name='rooms'  id="oneway-qnty-room" value='0' class='qty' />
                                                 <input type='button' value='+' slug="oneway" class='plus' field='quantity' />
                                              </div>
                                           </div>

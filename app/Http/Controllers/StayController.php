@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Countries;
+use App\Models\HotelsData;
 use App\Models\HotelDestination;
 
 class StayController extends Controller
@@ -94,7 +95,7 @@ class StayController extends Controller
     }
 
     public function search_hotel(Request $request)
-    { 
+    {  
         $data = array(
             '_MetaTitle' => 'Search Hotels',
             '_MetaKeywords' => '',
@@ -110,16 +111,46 @@ class StayController extends Controller
         $params = $request->all() ?? ''; 
         // dd($params);
         $signature = getsignature();  
-        
+        $search_hotels = [];
         if($signature['status'] == 200){
             $gethotels = searchHotel($signature['data'],$params);  
             $hotelsdata = $gethotels['data']->hotels ?? []; 
+            if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0){
+                foreach($hotelsdata->hotels as $hotel){ 
+                    $isexist = HotelsData::where('code',$hotel->code)->first();
+                    if(!empty($isexist)){
+                        $search_hotels[] = $isexist;
+                    }elseif(empty($isexist)){
+                        $details = getHoteldetail($signature['data'],$hotel);  
+                        $createdHotel = HotelsData::create([
+                            'code'=>$details['data']->code ?? '',
+                            'name'=>$details['data']->name ?? '',
+                            'categoryName'=>$details['data']->categoryName ?? '',
+                            'destinationCode'=>$details['data']->destinationCode ?? '',
+                            'destinationName'=>$details['data']->destinationName ?? '',
+                            'minRate'=>$details['data']->minRate ?? '',
+                            'maxRate'=>$details['data']->maxRate ?? '', 
+                            'currency'=>$details['data']->currency ?? '',
+                            'chain'=>$details['hoteldetail']->hotel->chain->description->content ?? '',
+                            'address'=>$details['hoteldetail']->hotel->address->content ?? '',
+                            'postalCode'=>$details['hoteldetail']->hotel->postalCode ?? '',
+                            'email'=>$details['hoteldetail']->hotel->email ?? '',
+                            'phones'=>!empty($details['hoteldetail']->hotel->phones) && count($details['hoteldetail']->hotel->phones) > 0 ? serialize($details['hoteldetail']->hotel->phones) : '',
+                            'ranking'=>$details['hoteldetail']->hotel->ranking ?? '',
+                            'images'=>!empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata'.'/'.$details['hoteldetail']->hotel->images[0]->path : '',
+                            'web'=>$details['hoteldetail']->hotel->web ?? '',
+                        ]); 
+                        $newhotel = HotelsData::where('id',$createdHotel->id)->first();
+                        $search_hotels[] = $newhotel;
+                    }
+                }
+            } 
         }else{
             return ([
                 'status'=>$signature['status']
             ]);
         }
-        return view('search_hotel', compact('data','hotelsdata','params'));
+        return view('search_hotel', compact('data','search_hotels','params'));
     }
 
     public function getSuggestionitems(Request $request)
