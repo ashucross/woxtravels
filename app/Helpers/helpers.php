@@ -77,7 +77,7 @@ function getSuggestionitems($data,$country){
         ]);
     }
 }
- 
+
     function getHotel($data,$pagination,$init){
         $signature = $data;
         $apiKey = env('HOTEL_API_KEY');
@@ -148,20 +148,20 @@ function getSuggestionitems($data,$country){
         $signature = $data;
         $apiKey = env('HOTEL_API_KEY');
         $Secret = env('HOTEL_SECRET_KEY');
-        $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels/".$hotel->code."/details?language=ENG&useSecondaryLanguage=False";  
+        $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels/".$hotel->code."/details?language=ENG&useSecondaryLanguage=False";
 
         try{
             $curl = curl_init();
-            curl_setopt_array($curl, array( 
+            curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $endpoint,
-                CURLOPT_HTTPHEADER => ['Accept:application/json' , 'Api-key:'.$apiKey.'', 'X-Signature:'.$signature.'','Content-Type:application/json'], 
+                CURLOPT_HTTPHEADER => ['Accept:application/json' , 'Api-key:'.$apiKey.'', 'X-Signature:'.$signature.'','Content-Type:application/json'],
             ));
             $resp = curl_exec($curl);
             if (!curl_errno($curl)) {
                 switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                     case 200:  # OK
-                    $hoteldetail = json_decode($resp); 
+                    $hoteldetail = json_decode($resp);
                     return ([
                         'status'=>200,
                         'data'=>$hotel,
@@ -199,12 +199,12 @@ function getSuggestionitems($data,$country){
                 "rooms"=> 1,
                 "adults"=> 1,
                 "children"=> 0
-            ]), 
+            ]),
             "destination"=> ([
                 "code"=> "MCO"
             ])
         ]; */
-        $dates = explode('-',$params['checkin']); 
+        $dates = explode('-',$params['checkin']);
         $post = [
             'stay' => ([
                 "checkIn"=> date('Y-m-d',strtotime($dates[0])),
@@ -214,7 +214,7 @@ function getSuggestionitems($data,$country){
                 "rooms"=> (int)$params['rooms'],
                 "adults"=> (int)$params['adult'],
                 "children"=> (int)$params['child']
-            ]), 
+            ]),
             "destination"=> ([
                 "code"=> $params['location']
             ])
@@ -423,6 +423,7 @@ function bookingsDetails($data){
 
 }
 
+
 function addBookingsDetails($data){
 // dd($data);
     $output['agent_id'] = null;;
@@ -443,4 +444,31 @@ function addBookingsDetails($data){
 	$output['type']= null;
 	// $output['type']= auth()->guard('agents')->user() ? 'b2b':'b2c';
 	return $output;
+}
+
+
+function addDataSession($data){
+    $datas =[];
+ foreach($data["data"] as $key=>$item){
+      $item["total_price"] =$item["price"]["total"];
+      $item["air_craft"] = $item["itineraries"][0]["segments"][0]["carrierCode"];
+      $item['oneway_stop'] = (count($item["itineraries"][0]["segments"]) - 1);
+      $item['twoway_stop'] = (count($item["itineraries"]) > 1) ? (count($item["itineraries"][1]["segments"]) - 1) : Null;
+      $item["trip"] = count($item["itineraries"]);
+       $datas[] = $item;
+ }
+  $data['meta']=$data["meta"];
+  $collection = collect($datas);
+
+ $data["dictionaries"] = $data["dictionaries"];
+ $arrValues = $collection->sortBy(['total_price'=>'asc'])->toArray();
+ $data["data"] = array_values($arrValues);
+ return $data;
+}
+
+
+
+function getinitalAirpot(){
+    $airports = DB::table('airports')->where(['country_code'=> 'IN','top_cities' => 1])->get();
+    return $airports;
 }

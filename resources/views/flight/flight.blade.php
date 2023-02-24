@@ -50,7 +50,17 @@
                                                         <div class="plane_list">
                                                             <span>Search</span>
                                                             <ul id="autocomplete-source">
-
+                                                                @if(!empty(getinitalAirpot() ))
+                                                                @foreach ( getinitalAirpot() as $airport)
+                                                                <li class="airport-select" type="source" code="{{ $airport->airport_code }}" location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                    <div class="fli_name"><i class="fa fa-plane">
+                                                                    </i>{{ $airport->city_name }} ({{ $airport->airport_code }})</div>
+                                                                    <div class="airport_name">
+                                                                        <span>{{ $airport->airport_name }}</span><span>>{{ $airport->country_name }}</span>
+                                                                    </div>
+                                                                </li>
+                                                                @endforeach
+                                                                @endif
                                                             </ul>
                                                             {{-- <span>Top Cities</span>
                                                             <ul>
@@ -100,7 +110,17 @@
                                                         <div class="plane_list">
                                                             <span>Search</span>
                                                             <ul id="autocomplete-destination">
-
+                                                                @if(!empty(getinitalAirpot() ))
+                                                                @foreach ( getinitalAirpot() as $airport)
+                                                                <li class="airport-select" type="destination" code="{{ $airport->airport_code }}" location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                    <div class="fli_name"><i class="fa fa-plane">
+                                                                    </i>{{ $airport->city_name }} ({{ $airport->airport_code }})</div>
+                                                                    <div class="airport_name">
+                                                                        <span>{{ $airport->airport_name }}</span><span>>{{ $airport->country_name }}</span>
+                                                                    </div>
+                                                                </li>
+                                                                @endforeach
+                                                                @endif
                                                             </ul>
                                                             {{-- <span>Top Cities</span>
                                                             <ul>
@@ -1741,9 +1761,9 @@
     $("body .airport-select").on("click", function() {
         var _Code = $(this).attr("code");
         var _Location = $(this).attr("location");
-        alert('hi');
-        $('#sourceName').val(_Location);
-        $('#sourceCode').val(_Code);
+        var _Type = $(this).attr("type");
+        $('#' + _Type + 'Name').val(_Location);
+        $('#' + _Type + 'Code').val(_Code);
     });
 </script>
 

@@ -34,6 +34,7 @@ Route::get('/flight-search', [FlightController::class, 'flightList'])->name('fli
 Route::get('/flightList/details/', [FlightController::class, 'flightDetails'])->name('flightDetails');
 Route::get('/flightReview', [FlightController::class, 'flightReview'])->name('flightReview');
 Route::post('flight/booking', [FlightController::class, 'bookingFlight'])->name('booking');
+Route::get('flight/filter', [FlightController::class, 'flightfilter'])->name('filter');
 // Route::post('/flight_order', [FlightController::class, 'flight_order'])->name('flight_order');
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');

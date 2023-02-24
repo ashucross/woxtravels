@@ -1286,21 +1286,20 @@
                             <div class="panel-body pdmrbx">
                                 <div class="checkftr">
                                     <ul class="check-boxes-custom list-checkboxes">
-                                        @foreach($Airlines as $_airlines)
+                                        @php $i =0 @endphp
+                                        @foreach($flightresult['dictionaries']['carriers'] as $key => $value)
+
+                                        @php $i++ @endphp
                                         <li>
-                                            <label for="{{$_airlines->FS_airlines}}"
-                                                class="label-container checkbox-default">{{$_airlines->FS_airlines}}
-                                                <input name="flight" class="flightfilter"
-                                                    slug="airlines-{{$_airlines->FS_airlines}}"
-                                                    id="{{$_airlines->FS_airlines}}" type="checkbox" checked
-                                                    value="{{$_airlines->FS_airlines}}">
+                                            <label for="flights{{$i}}" class="label-container checkbox-default">{{$value}}
+                                                <input name="flight" class="flightfilter" id="flights{{$i}}" type="checkbox" value="{{$key}}">
                                                 <span class="checkmark"></span>
                                             </label>
-                                            <span class="lsprc"> from <i
-                                                    class="fa fa-usd ml-1 mr-1"></i>{{number_format($_airlines->price)}}
-                                            </span>
+                                            {{-- <span class="lsprc"> from&nbsp;₦381,614 </span> --}}
                                         </li>
                                         @endforeach
+                                        {{-- <li><a href="#" class="sltxt">See All&nbsp;<i
+															class="fas fa-chevron-down"></i></a></li> --}}
                                     </ul>
                                     <button class="sltxt seeclick">See All&nbsp; <i class="fa fa-chevron-down"></i>
                                     </button>
@@ -1483,13 +1482,10 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    <div id="Cheapest" class="tab-pane  active">
+                    <div id="Cheapest" class="tab-pane active">
                         <div class="listticket">
                             <ul class="tktlist">
                                 @foreach($flightresult['data'] as $searchFlight)
-                                @php
-                                // dd($searchFlight);
-                                @endphp
                                 {{-- @if(count($searchFlight['itineraries']) == 1) --}}
                                 <li class="flight-li trip airlines-{{$searchFlight['itineraries'][0]['segments'][0]['carrierCode']}}"
                                     price="{{number_format($searchFlight['price']['total'])}}">
@@ -1594,8 +1590,7 @@
                                                                 getFileName($searchFlight['itineraries'][1]["segments"][0]['carrierCode']);
                                                                 @endphp
                                                                 @if($file)
-                                                                <img src="{{$file}}" class="img-res"
-                                                                    alt="{{$searchFlight['itineraries'][1]["segments"][0]['carrierCode']}}">
+                                                                <img src="{{$file}}" class="img-res" alt="{{$searchFlight['itineraries'][1]["segments"][0]['carrierCode']}}">
                                                                 @else
                                                                 {{-- <i class="fas fa-plane"></i><i
                                                                     class="fas fa-plane"></i> --}}
@@ -1650,7 +1645,7 @@
                                                         <span class="blkts">{{ $arrivalcountryDetails->country_name ??
                                                             Null }} ({{ $arrivalcountryDetails->city_name ?? Null
                                                             }})</span>
-                                                         <div class="tooltiptext">
+                                                        <div class="tooltiptext">
                                                             <h6><strong>
                                                                     {{$searchFlight['itineraries'][1]["segments"][(count($searchFlight['itineraries'][1]["segments"])-1)]['arrival']['iataCode']}}
                                                                     {{ date('H:i',
@@ -1682,7 +1677,10 @@
                                                 <div class="bookprc">
                                                     <h5>{{ $searchFlight["price"]["currency"] .',
                                                         '.$searchFlight["price"]['total']}}</h5>
-                                                    <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='.Request::get('px'))}}"
+                                                        <?php
+                                                            $totalPer = Session::get('totalPer');
+                                                        ?>
+                                                    <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='. $totalPer)}}"
                                                         type="button" class="btnvw"><i
                                                             class="fa fa-plane"></i>&nbsp;&nbsp;Book Now</a>
                                                     {{-- <span id="fltid">Flight Details<i
@@ -1713,16 +1711,67 @@
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script type="text/javascript">
-    $(function() {
-        $(".flightfilter").click(function() {
-            var _Slug = $(this).attr("slug");
-            if ($(this).is(":checked")) {
-                $('.' + _Slug).show();
-            } else {
-                $('.' + _Slug).hide();
+    $("#slider-range").click(function(){
+    var price = $("#slider-range-value2").text().replace("$", "")
+    // alert(price);
+    $.ajax({
+        url: "{{URL::to('flight/filter')}}?" + "&maxPrice=" + price
+        , method: 'GET'
+        , success: function(data) {
+            $('#Cheapest').html(data.html)
+            var list = $(".tktlist .trip");
+            var numToShow = 15;
+            var button = $(".lotds");
+            var numInList = list.length;
+            list.hide();
+            if (numInList > numToShow) {
+                button.show();
             }
-        });
+            list.slice(0, numToShow).show();
+
+        }
     });
+})
+
+
+$('.flightfilter').on('change', function() {
+            $('input[type=checkbox]').each(
+                function(index, checkbox) {
+                    if (index != 0) {
+                        checkbox.checked = false;
+                    }
+                });
+
+            $(this).prop('checked', true);
+            var air = $(this).val();
+            var price = $("#slider-range-value2").text().replace("$", "")
+            $.ajax({
+                url: "{{URL::to('flight/filter')}}?" + "&includedAirlineCodes=" + air
+                , method: 'GET'
+                , success: function(data) {
+                    $('#Cheapest').html(data.html)
+                    var list = $(".tktlist .trip");
+                    var numToShow = 15;
+                    var button = $(".lotds");
+                    var numInList = list.length;
+                    list.hide();
+                    if (numInList > numToShow) {
+                        button.show();
+                    }
+                     list.slice(0, numToShow).show();
+        }
+    });
+        });
+    // $(function() {
+    //     $(".flightfilter").click(function() {
+    //         var _Slug = $(this).attr("slug");
+    //         if ($(this).is(":checked")) {
+    //             $('.' + _Slug).show();
+    //         } else {
+    //             $('.' + _Slug).hide();
+    //         }
+    //     });
+    // });
 </script>
 
 <script>

@@ -86,6 +86,7 @@ trait FlightTrait
                 'Child' => $request->qntyChild,
                 'Infant' => $request->qntyInfant,
             );
+
             $date = explode(' - ', $request->ckein);
             //dd($date);
             $_departDate = date_create($date[0]);
@@ -128,89 +129,93 @@ trait FlightTrait
             curl_close($curlF);
             $dataArray = json_decode($response, true);
             $httpcode = curl_getinfo($curlF, CURLINFO_HTTP_CODE);
-            if($httpcode == 200){
-            // Multi row insert start
-            $flights = array();
-            if ($request->session()->has('token')) {
-                $tokenId = $request->session()->get('token');
-            } else {
-                $request->session()->put('token', $this->sessionId);
-                $tokenId = $request->session()->get('token');
-            }
-            $request->session()->put('source', $sourceName);
-            $request->session()->put('destination', $destiName);
-
-            foreach ($dataArray['data'] as $data) {
-
-                $noOfStops = count($data['itineraries'][0]['segments']);
-                if ($retD != '') {
-                    $returnnoOfStops = count($data['itineraries'][1]['segments']);
-                    $flights[] = array(
-                        'FS_search' => json_encode($Search),
-                        'FS_date' => $data['itineraries'][0]['segments'][0]['departure']['at'],
-                        'FS_airlines' => $data['itineraries'][0]['segments'][0]['carrierCode'],
-                        'FS_price' => $data['price']['total'],
-                        'FS_departure' => $data['itineraries'][0]['segments'][0]['departure']['at'],
-                        'FS_arrival' => $data['itineraries'][0]['segments'][0]['arrival']['at'],
-                        'FS_stops' => $noOfStops - 1,
-                        'FS_departLocation' => $data['itineraries'][0]['segments'][0]['departure']['iataCode'],
-                        'FS_arrivalLocation' => $data['itineraries'][0]['segments'][$noOfStops - 1]['arrival']['iataCode'],
-                        'FS_duration' => $data['itineraries'][0]['duration'],
-                        'FS_flightInformation' => json_encode($data['itineraries'][0]['segments']),
-                        'FS_faredetailrule' => '',
-                        'FS_baggesinformation' => '',
-                        'FS_cancelchangerule' => '',
-
-                        'FS_returndate' => $data['itineraries'][1]['segments'][0]['departure']['at'],
-                        'FS_returnairlines' => $data['itineraries'][1]['segments'][0]['carrierCode'],
-                        'FS_returndeparture' => $data['itineraries'][1]['segments'][0]['departure']['at'],
-                        'FS_returnarrival' => $data['itineraries'][1]['segments'][0]['arrival']['at'],
-                        'FS_returnstops' => $returnnoOfStops - 1,
-                        'FS_returndepartLocation' => $data['itineraries'][1]['segments'][0]['departure']['iataCode'],
-                        'FS_returnarrivalLocation' => $data['itineraries'][1]['segments'][$returnnoOfStops - 1]['arrival']['iataCode'],
-                        'FS_returnduration' => $data['itineraries'][1]['duration'],
-                        'FS_returnflightInformation' => json_encode($data['itineraries'][1]['segments']),
-                        'FS_returnfaredetailrule' => '',
-                        'FS_returnbaggesinformation' => '',
-                        'FS_returncancelchangerule' => '',
-
-                        'FS_return' => 1,
-                        'FS_sessionid' => $tokenId,
-                        'flight_uniq_id' => $data['id'],
-                        'complete_data' => json_encode($data)
-
-                    );
+            if ($httpcode == 200) {
+                // Multi row insert start
+                $flights = array();
+                if ($request->session()->has('token')) {
+                    $tokenId = $request->session()->get('token');
                 } else {
-                    $returnnoOfStops = count($data['itineraries'][0]['segments']);
-                    $flights[] = array(
-                        'FS_search' => json_encode($Search),
-                        'FS_date' => $data['itineraries'][0]['segments'][0]['departure']['at'],
-                        'FS_airlines' => $data['itineraries'][0]['segments'][0]['carrierCode'],
-                        'FS_price' => $data['price']['total'],
-                        'FS_departure' => $data['itineraries'][0]['segments'][0]['departure']['at'],
-                        'FS_arrival' => $data['itineraries'][0]['segments'][0]['arrival']['at'],
-                        'FS_stops' => $noOfStops - 1,
-                        'FS_departLocation' => $data['itineraries'][0]['segments'][0]['departure']['iataCode'],
-                        'FS_arrivalLocation' => $data['itineraries'][0]['segments'][$noOfStops - 1]['arrival']['iataCode'],
-                        'FS_duration' => $data['itineraries'][0]['duration'],
-                        'FS_flightInformation' => json_encode($data['itineraries'][0]['segments']),
-                        'FS_faredetailrule' => '',
-                        'FS_baggesinformation' => '',
-                        'FS_cancelchangerule' => '',
-                        'FS_return' => 0,
-                        'FS_sessionid' => $tokenId
-                    );
+                    $request->session()->put('token', $this->sessionId);
+                    $tokenId = $request->session()->get('token');
                 }
-            }
-            // die;
-            FlightSearch::where('FS_sessionid', $tokenId)->delete();
-            FlightSearch::insert($flights);
+                $request->session()->put('source', $sourceName);
+                $request->session()->put('destination', $destiName);
 
-            $request->session()->put('flights', $dataArray);
-            return response(["status" => 200, "message" => 'Record found', 'airports' => $dataArray], 200);
-        }else{
-            return response(["status" => 400, "message" => 'No Record Found! Try Agian', 'airports' => []], 200);
-        }
+                foreach ($dataArray['data'] as $data) {
+
+                    $noOfStops = count($data['itineraries'][0]['segments']);
+                    if ($retD != '') {
+                        $returnnoOfStops = count($data['itineraries'][1]['segments']);
+                        $flights[] = array(
+                            'FS_search' => json_encode($Search),
+                            'FS_date' => $data['itineraries'][0]['segments'][0]['departure']['at'],
+                            'FS_airlines' => $data['itineraries'][0]['segments'][0]['carrierCode'],
+                            'FS_price' => $data['price']['total'],
+                            'FS_departure' => $data['itineraries'][0]['segments'][0]['departure']['at'],
+                            'FS_arrival' => $data['itineraries'][0]['segments'][0]['arrival']['at'],
+                            'FS_stops' => $noOfStops - 1,
+                            'FS_departLocation' => $data['itineraries'][0]['segments'][0]['departure']['iataCode'],
+                            'FS_arrivalLocation' => $data['itineraries'][0]['segments'][$noOfStops - 1]['arrival']['iataCode'],
+                            'FS_duration' => $data['itineraries'][0]['duration'],
+                            'FS_flightInformation' => json_encode($data['itineraries'][0]['segments']),
+                            'FS_faredetailrule' => '',
+                            'FS_baggesinformation' => '',
+                            'FS_cancelchangerule' => '',
+
+                            'FS_returndate' => $data['itineraries'][1]['segments'][0]['departure']['at'],
+                            'FS_returnairlines' => $data['itineraries'][1]['segments'][0]['carrierCode'],
+                            'FS_returndeparture' => $data['itineraries'][1]['segments'][0]['departure']['at'],
+                            'FS_returnarrival' => $data['itineraries'][1]['segments'][0]['arrival']['at'],
+                            'FS_returnstops' => $returnnoOfStops - 1,
+                            'FS_returndepartLocation' => $data['itineraries'][1]['segments'][0]['departure']['iataCode'],
+                            'FS_returnarrivalLocation' => $data['itineraries'][1]['segments'][$returnnoOfStops - 1]['arrival']['iataCode'],
+                            'FS_returnduration' => $data['itineraries'][1]['duration'],
+                            'FS_returnflightInformation' => json_encode($data['itineraries'][1]['segments']),
+                            'FS_returnfaredetailrule' => '',
+                            'FS_returnbaggesinformation' => '',
+                            'FS_returncancelchangerule' => '',
+
+                            'FS_return' => 1,
+                            'FS_sessionid' => $tokenId,
+                            'flight_uniq_id' => $data['id'],
+                            'complete_data' => json_encode($data)
+
+                        );
+                    } else {
+                        $returnnoOfStops = count($data['itineraries'][0]['segments']);
+                        $flights[] = array(
+                            'FS_search' => json_encode($Search),
+                            'FS_date' => $data['itineraries'][0]['segments'][0]['departure']['at'],
+                            'FS_airlines' => $data['itineraries'][0]['segments'][0]['carrierCode'],
+                            'FS_price' => $data['price']['total'],
+                            'FS_departure' => $data['itineraries'][0]['segments'][0]['departure']['at'],
+                            'FS_arrival' => $data['itineraries'][0]['segments'][0]['arrival']['at'],
+                            'FS_stops' => $noOfStops - 1,
+                            'FS_departLocation' => $data['itineraries'][0]['segments'][0]['departure']['iataCode'],
+                            'FS_arrivalLocation' => $data['itineraries'][0]['segments'][$noOfStops - 1]['arrival']['iataCode'],
+                            'FS_duration' => $data['itineraries'][0]['duration'],
+                            'FS_flightInformation' => json_encode($data['itineraries'][0]['segments']),
+                            'FS_faredetailrule' => '',
+                            'FS_baggesinformation' => '',
+                            'FS_cancelchangerule' => '',
+                            'FS_return' => 0,
+                            'FS_sessionid' => $tokenId
+                        );
+                    }
+                }
+                // die;
+                FlightSearch::where('FS_sessionid', $tokenId)->delete();
+                FlightSearch::insert($flights);
+
+                $totalPer = $adult . '-' . $child . '-' . $infant;
+                $flightresult1 = addDataSession($dataArray);
+                $request->session()->put('totalPer', $totalPer);
+
+                $request->session()->put('flights', $flightresult1);
+                return response(["status" => 200, "message" => 'Record found', 'airports' => $dataArray], 200);
+            } else {
+                return response(["status" => 400, "message" => 'No Record Found! Try Agian', 'airports' => []], 200);
+            }
         } catch (\Exception $e) {
             return response(["status" => 500, "statuscode" => 500, "message" => $e->getMessage()], 500);
         }
@@ -261,24 +266,23 @@ trait FlightTrait
             '1stop' => FlightSearch::select(DB::raw('MIN(FS_price) as price'))->where('FS_sessionid', $tokenId)->where('FS_stops', 1)->get(),
             '1+stop' => FlightSearch::select(DB::raw('MIN(FS_price) as price'))->where('FS_sessionid', $tokenId)->where('FS_stops', '>', 1)->get(),
         );
-        // dd($flights);
+        // dd($flightresult);
         return view('flight.flightlist', compact('data', 'flightresult', 'price', 'Stops', 'Airlines', 'Location'));
     }
 
 
     public function flightDetails()
     {
+
         $data = json_decode(request()->get('data'));
         $dictionaries = json_decode(request()->get('dictionaries'));
-        $passangers = '1-0-0';
-        // $passangers = '1-1-1';
+        $passangers = request()->get('px');
         $sessionData['data'] = $data;
         $sessionData['dictionaries'] = $dictionaries;
         $sessionData['passengers'] = $passangers;
         $explodepass = explode('-', $passangers);
         $ticketsDetailsPricing =  collect($data->travelerPricings)->unique('travelerType')->values();
         foreach ($ticketsDetailsPricing as $key => $price) {
-
             $details[] = [
                 'name' => $price->travelerType,
                 'travelerId' => $price->travelerId,
@@ -361,29 +365,21 @@ trait FlightTrait
                 $travelers[] = $this->getTravelerDetails($adult);
             }
         }
-
-
         if ((array_key_exists("child", $data))) {
             foreach ($data['child']  as $key => $child) {
                 $travelers[] = $this->getTravelerDetails($child);
             }
         }
-
         if ((array_key_exists("held_infant", $data))) {
             foreach ($data['held_infant']  as $key => $infant) {
                 $travelers[] = $this->getTravelerDetails($infant);
             }
         }
-
         $userFlight = Session::get('data');
         Session::put('travelers', $travelers);
         $total = $userFlight['total'];
-
         $travele = $this->ticketBooking($travelers);
         $traveler = json_decode($travele, true);
-
-
-
         Log::info($traveler);
         if (array_key_exists('errors', $traveler)) {
             $errors =  ucfirst(str_replace("_", " ", $traveler["errors"][0]["detail"]));
@@ -479,53 +475,121 @@ trait FlightTrait
         return $result;
     }
 
+
+
+    public function flightfilter(Request $request)
+    {
+
+        // $from =  explode('-', $request->input('from'));
+        // $to =  explode('-', $request->get('to'));
+        // $originLocationCode = $from[0];
+        // $destinationLocationCode = $to[0];
+
+        // if ($request->has('srch')) {
+        //     $srch         =     $request->input('srch');
+        //     if (trim($srch) != '') {
+        //         $explodesearc = explode('|', $srch);
+
+        //         $originexplode = explode('-', $explodesearc[0]);
+
+        //         $desexplode = explode('-', $explodesearc[1]);
+
+        //         // $datedeparture = date('Y-m-d', strtotime($explodesearc[2]));
+        //         // $returnDate = date('Y-m-d', strtotime($explodesearc[2]));
+        //         // if(isset($explodesearc[3])){
+        //         // 	$returnDate = date('Y-m-d', strtotime($explodesearc[3]));
+        //         // }
+        //         $origin = $originexplode[0];
+        //         $destination = $desexplode[0];
+
+        //         // $source = $originexplode[1];
+        //         $destin = $desexplode;
+        //     }
+        // }
+        // if ($request->has('dep')) {
+        //     $datedeparture = Carbon::createFromFormat('d/m/Y', request()->get('dep'))->format('Y-m-d');
+        // }
+
+
+        $old = Session::get('flights');
+        $dar = collect($old["data"]);
+
+        $dar1 = [];
+        if (request()->get('maxPrice')) {
+            $price = request()->get('maxPrice');
+            $dar1  = $dar->where('total_price', '<', $price)->toArray();
+        } else if (request()->get('includedAirlineCodes')) {
+
+            $flight = request()->get('includedAirlineCodes');
+            $dar1  = $dar->where('air_craft', '=', $flight)->toArray();
+        } else {
+            // var_dump($dar1);die;
+            $dar1  = $dar->toArray();
+        }
+        $flightresult['meta'] = $old["meta"];
+        $flightresult['data'] = array_values($dar1);
+        $flightresult['dictionaries'] = $old["dictionaries"];
+        $calenderresult = "";
+
+        // return view('flight.flightlist', compact('data', 'flightresult', 'price', 'Stops', 'Airlines', 'Location'));
+
+        $html = view('flight.search', compact(['flightresult']))->render();
+        return response()->json([
+            'status' => true,
+            'html' => $html,
+        ]);
+    }
+
+
+
     public function payment()
     {
 
         // Define the API endpoint URL
-$url = 'https://credimax.gateway.mastercard.com/api/rest/version/65/merchant/E14737953/session';
+        $url = 'https://credimax.gateway.mastercard.com/api/rest/version/65/merchant/E14737953/session';
 
-// Define the API request data as an array
-$data = array(
-    'apiOperation' => 'CREATE_CHECKOUT_SESSION',
-    'order' => array(
-        'amount' => '10.00',
-        'currency' => 'BHD',
-    ),
-    'interaction' => array(
-        'operation' => 'PURCHASE',
-    ),
-);
+        // Define the API request data as an array
+        $data = array(
+            'apiOperation' => 'CREATE_CHECKOUT_SESSION',
+            'order' => array(
+                'amount' => '10.00',
+                'currency' => 'BHD',
+                'id' => '21'
+            ),
+            'interaction' => array(
+                'operation' => 'PURCHASE',
+            ),
+        );
 
-// Convert the request data to JSON format
-$jsonData = json_encode($data);
+        // Convert the request data to JSON format
+        $jsonData = json_encode($data);
 
-// Create a cURL handle for the API request
-$ch = curl_init();
+        // Create a cURL handle for the API request
+        $ch = curl_init();
 
 
-    // Set the cURL options
-    $url = $url;
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Content-Type: application/json",
-        "Authorization: Basic " . base64_encode("E14737953:3026fa2c9cdd93fbd29989d5fab40810"),
-        'acceptVersions: 3DS1,3DS2'
-    ));
+        // Set the cURL options
+        $url = $url;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Authorization: Basic " . base64_encode("E14737953:3026fa2c9cdd93fbd29989d5fab40810"),
+            'acceptVersions: 3DS1,3DS2'
+        ));
 
-    // Send the request and get the response
-    $response = curl_exec($ch);
-dd($response);
-    // Check for errors
-    if (curl_error($ch)) {
-        echo 'Error: ' . curl_error($ch);
-    } else {
-        echo 'Response: ' . $response;
-    }
-    die;
+        // Send the request and get the response
+        $response = curl_exec($ch);
+        dd($response);
+        // Check for errors
+        if (curl_error($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        } else {
+            echo 'Response: ' . $response;
+        }
+        die;
 
 
 
@@ -544,7 +608,7 @@ dd($response);
             "order" => array(
                 "amount" => "10.00",
                 "currency" => "USD",
-                 "id"  => "25"
+                "id"  => "25"
             ),
             "interaction" => array(
                 "operation" => "PURCHASE",
@@ -579,6 +643,5 @@ dd($response);
 
         // Close the cURL session
         curl_close($ch);
-
     }
 }
