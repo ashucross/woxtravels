@@ -96,6 +96,8 @@ class StayController extends Controller
 
     public function search_hotel(Request $request)
     {  
+        $error = '';
+        $cities = HotelDestination::get();
         $data = array(
             '_MetaTitle' => 'Search Hotels',
             '_MetaKeywords' => '',
@@ -110,10 +112,16 @@ class StayController extends Controller
         $hotels = [];
         $params = $request->all() ?? ''; 
         // dd($params);
+        // dd($params);
         $signature = getsignature();  
-        $search_hotels = [];
+        $search_hotels = []; 
         if($signature['status'] == 200){
-            $gethotels = searchHotel($signature['data'],$params);  
+            $gethotels = searchHotel($signature['data'],$params); 
+            if($gethotels['status'] == 203){
+                $error = $gethotels['message'] ?? '';
+            }  else{
+
+            
             $hotelsdata = $gethotels['data']->hotels ?? []; 
             if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0){
                 foreach($hotelsdata->hotels as $hotel){ 
@@ -145,12 +153,13 @@ class StayController extends Controller
                     }
                 }
             } 
+        }
         }else{
             return ([
                 'status'=>$signature['status']
             ]);
         }
-        return view('search_hotel', compact('data','search_hotels','params'));
+        return view('search_hotel', compact('data','search_hotels','params','cities','error'));
     }
 
     public function getSuggestionitems(Request $request)

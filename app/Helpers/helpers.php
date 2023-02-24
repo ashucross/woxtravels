@@ -233,6 +233,14 @@ function getSuggestionitems($data,$country){
             $resp = curl_exec($curl);
             if (!curl_errno($curl)) {
                 switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                    case 400:  # Fail
+                    $hotels = json_decode($resp); 
+                    return ([
+                        'status'=>203,
+                        'data'=>'',
+                        'message'=>$hotels->error->message ?? '',
+                    ]);
+                    break;
                     case 200:  # OK
                     $hotels = json_decode($resp);
                     return ([

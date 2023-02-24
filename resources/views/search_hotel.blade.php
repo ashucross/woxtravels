@@ -2,6 +2,7 @@
 @section('styles')
 <!-- page specific style code here-->
 <!-- page specific style code here-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css">
 @endsection
 @section('pageContent')
 <div class="modifyhead">
@@ -31,7 +32,11 @@
         <div class="tabsearh_input">
 
             <div class="boxsearching ">
-
+                @if(!empty($error))
+                <div class='alert alert-danger'>{{$error ?? ''}}</div>
+                @endif
+            <form method="post" id='searchHot' action='{{url("search_hotel")}}'>
+                     @csrf
                 <div class="d-flex justify-content-between">
 
                     <div class="search_des d-flex justify-content-between ">
@@ -43,8 +48,15 @@
                             <div class="position-relative">
 
                                 <span class="iconint"><i class="fa fa-map-marker"></i></span>
-
-                                <input type="text" value='{{getdestinationName($params["location"]) ?? ""}}' class="input_src leftri input_hgt" placeholder="Where are you going?" data-toggle="dropdown" />
+                                <select type="text"  class="input_src leftri input_hgt country_select" required name="location" >
+                                    <option value=''>Where are you going ?</option>
+                                    @if(!empty($cities))
+                                       @foreach($cities as $count)
+                                          <option {{!empty($params["location"]) && $params["location"] == $count->code ? 'selected' : ''}} value="{{$count->code ?? ''}}">{{$count->name ?? ''}}</option>
+                                       @endforeach
+                                    @endif
+                                 </select> 
+                               <!--  <input type="text" value='{{getdestinationName($params["location"]) ?? ""}}' class="input_src leftri input_hgt" placeholder="Where are you going?" data-toggle="dropdown" /> -->
 
 
 
@@ -122,19 +134,14 @@
 
 
 
-
-                        <div class="position-relative ">
-
-
-
-                            <span class="iconint"><i class="fa fa-calendar"></i></span>
-
-
-
-                            <input value='{{$params["checkin"] ?? ""}}' aut type="text" name="ckein" placeholder="Check-In - Check-Out" class="input_src  input_hgt ">
-
-
-                        </div>
+                    <div class="position-relative ">
+                              <span class="iconint"><i class="fa fa-calendar"></i></span>
+                              <input aut type="text" name="checkin" value='{{$params["checkin"] ?? ""}}' required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
+                           </div>
+                       <!--  <div class="position-relative "> 
+                            <span class="iconint"><i class="fa fa-calendar"></i></span> 
+                            <input value='{{$params["checkin"] ?? ""}}' aut type="text" name="checkin" placeholder="Check-In - Check-Out" class="input_src  input_hgt "> 
+                        </div> -->
 
 
 
@@ -156,7 +163,7 @@
 
 
 
-                            <input value='{{$params["adults"] ?? ""}}' type="text" value="2 adults - 10 children - 1 room" class="input_src input_hgt ups arrowus">
+                            <input name='adults' value='{{$params["adults"] ?? ""}}' type="text"  class="input_src input_hgt ups arrowus">
 
 
 
@@ -168,222 +175,102 @@
 
 
 
-                                <div class="dropdown-menu dropdown-menu-right">
-
+                            <div class="dropdown-menu dropdown-menu-right hiclk">
                                     <div class="htlad">
-
-                                        <div class="qty_box">
-
-                                            <div class=" d-flex justify-content-between align-items-center">
-
-
-
-                                                <span>Adult:
-
-
-
-                                                </span>
-
-
-
-                                                <div id='myform' method='POST' class='quantity' action='#'>
-
-
-
-                                                    <input type='button' value='-' class='qtyminus minus' field='quantity' />
-
-
-
-                                                    <input type='text' name='quantity' value='0' class='qty' />
-
-
-
-                                                    <input type='button' value='+' class='qtyplus plus' field='quantity' />
-
-
-
-                                                </div>
-
-
-
-
-
-
-
-                                            </div>
-
-
-
-                                        </div>
-
-
-
-
-
-                                        <div class="qty_box">
-
-                                            <div class=" d-flex justify-content-between align-items-center">
-
-
-
-                                                <span>Child:
-
-                                                    <span class="agetxt">Ages 0 - 17</span>
-
-                                                </span>
-
-
-
-                                                <div id='myform' method='POST' class='quantity' action='#'>
-
-
-
-                                                    <input type='button' value='-' class='qtyminus minus' field='quantity' />
-
-
-
-                                                    <input type='text' name='quantity' value='0' class='qty' />
-
-
-
-                                                    <input type='button' value='+' class='qtyplus plus' field='quantity' />
-
-
-
-                                                </div>
-
-
-
-                                            </div>
-
-                                            <div class="d-flex box_child flex-wrap">
-
-                                                <div class="childxd">
-
-                                                    <select>
-                                                        <option hidden>
-                                                            Age needed
-                                                        </option>
-
-                                                        <option value="0" selected="">0 years old</option>
-                                                        <option value="1">1 year old</option>
-                                                        <option value="2">2 years old</option>
-                                                        <option value="3">3 years old</option>
-                                                        <option value="4">4 years old</option>
-                                                        <option value="5">5 years old</option>
-                                                        <option value="6">6 years old</option>
-                                                        <option value="7">7 years old</option>
-                                                        <option value="8">8 years old</option>
-                                                        <option value="9">9 years old</option>
-                                                        <option value="10">10 years old</option>
-                                                        <option value="11">11 years old</option>
-                                                        <option value="12">12 years old</option>
-                                                        <option value="13">13 years old</option>
-                                                        <option value="14">14 years old</option>
-                                                        <option value="15">15 years old </option>
-                                                        <option value="16">16 years old</option>
-                                                        <option value="17">17 years old</option>
-
-                                                    </select>
-
-                                                </div>
-
-                                                <div class="childxd">
-
-                                                    <select>
-                                                        <option hidden>
-                                                            Age needed
-                                                        </option>
-
-                                                        <option value="0" selected="">0 years old</option>
-                                                        <option value="1">1 year old</option>
-                                                        <option value="2">2 years old</option>
-                                                        <option value="3">3 years old</option>
-                                                        <option value="4">4 years old</option>
-                                                        <option value="5">5 years old</option>
-                                                        <option value="6">6 years old</option>
-                                                        <option value="7">7 years old</option>
-                                                        <option value="8">8 years old</option>
-                                                        <option value="9">9 years old</option>
-                                                        <option value="10">10 years old</option>
-                                                        <option value="11">11 years old</option>
-                                                        <option value="12">12 years old</option>
-                                                        <option value="13">13 years old</option>
-                                                        <option value="14">14 years old</option>
-                                                        <option value="15">15 years old </option>
-                                                        <option value="16">16 years old</option>
-                                                        <option value="17">17 years old</option>
-
-                                                    </select>
-
-                                                </div>
-
-
-
-                                            </div>
-
-                                            <div class="ht_qt_txt">
-                                                <p>To find you a place to stay that fits your entire group along with correct prices, we need to know how old your children will be at check-out</p>
-                                            </div>
-
-                                        </div>
-
-
-
-                                        <div class="qty_box">
-
-                                            <div class="d-flex justify-content-between align-items-center">
-
-
-
-                                                <span>Rooms
-
-                                                </span>
-
-
-
-                                                <div id='myform' method='POST' class='quantity' action='#'>
-
-
-
-                                                    <input type='button' value='-' class='qtyminus minus' field='quantity' />
-
-
-
-                                                    <input type='text' name='quantity' value='0' class='qty' />
-
-
-
-                                                    <input type='button' value='+' class='qtyplus plus' field='quantity' />
-
-
-
-                                                </div>
-
-
-
-                                            </div>
-
-
-
-
-
-
-                                        </div>
-
+                                       <div class="qty_box">
+                                          <div class=" d-flex justify-content-between align-items-center">
+                                             <span>Adult:
+                                             </span>
+                                             <div  class='quantity1'  >
+                                                <input type='button' slug='oneway' value='-' class='minus' field='quantity' />
+                                                <input type='text' name='adult' id="oneway-qnty-adult" value='{{$params["adult"] ?? ""}}' class='qty' />
+                                                <input type='button' slug='oneway' value='+' class='plus' field='quantity' />
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="qty_box">
+                                          <div class=" d-flex justify-content-between align-items-center">
+                                             <span>Child:
+                                                <span class="agetxt">Ages 0 - 17</span>
+                                             </span>
+                                             <div   class='quantity1'  action='#'>
+                                                <input type='button'  slug='oneway' value='-'  class='minus child_minus' field='quantity' />
+                                                <input type='text' name='child' id="oneway-qnty-child"    value='{{$params["child"] ?? ""}}' class='qty' />
+                                                <input type='button'  slug='oneway' value='+'  class='plus child_added' field='quantity' />
+                                             </div>
+                                          </div>
+                                          <div class="d-flex box_child flex-wrap">
+                                             <div class="childxd child_ages">
+                                                <select class="form-control" name="childages[]">
+                                                   <option hidden>
+                                                      Age needed
+                                                   </option>
+                                                   <option value="0" selected="">0 years old</option>
+                                                   <option value="1">1 year old</option>
+                                                   <option value="2">2 years old</option>
+                                                   <option value="3">3 years old</option>
+                                                   <option value="4">4 years old</option>
+                                                   <option value="5">5 years old</option>
+                                                   <option value="6">6 years old</option>
+                                                   <option value="7">7 years old</option>
+                                                   <option value="8">8 years old</option>
+                                                   <option value="9">9 years old</option>
+                                                   <option value="10">10 years old</option>
+                                                   <option value="11">11 years old</option>
+                                                   <option value="12">12 years old</option>
+                                                   <option value="13">13 years old</option>
+                                                   <option value="14">14 years old</option>
+                                                   <option value="15">15 years old </option>
+                                                   <option value="16">16 years old</option>
+                                                   <option value="17">17 years old</option>
+                                                </select>
+                                             </div>
+                                             <!-- <div class="childxd">
+                                                <select>
+                                                   <option hidden>
+                                                      Age needed
+                                                   </option>
+                                                   <option value="0" selected="">0 years old</option>
+                                                   <option value="1">1 year old</option>
+                                                   <option value="2">2 years old</option>
+                                                   <option value="3">3 years old</option>
+                                                   <option value="4">4 years old</option>
+                                                   <option value="5">5 years old</option>
+                                                   <option value="6">6 years old</option>
+                                                   <option value="7">7 years old</option>
+                                                   <option value="8">8 years old</option>
+                                                   <option value="9">9 years old</option>
+                                                   <option value="10">10 years old</option>
+                                                   <option value="11">11 years old</option>
+                                                   <option value="12">12 years old</option>
+                                                   <option value="13">13 years old</option>
+                                                   <option value="14">14 years old</option>
+                                                   <option value="15">15 years old </option>
+                                                   <option value="16">16 years old</option>
+                                                   <option value="17">17 years old</option>
+                                                </select>
+                                             </div> -->
+                                          </div>
+                                          <div class="ht_qt_txt">
+                                             <p>To find you a place to stay that fits your entire group along with correct prices, we need to know how old your children will be at check-out</p>
+                                          </div>
+                                       </div>
+                                       <div class="qty_box">
+                                          <div class="d-flex justify-content-between align-items-center">
+                                             <span>Rooms
+                                             </span>
+                                             <div id='myform' method='POST' class='quantity1' action='#'>
+                                                <input type='button' value='-' slug="oneway" class='minus' field='quantity' />
+                                                <input type='text' name='rooms'  id="oneway-qnty-room" value='{{$params["rooms"] ?? ""}}' class='qty' />
+                                                <input type='button' value='+' slug="oneway" class='plus' field='quantity' />
+                                             </div>
+                                          </div>
+                                       </div>
                                     </div>
-
-
-
                                     <div class="btntv">
-
-                                        <button type="submit" class="btn-grad ftbtn_src">Done</button>
-
+                                       <button type="submit" class="btn-grad ftbtn_src set-adults-val">Done</button>
                                     </div>
-
-
-
-                                </div>
+                                 </div>
 
 
 
@@ -416,7 +303,7 @@
                     </div>
 
                 </div>
-
+            </form>
 
 
 
@@ -1446,9 +1333,10 @@
                                 <span>
                                     <?php $i = 0; 
                                     $rank = (int)$hotel->ranking ?? 0;
-                                    for($i;$i<=$rank;$i++){ ?>
-                                        <i class="fa fa-star"></i>
-                                    <?php } ?>
+                                   ?>
+                                   Rank : {{$rank ?? 0}}
+                                       <!--  <i class="fa fa-star"></i> -->
+                                     
                                     <!-- &nbsp;4.77 (48 reviews) -->
                                 </span>
                             </div>
@@ -1654,3 +1542,207 @@
 </div>
 
 @endsection
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+<script>
+
+$(".item_list").click(function(){
+         var country_select = $('.country_select').val();
+         // console.log(country_select);return;
+         if(country_select){ 
+            $('.item_list').html("<option>Loading...</option>");
+            $.ajax({
+            url: '{{url("getSuggestionitems")}}',
+            type: 'get',
+            dataType: "json",
+            data: {
+               search: country_select
+            },
+            success: function(data) {
+               $('.item_list').html();
+               $('.item_list').html(data.options);
+               $('.item_list').selectize();
+            }
+         });
+      }else{
+         toastr["error"]("Error!", "Please select country");
+      }
+   });
+   $('.country_select').selectize();
+
+      // $(".item_list").autocomplete({ 
+      //       source: function(request, response) { 
+      //           $.ajax({
+      //               url: '{{url("getSuggestionitems")}}',
+      //               type: 'get',
+      //               dataType: "json",
+      //               data: {
+      //                   search: 'IN'
+      //               },
+      //               success: function(data) {
+      //                   response(data);
+      //               }
+      //           });
+      //       },
+      //       select: function(event, ui) {  
+      //          $(".item_list").val(ui.item.data);
+      //          $(".item_list").attr('data-code',ui.item.code);
+      //           /*
+      //            $(this).parents('tr').find(".itemdesc").find("input").val(ui.item.description);
+      //           $(this).parents('tr').find(".itemrate").find("input").val(ui.item.rate);
+      //           setTimeout(()=>{
+      //               $(this).parents('tr').find(".invoice-select").find("input").val(ui.item.data);
+      //               console.log(ui.item.data)
+      //           },500) */
+      //       }
+      //   });
+      //   $(document).on('focus','.item_list',function() { 
+      //       $(this).autocomplete('search', '1')
+      //   });
+   
+
+
+      $(".hiclk").click(function(event) {
+         event.stopPropagation();
+      });
+
+      $("#searchHot").validate({
+         rules: {
+            location: "required",
+            checkin: "required",
+            adults: "required",
+         },
+
+         messages: {
+            location: "Please enter location",
+            checkin: "Please choose Checkin-Checkout dates",
+            adults: "Please choose atleast one adult",
+         },
+         submitHandler: function(form) {
+            /*Ajax Request Header setup*/
+            form.submit();
+         },
+      });
+
+      $(".quantity1").on("click", ".plus", function(e) {
+        let _Token = $(this).attr('slug');
+        let _Adult = parseInt($("#" + _Token + "-qnty-adult").val());
+        let _Child = parseInt($("#" + _Token + "-qnty-child").val());
+        let _Infant = parseInt($("#" + _Token + "-qnty-room").val());  
+        let _Total = _Adult + _Child; 
+        let $input = $(this).prev("input.qty");
+        let val = parseInt($input.val());
+        let slugId = $input.attr("id");
+        switch (slugId) {
+            case _Token + "-qnty-adult":
+                if (_Total + 1 <= 9 && _Adult + 1 <= 9) {
+                    $input.val(val + 1).change(); 
+                } else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-child":
+                if (_Total + 1 <= 9 && _Child + 1 <= 9) {
+                    $input.val(val + 1).change();
+                } else {
+                    toastr["error"]("Error!", "Only 9 passenger is allowed");
+                }
+                break;
+            case _Token + "-qnty-room":
+                if (_Infant + 1 <= 9) {
+                    $input.val(val + 1).change();
+                } else {
+                    toastr["error"](
+                        "Error!",
+                        "only 9 room can be booked"
+                    );
+                }
+                break;
+        }
+    });
+
+      $(".quantity1").on("click", ".minus", function(e) {
+         let _Token = $(this).attr('slug');
+         let _Adult = parseInt($("#" + _Token + "-qnty-adult").val());
+         let _Child = parseInt($("#" + _Token + "-qnty-child").val());
+         let _Infant = parseInt($("#" + _Token + "-qnty-room").val());
+         let _Total = _Adult + _Child;
+         let $input = $(this).next("input.qty");
+         var val = parseInt($input.val());
+         let slugId = $input.attr("id");
+         let vall = 0;
+         //alert(_Adult);
+         switch (slugId) {
+            case _Token + "-qnty-adult":
+               if (_Total <= 9 && _Adult <= 9) {
+                  if (_Adult - 1 < _Infant) {
+                     $("#" + _Token + "-qnty-infant").val("0");
+                  }
+               } else {
+                  toastr["error"]("Error!", "Only 9 passenger is allowed");
+               }
+               break;
+            case _Token + "-qnty-child":
+               if (_Total <= 9 && _Child <= 9) {} else {
+                  toastr["error"]("Error!", "Only 9 passenger is allowed");
+               }
+               break;
+            case _Token + "-qnty-room":
+               if (_Infant <= 9) {} else {
+                  toastr["error"](
+                     "Error!",
+                     "only 9 rooms can be booked "
+                  );
+               }
+               break;
+         }
+
+         if (slugId == _Token + "-qnty-adult") {
+            vall = 1;
+         }
+         if (val > vall) {
+            $input.val(val - 1).change();
+         }
+      });
+
+      $('.child_added').click(function(){ 
+         if($('#oneway-qnty-child').val() > 0){ 
+            $('.child_ages:last').clone().insertAfter($('.child_ages:last'));  
+         }
+      });
+      $('.child_minus').click(function(){ 
+         if($('#oneway-qnty-child').val() > 1){ 
+            $('.child_ages:last').remove();  
+         }
+      });
+      $('.set-adults-val').click(function(e){
+         e.preventDefault();
+         let _Adult = parseInt($("#oneway-qnty-adult").val());
+         let _Child = parseInt($("#oneway-qnty-child").val());
+         let _Room = parseInt($("#oneway-qnty-room").val());
+         let _Total = _Adult + _Child;
+         if(_Total == 0){
+            toastr["error"](
+               "Error!",
+               "Atleast 1 person is required"
+            );
+         }
+         if(_Room == 0){
+            toastr["error"](
+               "Error!",
+               "Atleast 1 room is required"
+            );
+         }
+         $('.arrowus').val('Adults : '+_Adult+', Child : '+_Child+', Room : '+_Room);
+         $('.dropslct').hide();
+      });
+      $('.arrowus').click(function(){
+         $('.dropslct').show();
+      });
+    </script>
+    @endsection
