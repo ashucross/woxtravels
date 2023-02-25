@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/woxtt/public_html/
-    - /bin/cp * $DEPLOYPATH
-
