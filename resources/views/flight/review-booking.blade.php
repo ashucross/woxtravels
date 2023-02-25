@@ -679,7 +679,7 @@
                                 <label>Phone Number</label>
                                 <div class="form-group">
                                     <input type="text" id="contact_number" class="" placeholder="Phone Number"
-                                        name="mobile_number">
+                                        name="mobile_number" required>
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -699,7 +699,7 @@
                         <div class="col-sm-6">
                             <div class="inpse ">
                                 <label>Email</label>
-                                <input type="text" id="email" name="contact_email" placeholder="Email">
+                                <input type="text" id="email" name="contact_email" placeholder="Email" required>
                             </div>
                         </div>
                     </div>
@@ -976,27 +976,39 @@
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data:strData,
         dataType:'json',
+        beforeSend: function(msg) {
+                        $('#booking-details').html(
+                            '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+                        );
+                        $('#booking-details').prop("disabled", true);
+                    },
         success:function(response){
-            console.log(response);
+            console.log(response.booking_id);
             $('.loading-div').css('display','none');
             localStorage.removeItem("travelers-details");
             if(response.success == true){
-              $('#contact_email').val(response.contact.email);
-              $('#contact_phone').val(response.contact.contact);
-             $('#amount').val(response.total.total_amount);
-             $('#currency').val(response.total.currency);
-              $('#payment').modal('show');
-              $('#bookingId').val(response.booking_id);
-               $('#contact_email-e').text(response.contact.email);
-              $('#contact_phone-p').text(response.contact.contact);
-             $('#amount-a').text(response.total.total_amount);
-             $('#currency-c').text(response.total.currency);
-              $('#payment').modal('show');
-              $('#bookingId').val(response.booking_id);
+                window.location.href = 'flight/booking-confirmation' + '/' + response.booking_id;
+
+            //   $('#contact_email').val(response.contact.email);
+            //   $('#contact_phone').val(response.contact.contact);
+            //  $('#amount').val(response.total.total_amount);
+            //  $('#currency').val(response.total.currency);
+            //   $('#payment').modal('show');
+            //   $('#bookingId').val(response.booking_id);
+            //    $('#contact_email-e').text(response.contact.email);
+            //   $('#contact_phone-p').text(response.contact.contact);
+            //  $('#amount-a').text(response.total.total_amount);
+            //  $('#currency-c').text(response.total.currency);
+            //   $('#payment').modal('show');
+            //   $('#bookingId').val(response.booking_id);
             }
 
         },
         error: function(response) {
+            $('#booking-details').html(
+                            'Continue to book&nbsp;&nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i>'
+                        );
+            $('#booking-details').prop("disabled", true);
             $('.loading-div').css('display','none');
               if (response.status === 400) {
                    alert(response.responseJSON.errors);
@@ -1023,5 +1035,52 @@
        });
    }
 });
+
+
+
+function change_year(select)
+{
+    if( isLeapYear( $(select).val() ) )
+	  {
+		    Days[1] = 29;
+
+    }
+    else {
+        Days[1] = 28;
+    }
+    if( $("#month,#month1,#month2").val() == 2)
+		    {
+			       var day = $('#day,#day1,#day2');
+			       var val = $(day).val();
+			       $(day).empty();
+			       var option = '<option value="day">day</option>';
+			       for (var i=1;i <= Days[1];i++){ //add option days
+				         option += '<option value="'+ i + '">' + i + '</option>';
+             }
+			       $(day).append(option);
+			       if( val > Days[ month ] )
+			       {
+				          val = 1;
+			       }
+			       $(day).val(val);
+		     }
+  }
+
+function change_month(select) {
+    var day = $('#day,#day1,#day2');
+    var val = $(day).val();
+    $(day).empty();
+    var option = '<option value="day">day</option>';
+    var month = parseInt( $(select).val() ) - 1;
+    for (var i=1;i <= Days[ month ];i++){ //add option days
+        option += '<option value="'+ i + '">' + i + '</option>';
+    }
+    $(day).append(option);
+    if( val > Days[ month ] )
+    {
+        val = 1;
+    }
+    $(day).val(val);
+}
 </script>
 @endsection

@@ -109,8 +109,8 @@
                                 </div>
                                 <div class="btnslit">
                                     <span id="email_cn">Continue with email</span>
-                                    <span><img src="{{asset('public/assets/images/google_g.svg')}}" alt="" class="imgres mr-2" />Google</span>
-                                    <span><img src="{{asset('public/assets/images/facebook_i.svg')}}" alt="" class="imgres mr-2" />Facebook</span>
+                                    <span>  <a href="{{ url('auth/google') }}"><img src="{{asset('public/assets/images/google_g.svg')}}" alt="" class="imgres mr-2" />Google</a></span>
+                                    <span><a href="{{ url('auth/facebook') }}"><img src="{{asset('public/assets/images/facebook_i.svg')}}" alt="" class="imgres mr-2" />Facebook</a></span>
 
                                     <div class="rmb_bx text-center">
                                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">

@@ -11,7 +11,7 @@
                 <label>Name<span class="erfr">*</span></label>
                 <div class="d-flex">
                     <div class="droptitle slcbs">
-                        <select class="sltclick">
+                        <select class="sltclick" required>
                             <option hidden data-ioshidden value="" name="title{{  $name }}[]"
                                 id="{{ $name }}[{{$a}}]['hideclick']">Title
                             </option>
@@ -32,7 +32,7 @@
         <div class="col-sm-4">
             <div class="inpse ">
                 <label class="md_none">&nbsp;</label>
-                <input type="text" class="form-input" name="{{ $name }}[{{$a}}][middel_name]" placeholder="Middle Name">
+                <input type="text" class="form-input" name="{{ $name }}[{{$a}}][middel_name]" placeholder="Middle Name" >
             </div>
         </div>
         <div class="col-sm-4">
@@ -47,7 +47,7 @@
                 <div class="dttrhee">
                     <div class="sltnox slcbs">
                         <select id="date_of_birth{{ $name.$a  }}" name="{{ $name }}[{{$a}}][date_of_birth]"
-                            onchange="change_year(this)">
+                            onchange="change_year(this)" required>
                             <option hidden data-ioshidden value="">year</option>
                             <option value="1930">1930</option>
                             <option value="1931">1931</option>
@@ -146,7 +146,7 @@
                     </div>
                     <div class="sltnox slcbs">
                         <select id="date_of_month{{ $name.$a  }}" name="{{ $name }}[{{$a}}][date_of_month]"
-                            onchange="change_month(this)">
+                            onchange="change_month(this)" required>
                             <option hidden data-ioshidden value="">month</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -163,7 +163,7 @@
                         </select>
                     </div>
                     <div class="sltnox slcbs">
-                        <select id="date_of_birst_Day{{ $name.$a  }}" name="{{ $name }}[{{$a}}][date_of_birst_Day]">
+                        <select id="date_of_birst_Day{{ $name.$a  }}" name="{{ $name }}[{{$a}}][date_of_birst_Day]" required>
                             <option hidden data-ioshidden value="">day</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -217,7 +217,7 @@
             <div class="inpse ">
                 <label>Nationality<span class="stres">*</span></label>
                 <div class="slcbs">
-                    <select class="form-input" id="nationality{{ $name.$a  }}" name="{{ $name }}[{{$a}}][nationality]">
+                    <select class="form-input" id="nationality{{ $name.$a  }}" name="{{ $name }}[{{$a}}][nationality]" required>
                         <option hidden data-ioshidden value="">Nationality</option>
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>

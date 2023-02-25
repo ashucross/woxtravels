@@ -35,23 +35,11 @@ trait FlightTrait
         $this->sessionId = Session::getId();
         $_TOKEN = EwebLink::token('amadeus');
         $this->Token = $_TOKEN['access_token'];
-        // dd($this->Token);
     }
     public function index(Request $request)
     {
 
-        // dd($this->sessionId);
-        $data = array(
-            '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
-            '_MetaKeywords' => '',
-            '_MetaDescription' => '',
-            '_Flight' => 'active',
-            '_Hotel' => '',
-            '_Packages' => '',
-            '_Visa' => '',
-            '_Insurance' => '',
-            '_Car' => '',
-        );
+        $data = meta_key();
         return view('flight.flight', compact('data'));
     }
     // Get Airport List
@@ -224,17 +212,7 @@ trait FlightTrait
     public function flightList(Request $request)
     {
         // dd();
-        $data = array(
-            '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
-            '_MetaKeywords' => '',
-            '_MetaDescription' => '',
-            '_Flight' => 'active',
-            '_Hotel' => '',
-            '_Packages' => '',
-            '_Visa' => '',
-            '_Insurance' => '',
-            '_Car' => '',
-        );
+        $data = meta_key();
         $tokenId = $request->session()->get('token');
         // $flights =  FlightSearch::where('FS_sessionid', $tokenId)->get();
         // Get
@@ -314,17 +292,7 @@ trait FlightTrait
 
     public function flightReview()
     {
-        $data = array(
-            '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
-            '_MetaKeywords' => '',
-            '_MetaDescription' => '',
-            '_Flight' => 'active',
-            '_Hotel' => '',
-            '_Packages' => '',
-            '_Visa' => '',
-            '_Insurance' => '',
-            '_Car' => '',
-        );
+        $data = meta_key();
         $userFlight = Session::get('data');
         if ($userFlight) {
             $ticketDetails =     $userFlight['ticket_details'];
@@ -343,15 +311,8 @@ trait FlightTrait
 
     public function bookingFlight(FlightBookingRequest $request)
     {
-
         $data = $request->except('__token');
-        // if(auth()->guard('agents')->user()){
-        //     return $this->bookingInfo($request,$data);
-        // }
-        // if(auth()->user()){
-        // }
         return $this->bookingInfo($request, $data);
-
         return response()->json(['succcess' => false, 'message' => 'Please login'], 401);
     }
 
@@ -389,7 +350,6 @@ trait FlightTrait
         $dataInput['flight_details'] = $traveler;
         $result = bookingsDetails($dataInput);
         $dataOutput = addBookingsDetails($result);
-
         $booking = BookingDetail::create($dataOutput);
         $contact = [
             'email' => $request->get('email'),
@@ -428,21 +388,70 @@ trait FlightTrait
     }
 
 
+    public function  bkConfiration($id){
+        if(!empty($id)){
+            $myBooking = BookingDetail::where('id', $id)->first();
+            $data = meta_key();
+            return view('flight.booking-success', compact('myBooking','data'));
+        }
+    }
+    public function bookingConfirm(Request $request)
+    {
+        // $data = $request->except('_token');
+        // $transactionId = $request->get('transaction_id');
+        // $curlF = curl_init();
+        // curl_setopt_array($curlF, array(
+        //     CURLOPT_URL => 'https://api.flutterwave.com/v3/transactions/' . $transactionId . '/verify',
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'GET',
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: Bearer FLWSECK_TEST-dca8fdc9d00301ef6def168470a13d10-X'
+        //     ),
+        // ));
+        // $response = curl_exec($curlF);
+        // $flightresult = json_decode($response, true);
+        // // $traveler = $this->ticketBooking();
+        // $booking = BookingDetail::find($request->get('booking_id'));
+        // $booking->update([
+        //     'status' => 1,
+        //     'email' => $flightresult["data"]["customer"]["email"],
+        //     'mobile' => $flightresult["data"]["customer"]["phone_number"],
+        // ]);
+        // $payment['bookingid'] =  $booking->id;
+        // $payment['org_amount'] = $flightresult["data"]["charged_amount"];
+        // $payment['amount'] = $flightresult["data"]["charged_amount"];
+        // $payment['payment_response'] =  $response;
+        // $payment['status'] = ($flightresult['data']['status'] == 'successful') ? 1 : 0;
+        // PaymentDetail::create($payment);
+        // curl_close($curlF);
+
+        // Mail::to($booking->email)->send(new TicketMail($booking));
+
+
+        return redirect()->to('/booking-success');
+    }
 
 
     public function getTravelerDetails($data)
     {
         $dob = $data['date_of_birth'] . '-' . $data['date_of_month'] . '-' . $data['date_of_birst_Day'];
-        // var_dump(Carbon::createFromFormat('d/m/Y', $dob)->format('Y-m-d'));die;
+        $date = date_create($dob);
+        $issuanceDate = $data['passport_Issued_Date'] . '-' . $data['passport_Issued_month'] . '-' . $data['passport_Issued_day'];
+        $issuanceDate_ = date_create($issuanceDate);
+        $expiryDate = $data['parsportExpire_year'] . '-' . $data['parsportExpire_month'] . '-' . $data['parsportExpire_day'];
+        $expiryDate_ = date_create($expiryDate);
         $result = [
             "id" => $data['travelerId'],
-            "dateOfBirth" => "2020-03-01",
-            // "dateOfBirth" => Carbon::createFromFormat('d/m/Y', $data['dob'])->format('Y-m-d'),
+            "dateOfBirth" => date_format($date, "Y-m-d"),
             "name" => [
                 "firstName" => $data['first_name'],
                 "lastName" => $data['last_name']
             ],
-            // "gender"=> $data['gender'],
             "gender" => $data['gender'],
             "contact" => [
                 "emailAddress" => $_POST['contact_email'],
@@ -460,10 +469,9 @@ trait FlightTrait
                     "documentType" => "PASSPORT",
                     "birthPlace" => "Bahrain",
                     "issuanceLocation" => "Bahrain",
-                    "issuanceDate" => "2020-03-01",
+                    "issuanceDate" => date_format($issuanceDate_, "Y-m-d"),
                     "number" => $data['passport_number'],
-                    "expiryDate" =>  "2025-04-14",
-                    // "expiryDate" =>  Carbon::createFromFormat('d/m/Y', $data['parsportExpire_year'])->format('Y-m-d'),
+                    "expiryDate" =>  date_format($expiryDate_, "Y-m-d"),
                     "issuanceCountry" => "ES",
                     "validityCountry" => "ES",
                     "nationality" => "ES",
@@ -544,7 +552,6 @@ trait FlightTrait
 
     public function payment()
     {
-
         // Define the API endpoint URL
         $url = 'https://credimax.gateway.mastercard.com/api/rest/version/65/merchant/E14737953/session';
 

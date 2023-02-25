@@ -8,6 +8,9 @@ use  App\Http\Controllers\InsuranceController;
 use  App\Http\Controllers\StayController;
 use  App\Http\Controllers\VisaController;
 use  App\Http\Controllers\StaticController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FacebookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +38,7 @@ Route::get('/flightList/details/', [FlightController::class, 'flightDetails'])->
 Route::get('/flightReview', [FlightController::class, 'flightReview'])->name('flightReview');
 Route::post('flight/booking', [FlightController::class, 'bookingFlight'])->name('booking');
 Route::get('flight/filter', [FlightController::class, 'flightfilter'])->name('filter');
+Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkConfiration'])->name('booking.confirmation');
 // Route::post('/flight_order', [FlightController::class, 'flight_order'])->name('flight_order');
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
@@ -56,6 +60,23 @@ Route::get('/car-rentals', [CarrentalController::class, 'index'])->name('carrent
 Route::get('/payment', [FlightController::class, 'payment'])->name('payment');
 
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::prefix('dashboard')->name('dashboard.')->group( function(){
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard-index');
+        Route::get('/logout', [DashboardController::class, 'logout'])->name('logout');
+        Route::post('/profile/update', [DashboardController::class, 'profileUpdate'])->name('profileUpdate');
+        Route::post('/profile/update/image', [DashboardController::class, 'updateImage'])->name('updateImage');
+    });
+});
+
+
+Route::controller(FacebookController::class)->group(function(){
+    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
+    Route::get('auth/facebook/callback', 'handleFacebookCallback');
+});
 
 
 
