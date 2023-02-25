@@ -1,9 +1,8 @@
 <?php
 
 use App\Models\Airport;
-use App\Helpers\Eweblink;
+use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 function getsignature()
 {
@@ -19,6 +18,7 @@ function getsignature()
             CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '']
         ));
         $resp = curl_exec($curl);
+        dd($resp);
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 200:  # OK
@@ -44,18 +44,47 @@ function getsignature()
     }
 }
 
+function update_currencies()
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array( 
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => "https://api.freecurrencyapi.com/v1/latest?apikey=bqutIM0X1TYXpjlugWfUT7XOntr32Ty2vnsExwXC", 
+    ));
+    $resp = curl_exec($curl); 
+    $currencies = json_decode($resp);  
+    $currencies = (array) $currencies->data;
+    if(!empty($currencies)){
+        foreach($currencies as $key => $curr){ 
+            $exists = Curren_Cies::where('code',$key)->first();
+            if($exists){
+                Curren_Cies::where('code',$key)->update([
+                    'code'=>$key,
+                    'value'=> $curr
+                ]);
+            } else{
+                Curren_Cies::create([
+                    'code'=>$key,
+                    'value'=> $curr
+                ]); 
+            }
+        }
+    }
+    echo 'currencies updated';die;
+}
+
 function getSuggestionitems($data, $country)
 {
     $signature = $data;
     $apiKey = env('HOTEL_API_KEY');
-    $Secret = env('HOTEL_SECRET_KEY');
+    $Secret = env('HOTEL_SECRET_KEY'); 
     $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/locations/destinations?fields=all&countryCodes=" . $country . "&language=ENG&from=1&to=1000&useSecondaryLanguage=false";
     try {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             // CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $endpoint,
+            CURLOPT_URL => $endpoint, 
             CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '']
         ));
         $resp = curl_exec($curl);
@@ -486,154 +515,4 @@ function getinitalAirpot()
 {
     $airports = DB::table('airports')->where(['country_code' => 'IN', 'top_cities' => 1])->get();
     return $airports;
-}
-
-
-/*** get bookin details  */
-function getBookingDetiils($data)
-{
-
-    $id = $data;
-    //   $url =  'https://test.api.amadeus.com/v1/booking/flight-orders/'.$id;
-    $output = getInformation($id);
-    $count = count($output['data']['flightOffers'][0]['itineraries']);
-    if ($count > 1) {
-        $out =  singleTripDetails($output);
-    }
-    $out =  roundTrip($output);
-    return $out;
-}
-
-function getPaymentDetiils($data)
-{
-    dd($data);
-}
-
-function getInformation($id)
-{
-    $_TOKEN = EwebLink::token('amadeus');
-    $Token = $_TOKEN['access_token'];
-    // dd($Token)
-    $curlF = curl_init();
-    curl_setopt_array($curlF, array(
-        CURLOPT_URL => 'https://test.api.amadeus.com/v1/booking/flight-orders/' . $id,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer ' . $Token . ''
-        ),
-    ));
-
-    $response = curl_exec($curlF);
-
-    $jsonResponse = json_decode($response, true);
-    curl_close($curlF);
-    return  $jsonResponse;
-}
-function searchResults($data)
-{
-
-    $collection = collect([]);
-    dd($data);
-}
-
-function singleTripDetails($outputs)
-{
-    // $carriercode = $output["segments"][0]['carrierCode'];
-    // $depaturecountry = getCountryName($outputs['dictionaries']['locations'][$output["segments"][0]['departure']['iataCode']]["countryCode"],$output["segments"][0]['departure']['iataCode']);
-    // $file = getFileName($carriercode);
-    // //  $tt  = $outputs['dictionaries']['carriers'][$carriercode];
-    // // dd($tt);
-    //   $datas[]=[
-    // 	  'file'=>$file,
-    // 	//   'duration'=>strtolower(str_replace('H','H     ',substr($output['itineraries'][0]["duration"], 2))),
-    // 	  'depature'=>[
-    // 		  'country'=> $depaturecountry->country_name,
-    // 		  'city'=>$depaturecountry->city_name,
-    // 		  'time'=> date('H:i', strtotime($output["segments"][0]['departure']['at'])),
-    // 		  'date'=> date('M-d-Y', strtotime($output["segments"][0]['departure']['at'])),
-    // 		  'flight'=>$output["segments"][0]['carrierCode'] .'-'. $output["segments"][0]['number'],
-    // 		  'status'=>$output["segments"][0]['bookingStatus']
-    // 	  ]
-
-    //   ];
-}
-function  roundTrip($outputs)
-{
-    foreach ($outputs['data']['flightOffers'][0]['itineraries'] as $key => $output) {
-        $carriercode = $output["segments"][0]['carrierCode'];
-        $depaturecountry = getCountryName($outputs['dictionaries']['locations'][$output["segments"][0]['departure']['iataCode']]["countryCode"], $output["segments"][0]['departure']['iataCode']);
-        $file = getFileName($carriercode);
-        //  $tt  = $outputs['dictionaries']['carriers'][$carriercode];
-        // dd($tt);
-        $datas[] = [
-            'file' => $file,
-            //   'duration'=>strtolower(str_replace('H','H     ',substr($output['itineraries'][0]["duration"], 2))),
-            'depature' => [
-                'country' => $depaturecountry->country_name,
-                'city' => $depaturecountry->city_name,
-                'time' => date('H:i', strtotime($output["segments"][0]['departure']['at'])),
-                'date' => date('M-d-Y', strtotime($output["segments"][0]['departure']['at'])),
-                'flight' => $output["segments"][0]['carrierCode'] . '-' . $output["segments"][0]['number'],
-                'status' => $output["segments"][0]['bookingStatus']
-            ]
-
-        ];
-    }
-// dd($outputs);die;
-    $datas['travelersDetails'] = $outputs['data']['travelers'];
-    foreach ($outputs['data']['flightOffers'][0]['travelerPricings'] as $key => $traveller) {
-
-        // dd($outputs['data']['travelers'][$key], $traveller);
-        $passengers[] = [
-            'first_name' => $outputs['data']['travelers'][$key]['name']['firstName'],
-            'last_name'  => $outputs['data']['travelers'][$key]['name']['lastName'],
-            'gender' => $outputs['data']['travelers'][$key]['gender'],
-            'type' => $traveller['travelerType'],
-        ];
-    }
-
-    $datas['passengers'] = $passengers;
-    return $datas;
-    //	<span>{{ $arrivalcountryDetails->country_name}}  ({{ $arrivalcountryDetails->city_name}})
-
-}
-
-
-function meta_key(){
-    $data = array(
-        '_MetaTitle' => 'WOX Travel & Tour - Book Cheapest air tickets',
-        '_MetaKeywords' => '',
-        '_MetaDescription' => '',
-        '_Flight' => 'active',
-        '_Hotel' => '',
-        '_Packages' => '',
-        '_Visa' => '',
-        '_Insurance' => '',
-        '_Car' => '',
-    );
-    return $data;
-}
-
-
-
-
-function displayAlert()
-{
-      if (Session::has('message'))
-      {
-         list($type, $message) = explode('|', Session::get('message'));
-
-         $type = $type == 'error' ?: 'danger';
-         $type = $type == 'message' ?: 'info';
-
-         return sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
-      }
-
-      return '';
 }
