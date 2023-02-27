@@ -77,11 +77,19 @@
                     <a href="My-Trip.html" class="btnds_menu logcng">
                         <i class="fa fa-plane mr-1"></i>My&nbsp;Trip </a>
                 </li>
+                @auth
                 <li>
+                    <a href="{{ url('dashboard') }}" class="btnds_menu logcng" >
+                        <i class="fa fa-user-o mr-1"></i>Dashboard </a>
+                    </li>
+                @else
+                    <li>
                     <a href="#" class="btnds_menu logcng" data-toggle="modal" data-target="#poplogin">
                         <i class="fa fa-user-o mr-1"></i>Log&nbsp;in </a>
-                </li>
-            </ul>
+                    </li>
+                    @endauth
+                </ul>
+
         </div>
     </section>
 </header>
@@ -132,18 +140,21 @@
                                 <h3>What's your email address?</h3>
                             </div>
 
+                         <form action="" method="POST"  id="requestemailOtp">
                             <div class="d-flex flx_hv">
-                                <div class="email_box">
-                                    <label>Email</label>
-                                    <div class="position-relative">
-                                        <input type="text" class="login_input" placeholder="Enter email address" />
+                                    <div class="email_box">
+                                        <label>Email</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="login_input" name="email" required placeholder="Enter email address" />
+                                        </div>
+                                    </div>
+
+                                    <div class="btn_poplog">
+                                        <button class="btnnxt requestemailOtpbtn"  type="submit">Next</button>
+                                        {{-- <button class="btnnxt" id="nxtotp" type="submit">Next</button> --}}
                                     </div>
                                 </div>
-
-                                <div class="btn_poplog">
-                                    <button class="btnnxt" id="nxtotp" type="submit">Next</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
 
 
@@ -154,28 +165,30 @@
                                 <h3>Continue with your account</h3>
                             </div>
 
-                            <div class="flx_hv">
-                                <P>Use the verification code we sent to <strong>dfg@gmail.com</strong> to log in.</P>
-                                <div class="email_box">
-                                    <label>4-digit verification code</label>
-                                    <div class="position-relative d-flex psrdotp">
-                                        <input type="text" class="login_input" />
-                                        <input type="text" class="login_input" />
-                                        <input type="text" class="login_input" />
-                                        <input type="text" class="login_input" />
+
+                            <form action="" method="POST"  id="verifyOtp">
+                                <div class="flx_hv">
+                                    <P>Use the verification code we sent to <strong class="gmailOtp"></strong> to log in.</P>
+                                    <div class="email_box">
+                                        <label>4-digit verification code</label>
+                                        <div class="position-relative d-flex psrdotp">
+                                            <input type="number" id="firstA"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
+                                            <input type="number" id="firstB"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
+                                            <input type="number" id="firstC"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
+                                            <input type="number" id="firstD"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
+                                        </div>
+                                        <button class="sntbtn" id="resendOtp" type="button">Send a new code</button>
                                     </div>
-                                    <button class="sntbtn" type="button">Send a new code</button>
+                                    <input type="hidden" id="getEmail"  name="email" value="">
+                                    <div class="btn_poplog">
+                                        <button class="btnnxt verifyOtpbtn" type="submit">Verify code</button>
+                                    </div>
+                                    <div class="rmb_bx text-center mt-2">
+                                        <input type="checkbox" id="Remember" name="Remember" value="">
+                                        <label for="Remember"> Remember me</label>
+                                    </div>
                                 </div>
-
-                                <div class="btn_poplog">
-                                    <button class="btnnxt" type="submit">Verify code</button>
-                                </div>
-                                <div class="rmb_bx text-center mt-2">
-                                    <input type="checkbox" id="Remember" name="Remember" value="">
-                                    <label for="Remember"> Remember me</label>
-
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 

@@ -17,7 +17,7 @@
                     <div class="tabsb d-flex">
                         <div class="sbt1 leftrds activetb">
                             <input type="radio" id="tab1" name="tab" checked>
-                            <label for="tab1">Rounsssd Trip</label>
+                            <label for="tab1">Round Trip</label>
                         </div>
                         <div class="sbt1">
                             <input type="radio" id="tab2" name="tab">

@@ -16,6 +16,124 @@ $(document).ready(function() {
         $(".login_view3").show();
     });
 
+    $("#resendOtp").on('click', function(e){
+        e.preventDefault();
+        const email  = $("#getEmail").val();
+
+        $.ajax({
+            url   : '/request_otp',
+            type:"POST",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{
+                email:email
+            },
+            dataType:'json',
+            beforeSend: function(msg) {
+                $('.requestemailOtpbtn').html(
+                    '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+                );
+                $('.requestemailOtpbtn').prop("disabled", true);
+            },
+            success:function(response){
+                if(response.status == 200) {
+                    toastr["success"]("Success!", response.message);
+                }else{
+                    $('.requestemailOtpbtn').prop("disabled", false);
+                    toastr["error"]("Error!", response.message);
+                }
+                console.log(response);
+                $('.loading-div').css('display','none');
+            },
+            error: function(response) {
+                $('.requestemailOtpbtn').prop("disabled", false);
+                $('.saveProfile').html(
+                    'Next'
+                );
+                $('.requestemailOtpbtn').prop("disabled", false);
+            }
+        });
+    });
+
+    $("#requestemailOtp").on('submit',function(event){
+        event.preventDefault();
+        var strData = $("#requestemailOtp").serializeArray();
+        $.ajax({
+            url   : '/request_otp',
+            type:"POST",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:strData,
+            dataType:'json',
+        beforeSend: function(msg) {
+            $('.requestemailOtpbtn').html(
+                '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+            );
+            $('.requestemailOtpbtn').prop("disabled", true);
+        },
+        success:function(response){
+            if(response.status == 200) {
+                toastr["success"]("Success!", response.message);
+                $(".gmailOtp").html(response.email);
+                $("#getEmail").val(response.email);
+                $(".login_view2").hide();
+                $(".login_view3").show();
+            }else{
+                $('.requestemailOtpbtn').prop("disabled", false);
+                toastr["error"]("Error!", response.message);
+            }
+            console.log(response);
+            $('.loading-div').css('display','none');
+        },
+        error: function(response) {
+            $('.requestemailOtpbtn').prop("disabled", false);
+            $('.saveProfile').html(
+                'Next'
+            );
+            $('.requestemailOtpbtn').prop("disabled", false);
+        }
+    });
+    });
+
+
+    $("#verifyOtp").on('submit',function(event){
+        event.preventDefault();
+        var strData = $("#verifyOtp").serializeArray();
+        $.ajax({
+            url   : '/verify-otp',
+            type:"POST",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:strData,
+            dataType:'json',
+        beforeSend: function(msg) {
+            $('.verifyOtpbtn').html(
+                '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+            );
+            $('.verifyOtpbtn').prop("disabled", true);
+        },
+        success:function(response){
+            if(response.status == 200) {
+                window.location.href ="/dashboard";
+                toastr["success"]("Success!", response.message);
+            }else{
+                $('.verifyOtpbtn').prop("disabled", false);
+                toastr["error"]("Error!", response.message);
+            }
+            console.log(response);
+            $('.loading-div').css('display','none');
+        },
+        error: function(response) {
+            toastr["error"]("Error!", response);
+            $('.verifyOtpbtn').prop("disabled", false);
+            $('.saveProfile').html(
+                'Next'
+            );
+            $('.verifyOtpbtn').prop("disabled", false);
+        }
+    });
+    });
+
+
+
+
     $("#bck_2").click(function() {
         $(".login_view2").show();
         $(".login_view3").hide();
@@ -496,3 +614,27 @@ $(document).ready(function() {
         })
         .scroll();
 });
+
+
+
+/**** focun next brtn  */
+var a = document.getElementById("firstA"),
+    b = document.getElementById("firstB"),
+    c = document.getElementById("firstC");
+    d = document.getElementById("firstD");
+
+    a.onkeyup = function() {
+        if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+            b.focus();
+        }
+    }
+    b.onkeyup = function() {
+        if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+            c.focus();
+        }
+    }
+    c.onkeyup = function() {
+        if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+            d.focus();
+        }
+    }

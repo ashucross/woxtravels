@@ -987,20 +987,7 @@
             $('.loading-div').css('display','none');
             localStorage.removeItem("travelers-details");
             if(response.success == true){
-                window.location.href = 'flight/booking-confirmation' + '/' + response.booking_id;
-
-            //   $('#contact_email').val(response.contact.email);
-            //   $('#contact_phone').val(response.contact.contact);
-            //  $('#amount').val(response.total.total_amount);
-            //  $('#currency').val(response.total.currency);
-            //   $('#payment').modal('show');
-            //   $('#bookingId').val(response.booking_id);
-            //    $('#contact_email-e').text(response.contact.email);
-            //   $('#contact_phone-p').text(response.contact.contact);
-            //  $('#amount-a').text(response.total.total_amount);
-            //  $('#currency-c').text(response.total.currency);
-            //   $('#payment').modal('show');
-            //   $('#bookingId').val(response.booking_id);
+                window.location.href = 'initiate-Payment' + '/' + response.booking_id;
             }
 
         },

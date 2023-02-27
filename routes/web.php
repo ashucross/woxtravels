@@ -11,6 +11,7 @@ use  App\Http\Controllers\StaticController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\EmailLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,8 @@ use App\Http\Controllers\FacebookController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/', [FlightController::class, 'index'])->name('flight');
 
 Route::get('/my-tips', [StaticController::class, 'mytips'])->name('my-tips');
@@ -38,6 +41,7 @@ Route::get('/flightList/details/', [FlightController::class, 'flightDetails'])->
 Route::get('/flightReview', [FlightController::class, 'flightReview'])->name('flightReview');
 Route::post('flight/booking', [FlightController::class, 'bookingFlight'])->name('booking');
 Route::get('flight/filter', [FlightController::class, 'flightfilter'])->name('filter');
+Route::get('initiate-Payment/{id}', [FlightController::class, 'inititatePayment'])->name('inititatePayment');
 Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkConfiration'])->name('booking.confirmation');
 // Route::post('/flight_order', [FlightController::class, 'flight_order'])->name('flight_order');
 
@@ -63,6 +67,19 @@ Route::get('/payment', [FlightController::class, 'payment'])->name('payment');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+
+Route::controller(FacebookController::class)->group(function(){
+    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
+    Route::get('auth/facebook/callback', 'handleFacebookCallback');
+});
+
+
+Route::controller(EmailLoginController::class)->group(function(){
+    Route::any('request_otp', 'requestOtp')->name('requestOtp');
+    Route::post('verify-otp', 'verifyOtp')->name('verifyOtp');
+});
+
+
 Route::group(['middleware' => ['auth']], function() {
     Route::prefix('dashboard')->name('dashboard.')->group( function(){
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard-index');
@@ -73,10 +90,6 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 
-Route::controller(FacebookController::class)->group(function(){
-    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
-    Route::get('auth/facebook/callback', 'handleFacebookCallback');
-});
 
 
 

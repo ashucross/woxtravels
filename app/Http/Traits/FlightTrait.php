@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Airport;
 use App\Models\FlightSearch;
 use App\Models\BookingDetail;
-use App\Helpers\Eweblink;
+
 use Illuminate\Support\Facades\Session;
 // use DB;
 use Log;
@@ -33,7 +33,7 @@ trait FlightTrait
     {
         $this->flightServices = $flightServices;
         $this->sessionId = Session::getId();
-        $_TOKEN = EwebLink::token('amadeus');
+        $_TOKEN = token('amadeus');
         $this->Token = $_TOKEN['access_token'];
     }
     public function index(Request $request)
@@ -211,19 +211,15 @@ trait FlightTrait
 
     public function flightList(Request $request)
     {
-        // dd();
         $data = meta_key();
         $tokenId = $request->session()->get('token');
-        // $flights =  FlightSearch::where('FS_sessionid', $tokenId)->get();
-        // Get
         $flightresult = Session::get('flights');
         $n = 10;
         $flights["data"]  = array_slice($flightresult["data"], 0, -$n);
         $flights["meta"] = $flightresult["meta"];
         $flights["dictionaries"] = $flightresult["dictionaries"];
         $flights["top_data"] = array_slice($flightresult["data"], -$n);
-        //  dd( $flightresult["top_data"]);
-        $calenderresult = ""; //file_get_contents();
+        $calenderresult = "";
         if (array_key_exists('errors', $flightresult)) {
             return redirect()->back()->withErrors([
                 'title' => $flightresult['errors'][0]['title'],
@@ -251,7 +247,6 @@ trait FlightTrait
 
     public function flightDetails()
     {
-
         $data = json_decode(request()->get('data'));
         $dictionaries = json_decode(request()->get('dictionaries'));
         $passangers = request()->get('px');
@@ -307,8 +302,6 @@ trait FlightTrait
     }
 
 
-
-
     public function bookingFlight(FlightBookingRequest $request)
     {
         $data = $request->except('__token');
@@ -341,6 +334,7 @@ trait FlightTrait
         $total = $userFlight['total'];
         $travele = $this->ticketBooking($travelers);
         $traveler = json_decode($travele, true);
+
         Log::info($traveler);
         if (array_key_exists('errors', $traveler)) {
             $errors =  ucfirst(str_replace("_", " ", $traveler["errors"][0]["detail"]));
@@ -388,13 +382,26 @@ trait FlightTrait
     }
 
 
-    public function  bkConfiration($id){
-        if(!empty($id)){
+    public function  inititatePayment($id)
+    {
+        if (!empty($id)) {
+            dd($id);
             $myBooking = BookingDetail::where('id', $id)->first();
             $data = meta_key();
-            return view('flight.booking-success', compact('myBooking','data'));
+            return view('flight.booking-success', compact('myBooking', 'data'));
         }
     }
+
+    public function  bkConfiration($id)
+    {
+        if (!empty($id)) {
+            dd($id);
+            $myBooking = BookingDetail::where('id', $id)->first();
+            $data = meta_key();
+            return view('flight.booking-success', compact('myBooking', 'data'));
+        }
+    }
+
     public function bookingConfirm(Request $request)
     {
         // $data = $request->except('_token');
@@ -553,102 +560,49 @@ trait FlightTrait
     public function payment()
     {
         // Define the API endpoint URL
-        $url = 'https://credimax.gateway.mastercard.com/api/rest/version/65/merchant/E14737953/session';
-
-        // Define the API request data as an array
-        $data = array(
-            'apiOperation' => 'CREATE_CHECKOUT_SESSION',
-            'order' => array(
-                'amount' => '10.00',
-                'currency' => 'BHD',
-                'id' => '21'
-            ),
-            'interaction' => array(
-                'operation' => 'PURCHASE',
-            ),
-        );
-
-        // Convert the request data to JSON format
-        $jsonData = json_encode($data);
-
-        // Create a cURL handle for the API request
-        $ch = curl_init();
-
-
-        // Set the cURL options
-        $url = $url;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "Authorization: Basic " . base64_encode("E14737953:3026fa2c9cdd93fbd29989d5fab40810"),
-            'acceptVersions: 3DS1,3DS2'
-        ));
-
-        // Send the request and get the response
-        $response = curl_exec($ch);
-        dd($response);
-        // Check for errors
-        if (curl_error($ch)) {
-            echo 'Error: ' . curl_error($ch);
-        } else {
-            echo 'Response: ' . $response;
-        }
-        die;
-
-
-
-
+        // $url = 'https://credimax.gateway.mastercard.com/api/rest/version/62/merchant/E14737953/session/';
+        // // Define the API request data as an array
+        // $data = array(
+        //     "apiOperation" => "CREATE_CHECKOUT_SESSION",
+        //     "order" => array(
+        //         "amount" => "10.00",
+        //         "currency" => "USD",
+        //         "id"  => "25",
+        //         "description"  => "Test Paymemnt"
+        //     ),
+        //     "interaction" => array(
+        //         "operation" => "AUTHORIZE",
+        //         "returnUrl" => "https://www.google.com/",
+        //         "cancelUrl" => "https://www.google.com/",
+        //         "merchant" => array(
+        //             "name" => "Woxtt"
+        //         ),
+        //         "displayControl" => array(
+        //             "billingAddress" => "HIDE"
+        //         )
+        //     )
+        // );
+        // $jsonData = json_encode($data);
+        // $ch = curl_init();
+        // $url = $url;
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //     "Content-Type: text/plain",
+        //     "Authorization: Basic bWVyY2hhbnQuRTE0NzM3OTUzOjMwMjZmYTJjOWNkZDkzZmJkMjk5ODlkNWZhYjQwODEw",
+        //     'acceptVersions: 3DS1,3DS2'
+        // ));
+        // $response = curl_exec($ch);
+        // dd($response);
+        // // Check for errors
+        // if (curl_error($ch)) {
+        //     echo 'Error: ' . curl_error($ch);
+        // } else {
+        //     echo 'Response: ' . $response;
+        // }
+        // die;
         return view('flight.payment');
-
-
-        // Set your credentials
-        $merchant_id = "E14737953";
-        $api_password = "3026fa2c9cdd93fbd29989d5fab40810";
-        $orderid = "21";
-
-        // Set the request data
-        $data = array(
-            "apiOperation" => "CREATE_CHECKOUT_SESSION",
-            "order" => array(
-                "amount" => "10.00",
-                "currency" => "USD",
-                "id"  => "25"
-            ),
-            "interaction" => array(
-                "operation" => "PURCHASE",
-                "returnUrl" => "https://example.com/return"
-            )
-        );
-
-        // Convert the data to JSON
-        $json_data = json_encode($data);
-
-        // Set the cURL options
-        $url = "https://credimax.gateway.mastercard.com/api/rest/version/61/merchant/$merchant_id/session";
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "Authorization: Basic " . base64_encode("$merchant_id:$api_password"),
-            'acceptVersions: 3DS1,3DS2'
-        ));
-
-        // Send the request and get the response
-        $response = curl_exec($ch);
-
-        // Check for errors
-        if (curl_error($ch)) {
-            echo 'Error: ' . curl_error($ch);
-        } else {
-            echo 'Response: ' . $response;
-        }
-
-        // Close the cURL session
-        curl_close($ch);
     }
 }
