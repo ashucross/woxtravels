@@ -10,7 +10,7 @@
             }
             Checkout.configure({
               session: {
-            	id: 'SESSION0002395117167M1739358I94'
+            	id: "{{ $sessionDataId }}"
        			}
             });
         </script>

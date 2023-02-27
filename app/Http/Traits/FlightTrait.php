@@ -382,16 +382,6 @@ trait FlightTrait
     }
 
 
-    public function  inititatePayment($id)
-    {
-        if (!empty($id)) {
-            dd($id);
-            $myBooking = BookingDetail::where('id', $id)->first();
-            $data = meta_key();
-            return view('flight.booking-success', compact('myBooking', 'data'));
-        }
-    }
-
     public function  bkConfiration($id)
     {
         if (!empty($id)) {
@@ -556,53 +546,27 @@ trait FlightTrait
     }
 
 
+    public function  inititatePayment($id)
+    {
+        if (!empty($id)) {
+            $myBooking = BookingDetail::where('id', $id)->first();
+            $prices = [];
+            foreach (json_decode($myBooking->booking_response)->passengers as $key => $passenger) {
+                $prices[] = $passenger->price;
+            }
+            $totalAmount = array_sum($prices);
+            // Define the API endpoint URL
+            $paymentType = "Flight Booking";
+            $sessionDataId = CREATE_CHECKOUT_SESSION($totalAmount, $id, $paymentType);
+            return view('flight.payment', compact('sessionDataId'));
+            // return view('flight.booking-success', compact('myBooking', 'data'));
+        }
+    }
+
 
     public function payment()
     {
-        // Define the API endpoint URL
-        // $url = 'https://credimax.gateway.mastercard.com/api/rest/version/62/merchant/E14737953/session/';
-        // // Define the API request data as an array
-        // $data = array(
-        //     "apiOperation" => "CREATE_CHECKOUT_SESSION",
-        //     "order" => array(
-        //         "amount" => "10.00",
-        //         "currency" => "USD",
-        //         "id"  => "25",
-        //         "description"  => "Test Paymemnt"
-        //     ),
-        //     "interaction" => array(
-        //         "operation" => "AUTHORIZE",
-        //         "returnUrl" => "https://www.google.com/",
-        //         "cancelUrl" => "https://www.google.com/",
-        //         "merchant" => array(
-        //             "name" => "Woxtt"
-        //         ),
-        //         "displayControl" => array(
-        //             "billingAddress" => "HIDE"
-        //         )
-        //     )
-        // );
-        // $jsonData = json_encode($data);
-        // $ch = curl_init();
-        // $url = $url;
-        // $ch = curl_init($url);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //     "Content-Type: text/plain",
-        //     "Authorization: Basic bWVyY2hhbnQuRTE0NzM3OTUzOjMwMjZmYTJjOWNkZDkzZmJkMjk5ODlkNWZhYjQwODEw",
-        //     'acceptVersions: 3DS1,3DS2'
-        // ));
-        // $response = curl_exec($ch);
-        // dd($response);
-        // // Check for errors
-        // if (curl_error($ch)) {
-        //     echo 'Error: ' . curl_error($ch);
-        // } else {
-        //     echo 'Response: ' . $response;
-        // }
-        // die;
+
         return view('flight.payment');
     }
 }

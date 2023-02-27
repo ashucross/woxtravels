@@ -411,3 +411,50 @@ function getFileName($fileName)
     }
     return $output;
 }
+
+
+function CREATE_CHECKOUT_SESSION($amout, $orderId, $paymentType)
+{
+    $merchantId = env("CREDIMAX_MERCH_ID");
+    $url = 'https://credimax.gateway.mastercard.com/api/rest/version/62/merchant/' . $merchantId . '/session/';
+    // Define the API request data as an array
+    $data = array(
+        "apiOperation" => "CREATE_CHECKOUT_SESSION",
+        "order" => array(
+            "amount" => $amout,
+            "currency" => "USD",
+            "id"  => $orderId,
+            "description"  => $paymentType
+        ),
+        "interaction" => array(
+            "operation" => "AUTHORIZE",
+            "returnUrl" => "https://www.woxtt.com/",
+            "cancelUrl" => "https://www.woxtt.com",
+            "merchant" => array(
+                "name" => "Woxtt"
+            ),
+            "displayControl" => array(
+                "billingAddress" => "HIDE"
+            )
+        )
+    );
+    $jsonData = json_encode($data);
+    $ch = curl_init();
+    $url = $url;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Content-Type: text/plain",
+        "Authorization: Basic bWVyY2hhbnQuRTE0NzM3OTUzOjMwMjZmYTJjOWNkZDkzZmJkMjk5ODlkNWZhYjQwODEw",
+        'acceptVersions: 3DS1,3DS2'
+    ));
+    $response = curl_exec($ch);
+    // Check for errors
+    if (curl_error($ch)) {
+        echo 'Error: ' . curl_error($ch);
+    } else {
+        return json_decode($response)->session->id;
+    }
+}
