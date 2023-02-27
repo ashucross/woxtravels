@@ -64,14 +64,14 @@
                 </li>
                 <li class="flx_lgs">
                     <a href="#" class="btnds_menu" data-toggle="modal" data-target="#poplanguage">
-                        <span class="mobile_lg_hd">Lang : {{$setting->language ?? ''}}</span>
+                        <span class="mobile_lg_hd">Lang : {{$setting->language ?? 'English'}}</span>
                         <!-- <span class="mobile_sml_hd">EN</span> -->
                         <span class="imglgsin">
                             <img src="{{asset('public/assets/images/AMR.png')}}" alt="" class="imgres" />
                         </span>
-                        <span class="mobile_lg_hd">{{$setting->country ?? ''}}</span>
+                        <span class="mobile_lg_hd">{{$setting->country ?? 'US'}}</span>
                         <span class="inr_c"> -
-                            <!-- <i class="fa fa-usd mr-1 ml-1"></i> -->{{$setting->currency ?? ''}} </span>
+                            <!-- <i class="fa fa-usd mr-1 ml-1"></i> -->{{$setting->currency ?? '$'}} </span>
                     </a>
                 </li>
                 <li>
