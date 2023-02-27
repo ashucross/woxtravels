@@ -47,6 +47,7 @@ Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkCon
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 Route::post('/search_hotel', [StayController::class, 'search_hotel'])->name('search_hotel');
+Route::post('/setRegion', [StayController::class, 'setRegion'])->name('setRegion');
 Route::get('/hotelDetails', [StayController::class, 'hotelDetails'])->name('hotelDetails');
 Route::get('/book_now', [StayController::class, 'book_now'])->name('book_now');
 Route::get('/loadMoredata', [StayController::class, 'loadMoredata'])->name('loadMoredata');

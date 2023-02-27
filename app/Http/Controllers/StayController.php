@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Countries;
 use App\Models\HotelsData;
 use App\Models\HotelFacilities;
+use App\Models\RegionalSetting;
 use App\Models\HotelDestination;
 
 class StayController extends Controller
@@ -88,6 +89,19 @@ class StayController extends Controller
             ]);
         }  */
         return view('hotel', compact('data','hotelsdata','cities'));
+    }
+    public function setRegion(Request $request){
+        $ip = $request->ip ?? ''; 
+        $language = $request->language ?? '';
+        $country = $request->country ?? '';
+        $currency = $request->currency ?? '';
+        RegionalSetting::updateOrCreate(['ip'=>$ip],[ 
+            'language'=>$language ?? '',
+            'country'=>$country ?? '',
+            'currency'=>$currency ?? '', 
+        ]);
+        
+        return redirect()->back()->with('success','Setting saved successfully');
     }
     public function loadMoredata(Request $request){
         $pagination = $request->pagination;

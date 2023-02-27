@@ -47,6 +47,7 @@ ul#ui-id-1 {
                <div class="boxsearching ">
                   <form method="post" id='searchHot' action='{{url("search_hotel")}}'>
                      @csrf
+                    
                      <div class="d-flex justify-content-between">
                         <div class="search_des d-flex justify-content-between ">
                            <div class="Fromwhere position-relative">

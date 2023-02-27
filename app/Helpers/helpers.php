@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Airport;
+use App\Models\Countries;
 use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
 
@@ -43,6 +44,16 @@ function getsignature()
         ]);
     }
 }
+
+function getcountries(){
+    $countries = Countries::get();
+    return $countries;
+}
+function getcurrencies(){
+    $currencies = Curren_Cies::get();
+    return $currencies;
+}
+
 
 function update_currencies()
 {
