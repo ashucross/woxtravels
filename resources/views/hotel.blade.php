@@ -375,7 +375,7 @@ ul#ui-id-1 {
          </div>
       </div>
       <div class="row">
-         @if(!empty($hotelsdata))
+        {{--  @if(!empty($hotelsdata))
             @if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0)
             @foreach($hotelsdata->hotels as $hotel)
             <?php $image = !empty($hotel->images) && count($hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata'.'/'.$hotel->images[0]->path : ''; ?>
@@ -398,9 +398,9 @@ ul#ui-id-1 {
             </div>
             @endforeach
             @endif
-         @endif 
+         @endif  --}}
          
-         <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">
                         <a href="hotel-details.html">
@@ -524,7 +524,7 @@ ul#ui-id-1 {
                         <h3>$99.00 <span>Price starts from</span></h3>
                      </div>
                   </div>
-               </div> -->
+               </div>
       </div>
       <div class="row ">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">

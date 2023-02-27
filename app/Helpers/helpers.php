@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Airport;
+use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
 
 function getsignature()
@@ -17,7 +18,7 @@ function getsignature()
             CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '']
         ));
         $resp = curl_exec($curl);
-        dd($resp);
+        // dd($resp);
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 200:  # OK
@@ -90,7 +91,7 @@ function getSuggestionitems($data, $country)
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 200:  # OK
-                    $hotels = json_decode($resp);
+                    $hotels = json_decode($resp); 
                     return ([
                         'status' => 200,
                         'data' => $hotels
