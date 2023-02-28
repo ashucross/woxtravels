@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css">
 @endsection
 @section('pageContent')
+<form method="post" id='searchHot' action='{{url("search_hotel")}}'>
+    @csrf
 <div class="modifyhead">
 
     <div class="mobile-filter">
@@ -35,8 +37,6 @@
                 @if(!empty($error))
                 <div class='alert alert-danger'>{{$error ?? ''}}</div>
                 @endif
-                <form method="post" id='searchHot' action='{{url("search_hotel")}}'>
-                    @csrf
                     <div class="d-flex justify-content-between">
 
                         <div class="search_des d-flex justify-content-between ">
@@ -303,7 +303,7 @@
                         </div>
 
                     </div>
-                </form>
+             
 
 
 
@@ -373,8 +373,8 @@
                                         </div> 
                                     </div> 
                                     <form> 
-                                        <input type="hidden" name="min-value" value=""> 
-                                        <input type="hidden" name="max-value" value=""> 
+                                        <input type="hidden" name="min-value" id="min-value" value=""> 
+                                        <input type="hidden" name="max-value" id="max-value" value=""> 
                                     </form> 
                                 </div> 
                             </div> 
@@ -1216,11 +1216,12 @@
                     <p>Our best prices have now loaded</p>
                 </h2>
                 <div class="ratingdrop">
-                    <select class="lidr_pc">
-                        <option>Rating</option>
-                        <option>Price&nbsp;&nbsp;:&nbsp;&nbsp;low to high</option>
-                        <option>Price&nbsp;&nbsp;:&nbsp;&nbsp;high to low</option>
-                        <option>Distance</option>
+                    <select class="lidr_pc orderby" name="orderby">
+                        <!-- <option>Rating</option> -->
+                        <option value="">Select</option>
+                        <option value="low">Price&nbsp;&nbsp;:&nbsp;&nbsp;low to high</option>
+                        <option value="high">Price&nbsp;&nbsp;:&nbsp;&nbsp;high to low</option>
+                       <!--  <option>Distance</option> -->
                     </select>
                 </div>
             </div>
@@ -1494,7 +1495,7 @@
     </section>
 
 </div>
-
+</form>
 @endsection
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -3363,8 +3364,8 @@ $(document).ready(function() {
         var moneyFormat = wNumb({
             decimals: 0,
             thousand: ',',
-            prefix: '$'
-        });
+            prefix: ''
+        }); 
         var minVal = $('#min-value').val();
         var maxVal = $('#max-value').val();
         noUiSlider.create(rangeSlider, {
@@ -3383,9 +3384,8 @@ $(document).ready(function() {
             const high = moneyFormat.from(values[1]);
             document.getElementById('slider-range-value1').innerHTML = values[0];
             document.getElementById('slider-range-value2').innerHTML = values[1];
-            document.getElementsByName('min-value').value = moneyFormat.from(values[0]);
-            document.getElementsByName('max-value').value = moneyFormat.from(values[1]);
-            
+            $('#min-value').val(moneyFormat.from(values[0]));
+            $('#max-value').val(moneyFormat.from(values[1])); 
         });
    
 
@@ -3466,6 +3466,26 @@ $(document).ready(function() {
             form.submit();
         },
     });
+
+    $("#min-value,#max-value").on("click", function(e) {
+        $('.searchHot').submit();
+    });
+
+    $(document).on("change",'.orderby', function(e) {
+        var val = $(this).val();
+        var country_select  = $('.country_select ').val(); 
+        $.ajax({
+        type: "POST",
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        url: "{{url('search_hot')}}",
+        data: {orderBy:val,country_select :country_select },
+        dataType: 'json',
+            success: function(data){
+                $(".largebox_listing").html(data.html);
+            }
+        });
+    });
+
 
     $(".quantity1").on("click", ".plus", function(e) {
         let _Token = $(this).attr('slug');
