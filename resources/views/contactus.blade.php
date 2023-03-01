@@ -43,6 +43,11 @@
                 <a href="#">Open 24/7.</a>
             </div>
         </div>
+        @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
         <div class="whybox text-center topvx">
             <div class="form_txt_contact">
                 <span>DROP US A LINE</span>
@@ -50,31 +55,33 @@
                 </h2>
                 <p>If you have question or would like more information on our works, Please complete the form and we’ll aim get back to you</p>
             </div>
+            <form method="post" id='searchHot' action='{{url("submit_contact_form")}}'>
+                     @csrf
             <div class="contact_form">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" placeholder="First Name" />
+                            <input type="text" class="intsa" name='firstname' placeholder="First Name" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" placeholder="Last Name" />
+                            <input type="text" class="intsa" name='lastname' placeholder="Last Name" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" placeholder="Email" />
+                            <input type="text" class="intsa" name='email' placeholder="Email" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" placeholder="Mobile" />
+                            <input type="text" class="intsa" name='mobile' placeholder="Mobile" />
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="position-relative">
-                            <textarea name="" class="intsa" placeholder="Message" id="" cols="10" rows="5"></textarea>
+                            <textarea class="intsa" name='message' placeholder="Message" id="" cols="10" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-12">
@@ -85,6 +92,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </section>

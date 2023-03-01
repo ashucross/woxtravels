@@ -22,6 +22,19 @@ class StayController extends Controller
         //
     }
 
+    public function submit_contact_form(Request $request)
+    {
+        $firstname = $request->firstname;
+        $lastname = $request->lastname;
+        $email = $request->email;
+        $mobile = $request->mobile;
+        $message = $request->message; 
+        $msg = "Woxtavel : Contact us request # By ".$firstname.' '.$lastname.'. Email : '.$email;
+        sendWhatsAppMessage($msg.'. Message : '.$message,env('ADMIN_WHATSAPP_NUMBER'));
+        return redirect()->back()->with('success','Thank you for contacting us, we will get back to you soon.'); 
+    }
+
+
     public function index(Request $request)
     {
         // sendWhatsAppMessage('HI test msg','+918894254007');
