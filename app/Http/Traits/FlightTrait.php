@@ -114,6 +114,7 @@ trait FlightTrait
             ));
 
             $response = curl_exec($curlF);
+            dd($response);
             curl_close($curlF);
             $dataArray = json_decode($response, true);
             $httpcode = curl_getinfo($curlF, CURLINFO_HTTP_CODE);
