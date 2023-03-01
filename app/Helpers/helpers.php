@@ -223,21 +223,7 @@ function searchHotel($data, $params = null)
     $signature = $data;
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
-    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
-    /*  $post = [
-            'stay' => ([
-                "checkIn"=> "2023-06-15",
-                "checkOut"=> "2023-06-16"
-            ]),
-            "occupancies"=> array([
-                "rooms"=> 1,
-                "adults"=> 1,
-                "children"=> 0
-            ]),
-            "destination"=> ([
-                "code"=> "MCO"
-            ])
-        ]; */
+    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels"; 
     $dates = explode('-', $params['checkin']);
     $post = [
         'stay' => ([
@@ -297,6 +283,8 @@ function searchHotel($data, $params = null)
         ]);
     }
 }
+
+
 
 
 

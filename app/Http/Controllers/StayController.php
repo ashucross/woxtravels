@@ -194,6 +194,23 @@ class StayController extends Controller
         return view('search_hotel', compact('data','search_hotels','params','cities','error'));
     }
 
+    
+    function search_hot(Request $request)
+    {
+        $orderBy = $request->orderBy ?? '';
+        if(!empty($orderBy)){
+            if($orderBy == 'low'){
+                $orderbyval = 'asc';
+            }else{
+                $orderbyval = 'desc'; 
+            } 
+            $search_hotels = HotelsData::where('destinationCode',$request->country_select)->orderBy('minRate',$orderbyval)->get();
+            $returnHTML = view('filter_search_hotels',compact('search_hotels','orderBy'))->render();
+            return response()->json(array('success' => true, 'html'=>$returnHTML));
+        }
+    } 
+
+
     public function getSuggestionitems(Request $request)
     {  
         $hotels = [];
