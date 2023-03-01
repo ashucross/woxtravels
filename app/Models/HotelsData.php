@@ -28,7 +28,8 @@ class HotelsData extends Model
         'ranking',
         'images',
         'web', 
+        'noDecimalPrice', 
     ];
-
+//ALTER TABLE `hotel_data` ADD `noDecimalPrice` INT(20) NULL AFTER `web`;
 
 }

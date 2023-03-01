@@ -4,6 +4,55 @@ use App\Models\Airport;
 use App\Models\Countries;
 use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Request;
+use Twilio\Rest\Client;
+
+function sendWhatsAppMessage(string $message, string $recipient)
+{
+    $twilio_whatsapp_number = env('TWILIO_WHATSAPP_NUMBER');
+    $account_sid = env("TWILIO_SID");
+    $auth_token = env("TWILIO_AUTH_TOKEN");
+    $client = new Client($account_sid, $auth_token);
+    $res = $client->messages
+        ->create(
+            'whatsapp:'.$recipient, // to
+            [
+                "from" => 'whatsapp:'.$twilio_whatsapp_number,
+                "body" => $message
+            ]
+        );
+    return $res;
+}
+
+function listenToReplies(Request $request)
+{
+    $from = $request->input('From');
+    $body = $request->input('Body');
+
+    $client = new \GuzzleHttp\Client();
+    try {
+        $response = $client->request('GET', "https://api.github.com/users/$body");
+        $githubResponse = json_decode($response->getBody());
+        if ($response->getStatusCode() == 200) {
+            $message = "*Name:* $githubResponse->name\n";
+            $message .= "*Bio:* $githubResponse->bio\n";
+            $message .= "*Lives in:* $githubResponse->location\n";
+            $message .= "*Number of Repos:* $githubResponse->public_repos\n";
+            $message .= "*Followers:* $githubResponse->followers devs\n";
+            $message .= "*Following:* $githubResponse->following devs\n";
+            $message .= "*URL:* $githubResponse->html_url\n";
+            sendWhatsAppMessage($message, $from);
+        } else {
+            sendWhatsAppMessage($githubResponse->message, $from);
+        }
+    } catch (RequestException $th) {
+        $response = json_decode($th->getResponse()->getBody());
+        sendWhatsAppMessage($response->message, $from);
+    }
+    return;
+}
+
 
 function getsignature()
 {
@@ -45,11 +94,13 @@ function getsignature()
     }
 }
 
-function getcountries(){
+function getcountries()
+{
     $countries = Countries::get();
     return $countries;
 }
-function getcurrencies(){
+function getcurrencies()
+{
     $currencies = Curren_Cies::get();
     return $currencies;
 }
@@ -65,23 +116,24 @@ function update_currencies()
     $resp = curl_exec($curl);
     $currencies = json_decode($resp);
     $currencies = (array) $currencies->data;
-    if(!empty($currencies)){
-        foreach($currencies as $key => $curr){
-            $exists = Curren_Cies::where('code',$key)->first();
-            if($exists){
-                Curren_Cies::where('code',$key)->update([
-                    'code'=>$key,
-                    'value'=> $curr
+    if (!empty($currencies)) {
+        foreach ($currencies as $key => $curr) {
+            $exists = Curren_Cies::where('code', $key)->first();
+            if ($exists) {
+                Curren_Cies::where('code', $key)->update([
+                    'code' => $key,
+                    'value' => $curr
                 ]);
-            } else{
+            } else {
                 Curren_Cies::create([
-                    'code'=>$key,
-                    'value'=> $curr
+                    'code' => $key,
+                    'value' => $curr
                 ]);
             }
         }
     }
-    echo 'currencies updated';die;
+    echo 'currencies updated';
+    die;
 }
 
 function getSuggestionitems($data, $country)
@@ -102,7 +154,7 @@ function getSuggestionitems($data, $country)
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 200:  # OK
-                    $hotels = json_decode($resp); 
+                    $hotels = json_decode($resp);
                     return ([
                         'status' => 200,
                         'data' => $hotels
@@ -223,7 +275,7 @@ function searchHotel($data, $params = null)
     $signature = $data;
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
-    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels"; 
+    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
     $dates = explode('-', $params['checkin']);
     $post = [
         'stay' => ([
@@ -283,8 +335,3 @@ function searchHotel($data, $params = null)
         ]);
     }
 }
-
-
-
-
-

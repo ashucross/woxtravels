@@ -31,6 +31,7 @@ class HotelsData extends Migration
             $table->text('ranking');  
             $table->text('images');  
             $table->text('web');  
+            $table->integer('noDecimalPrice');  
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class StayController extends Controller
 
     public function index(Request $request)
     {
+        // sendWhatsAppMessage('HI test msg','+918894254007');
         // update_currencies();
         
         ini_set('max_execution_time', '0');
@@ -137,7 +138,7 @@ class StayController extends Controller
         $params = $request->all() ?? '';  
         $signature = getsignature();  
         $search_hotels = [];  
-        if($signature['status'] == 200){
+        if(!empty($signature) && $signature['status'] == 200){
             $gethotels = searchHotel($signature['data'],$params); 
             if($gethotels['status'] == 203){
                 $error = $gethotels['message'] ?? '';
@@ -158,6 +159,7 @@ class StayController extends Controller
                             'categoryName'=>$details['data']->categoryName ?? '',
                             'destinationCode'=>$details['data']->destinationCode ?? '',
                             'destinationName'=>$details['data']->destinationName ?? '',
+                            'noDecimalPrice'=>round($details['data']->noDecimalPrice) ?? '',
                             'minRate'=>$details['data']->minRate ?? '',
                             'maxRate'=>$details['data']->maxRate ?? '', 
                             'currency'=>$details['data']->currency ?? '',
@@ -187,9 +189,7 @@ class StayController extends Controller
             } 
         }
         }else{ 
-            return ([
-                'status'=>$signature['status']
-            ]);
+            $search_hotels = [];
         }
         return view('search_hotel', compact('data','search_hotels','params','cities','error'));
     }
