@@ -34,7 +34,7 @@ trait FlightTrait
         $this->flightServices = $flightServices;
         $this->sessionId = Session::getId();
         $_TOKEN = token('amadeus');
-        $this->Token = $_TOKEN['access_token'];
+        $this->Token = $_TOKEN['access_token'] ?? '';
     }
     public function index(Request $request)
     {
