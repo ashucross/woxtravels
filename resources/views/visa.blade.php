@@ -32,7 +32,14 @@
             <h1>Get Visa Assistance Now</h1>
             <p>We're bringing you a new level of comfort.</p>
         </div>
-        <form id="visa-enquiry" method="Post">
+        <form id="visa-enquiry" action="{{url('visa_enquiry')}}" method="Post" enctype="multipart/form-data">
+          
+            @csrf
+            @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
             <div class="newvisa">
                 <div class="twobox">
                     <div class="boxvisa wi50">
@@ -60,7 +67,7 @@
                 </div>
                 <div class="boxvisa ">
                     <i class="fa fa-flag iconal_visa"></i>
-                    <select class="visainp txtind" id="visa_type" name="visa_type">
+                    <select class="visainp txtind" id="nationality" name="nationality">
                         <option hidden data-ioshidden value="">Nationality</option>
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
@@ -520,7 +527,7 @@
                      </div> -->
                 <div class="twobox">
                     <div class="boxvisa wi50">
-                        <input type="file" class="hideup" placeholder=" ">
+                        <input type="file" class="hideup" placeholder=" " name="passport">
                         <span class="uptxt_cs"><i class="fa fa-upload mr-2"></i>Upload Passport copy </span>
                     </div>
                     <!-- <div class="boxvisa wi50">

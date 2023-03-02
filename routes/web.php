@@ -60,6 +60,7 @@ Route::get('/package-list/{destination}', [AttractionController::class, 'package
 Route::get('/package/{city}/{package}', [AttractionController::class, 'details'])->name('packages');
 
 Route::get('/visa', [VisaController::class, 'index'])->name('visa');
+Route::post('/visa_enquiry', [VisaController::class, 'visa_enquiry'])->name('visa_enquiry');
 
 Route::get('/insurance', [InsuranceController::class, 'index'])->name('insurance');
 
