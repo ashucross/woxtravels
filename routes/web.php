@@ -12,6 +12,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\EmailLoginController;
+use App\Http\Controllers\PackageQueryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,6 +85,11 @@ Route::controller(EmailLoginController::class)->group(function(){
 });
 
 
+Route::controller(PackageQueryController::class)->group(function(){
+    Route::post('query/package/store', 'store')->name('query.package');
+});
+
+
 Route::group(['middleware' => ['auth']], function() {
     Route::prefix('dashboard')->name('dashboard.')->group( function(){
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard-index');
@@ -92,6 +98,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/profile/update/image', [DashboardController::class, 'updateImage'])->name('updateImage');
     });
 });
+
 
 
 

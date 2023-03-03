@@ -14,15 +14,15 @@ class VisaEnquires extends Migration
     public function up()
     {
         Schema::create('visa_enquries', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('first_name'); 
-            $table->string('last_name');  
-            $table->string('phone_no');  
-            $table->text('email_id');  
-            $table->string('nationality');  
-            $table->string('visa_type');  
-            $table->text('message');  
-            $table->text('passport');  
+            $table->id()->autoIncrement();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone_no');
+            $table->text('email_id');
+            $table->string('nationality');
+            $table->string('visa_type');
+            $table->text('message');
+            $table->text('passport');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Locations;
 use App\Models\Packages;
+use App\Models\PackageGallery;
 use App\Models\PackageItineraries;
 use App\Models\Addons;
 use App\Models\PackageHotels;
@@ -78,8 +79,10 @@ class AttractionController extends Controller
         $PkgDetls = Packages::where('slug', collect(request()->segments())->last())->orderBy('package_name', 'asc')->first();
 
         $inclusions = Inclusion::whereIn('id', explode(",", $PkgDetls->package_inclusions))->get();
+        // dd($PkgDetls);
         $exclusions = Exclusions::whereIn('id', explode(",", $PkgDetls->package_exclusions))->get();
         $packageItineraries = PackageItineraries::where('package_id', $PkgDetls->id)->get();
+        $packageGallery = PackageGallery::where('package_id', $PkgDetls->id)->get();
         $hotels = PackageHotels::select('hotels.id', 'hotels.name as hotelName', 'hotels.image_alt', 'hotels.image', 'hotels.description', 'hotels.amenities', 'hotels.help_line_no', 'hotels.email', 'hotels.address')->join('hotels', 'hotels.id', '=', 'package_hotels.hotel_name')->where('package_hotels.package_id', $PkgDetls->id)->get();
         $addon = Addons::whereIn('id', explode(",", $PkgDetls->addon))->get();
         $data = array(
@@ -97,7 +100,8 @@ class AttractionController extends Controller
             'exclusions' => $exclusions,
             'packageItineraries' => $packageItineraries,
             'hotels' => $hotels,
-            'addon' => $addon
+            'addon' => $addon,
+            'packageGallery' => $packageGallery
         );
         // dd($data);
         return view('packagesDetails', compact('data'));

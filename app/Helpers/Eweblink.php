@@ -4,6 +4,7 @@
 use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
 use App\Models\Airport;
+use App\Models\MediaImage;
 
 // Creating amadeus token
 function token($_APIPROVIDER)
@@ -457,4 +458,10 @@ function CREATE_CHECKOUT_SESSION($amout, $orderId, $paymentType)
     } else {
         return json_decode($response)->session->id;
     }
+}
+
+
+function MediaImage($package_gallery_image){
+    $fetchggimage = MediaImage::where('id', $package_gallery_image)->first();
+    return $fetchggimage;
 }
