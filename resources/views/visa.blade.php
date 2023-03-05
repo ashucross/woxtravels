@@ -40,20 +40,31 @@
                     {{ session()->get('success') }}
                 </div>
             @endif
+            @if(count($errors))
+            <div class="form-group">
+                <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <div class="newvisa">
                 <div class="twobox">
                     <div class="boxvisa wi50">
                         <i class="fa fa-user iconal_visa"></i>
-                        <input type="text" class="visainp" id="first_name" name="first_name" placeholder="First Name ">
+                        <input type="text" class="visainp" id="first_name" name="first_name" placeholder="First Name " required>
                     </div>
                     <div class="boxvisa wi50">
                         <i class="fa fa-user iconal_visa"></i>
-                        <input type="text" class="visainp" id="last_name" name="last_name" placeholder="Last Name ">
+                        <input type="text" class="visainp" id="last_name" name="last_name" placeholder="Last Name " required>
                     </div>
                 </div>
                 <div class="boxvisa ">
                     <i class="fa fa-phone iconal_visa"></i>
-                    <input type="text" class="visainp" id="phone_no" name="phone_no" placeholder="Mobile No ">
+                    <input type="text" class="visainp" required id="phone_no" name="phone_no" placeholder="Mobile No ">
                 </div>
                 <!-- <div class="twobox">
                      <div class="boxvisa wi50">
@@ -63,11 +74,11 @@
                      </div> -->
                 <div class="boxvisa">
                     <i class="fa fa-envelope iconal_visa"></i>
-                    <input type="text" class="visainp" id="email_id" name="email_id" placeholder="Email ">
+                    <input type="email" class="visainp" required id="email_id" name="email_id" placeholder="Email ">
                 </div>
                 <div class="boxvisa ">
                     <i class="fa fa-flag iconal_visa"></i>
-                    <select class="visainp txtind" id="nationality" name="nationality">
+                    <select class="visainp txtind" id="nationality" required name="nationality">
                         <option hidden data-ioshidden value="">Nationality</option>
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
@@ -527,7 +538,7 @@
                      </div> -->
                 <div class="twobox">
                     <div class="boxvisa wi50">
-                        <input type="file" class="hideup" placeholder=" " name="passport">
+                        <input type="file" class="hideup" placeholder=" " required name="passport">
                         <span class="uptxt_cs"><i class="fa fa-upload mr-2"></i>Upload Passport copy </span>
                     </div>
                     <!-- <div class="boxvisa wi50">
@@ -536,7 +547,7 @@
                         </div> -->
                     <div class="boxvisa wi50">
                         <i class="fa fa-cc-visa iconal_visa"></i>
-                        <select class="visainp txtind" id="visa_type" name="visa_type">
+                        <select class="visainp txtind" id="visa_type" name="visa_type" required>
                             <option hidden data-ioshidden value="">Visa Type</option>
                             <option>Bahrain Visa</option>
                             <option>Dubai Visa </option>
@@ -550,7 +561,7 @@
                 </div>
                 <div class="boxvisa msgtop_vic">
                     <i class="fa fa-edit iconal_visa "></i>
-                    <textarea class="visainp heightauto" placeholder="Additional Message" id="message" name="message" cols="2" rows="2"></textarea>
+                    <textarea class="visainp heightauto" placeholder="Additional Message" required id="message" name="message" cols="2" rows="2"></textarea>
                 </div>
                 <div class="boxvisa">
                     <button type="submit" class="btn-grad ftbtn_src"><i class="fa fa-paper-plane-o mr-2" aria-hidden="true"></i>Submit</button>

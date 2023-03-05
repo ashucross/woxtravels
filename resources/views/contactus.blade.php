@@ -48,6 +48,7 @@
                 {{ session()->get('success') }}
             </div>
         @endif
+        
         <div class="whybox text-center topvx">
             <div class="form_txt_contact">
                 <span>DROP US A LINE</span>
@@ -55,33 +56,44 @@
                 </h2>
                 <p>If you have question or would like more information on our works, Please complete the form and we’ll aim get back to you</p>
             </div>
+            @if(count($errors))
+            <div class="form-group">
+                <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <form method="post" id='searchHot' action='{{url("submit_contact_form")}}'>
                      @csrf
             <div class="contact_form">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" name='firstname' placeholder="First Name" />
+                            <input type="text" class="intsa" name='firstname' placeholder="First Name" required/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" name='lastname' placeholder="Last Name" />
+                            <input type="text" class="intsa" name='lastname' placeholder="Last Name" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" name='email' placeholder="Email" />
+                            <input type="email" class="intsa" name='email' placeholder="Email" required/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="position-relative">
-                            <input type="text" class="intsa" name='mobile' placeholder="Mobile" />
+                            <input type="text" class="intsa" name='mobile' placeholder="Mobile" required />
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="position-relative">
-                            <textarea class="intsa" name='message' placeholder="Message" id="" cols="10" rows="5"></textarea>
+                            <textarea class="intsa" name='message' placeholder="Message" required id="" cols="10" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-12">

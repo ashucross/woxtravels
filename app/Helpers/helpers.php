@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 
 function sendWhatsAppMessage(string $message, string $recipient)
-{
+{ 
     $twilio_whatsapp_number = env('TWILIO_WHATSAPP_NUMBER');
     $account_sid = env("TWILIO_SID");
     $auth_token = env("TWILIO_AUTH_TOKEN");

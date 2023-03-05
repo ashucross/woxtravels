@@ -24,6 +24,13 @@ class StayController extends Controller
 
     public function submit_contact_form(Request $request)
     {
+        $this->validate(request(), [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'mobile' => 'required',
+            'email' => 'required', 
+            'message' => 'required',
+        ]);
         $firstname = $request->firstname;
         $lastname = $request->lastname;
         $email = $request->email;

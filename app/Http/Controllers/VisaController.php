@@ -20,6 +20,7 @@ class VisaController extends Controller
     }
     public function index(Request $request)
     {
+        
         $data = array(
             '_MetaTitle' => 'Visa',
             '_MetaKeywords' => '',
@@ -36,6 +37,15 @@ class VisaController extends Controller
     public function visa_enquiry(Request $request)
     {
         // dd($request->all());
+        $this->validate(request(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_no' => 'required',
+            'email_id' => 'required',
+            'visa_type' => 'required',
+            'nationality' => 'required',
+            'message' => 'required',
+        ]);
         $first_name = $request->first_name ?? '';
         $last_name = $request->last_name ?? '';
         $phone_no = $request->phone_no ?? '';
@@ -75,7 +85,12 @@ class VisaController extends Controller
             ];
             \Mail::to($email_id)->send(new VisaEnquiryEmail($mailData));
             $msg = "Woxtavel : Visa assistance request submitted successfully # By ".$first_name.' '.$last_name.'. Email : '.$email_id;
-            sendWhatsAppMessage($msg.'. Message : '.$message,env('ADMIN_WHATSAPP_NUMBER'));
+            if(!empty(env('ADMIN_WHATSAPP_NUMBER'))){
+                sendWhatsAppMessage($msg.'. Message : '.$message,env('ADMIN_WHATSAPP_NUMBER'));
+            }
+            if(!empty($phone_no)){
+                sendWhatsAppMessage($msg.'. Message : '.$message,$phone_no);
+            }
         } 
         return redirect()->back()->with('success','You request is under process, we will contact you within 24 hours.');
     }
