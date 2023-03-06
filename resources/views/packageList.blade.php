@@ -10,113 +10,103 @@
 
 <!-- The send query -->
 <div class="popsend">
-<div class="modal fade" id="sendquery">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    <h4 class="modal-title"><i class="fa fa-envelope mr-2"></i>Send Enquiry </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-    
-      <div class="modal-body">
-       <div class="form_pop_send">
-<div class="row">
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">Name</label>
-    <input type="text" class="form-control" placeholder="Enter Name" >
-  </div>
-    </div>
+    <div class="modal fade" id="sendquery">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h4 class="modal-title"><i class="fa fa-envelope mr-2"></i>Send Enquiry </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">Email</label>
-    <input type="text" class="form-control" placeholder="Enter Email" >
-  </div>
-    </div>
+                <div class="modal-body">
+                    <div class="form_pop_send">
+                        <form method="POST" class="inqueryForm" id="needs-validation" novalidate>
+                            @csrf
+                            <input type="hidden" name="package_id"  id="package_slug" value="">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">Name</label>
+                                        <input type="text" required class="form-control" name="cname"
+                                            placeholder="Enter Name">
+                                    </div>
+                                </div>
 
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">Country Of Residence</label>
-    <input type="text" class="form-control" placeholder="Enter Country Of Residence" >
-  </div>
-    </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">Email</label>
+                                        <input type="text" required class="form-control" name="email"
+                                            placeholder="Enter Email">
+                                    </div>
+                                </div>
 
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">City</label>
-    <input type="text" class="form-control" placeholder="Enter City" >
-  </div>
-    </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">Country Of Residence</label>
+                                        <input type="text" required class="form-control" name="residence"
+                                            placeholder="Enter Country Of Residence">
+                                    </div>
+                                </div>
 
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">Phone Number</label>
-    <input type="text" class="form-control" placeholder="Enter City" >
-  </div>
-    </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">City</label>
+                                        <input type="text" required class="form-control" name="city"
+                                            placeholder="Enter City">
+                                    </div>
+                                </div>
 
-    <div class="col-sm-6">
-    <div class="form-group">
-    <label for="Name">Number of Guest</label>
-    <input type="text" class="form-control" placeholder="Enter Number of Guest" >
-  </div>
-    </div>
-    <div class="col-sm-12">
-    <div class="form-group">
-    <label for="Name">Travel Month</label>
-    <select>
-        <option>Select Travel Month</option>
-        <option>January</option>
-        <option>February</option>
-        <option>March</option>
-        <option>April</option>
-        <option>May</option>
-        <option>June</option>
-        <option>July</option>
-        <option>August</option>
-        <option>September</option>
-        <option>October</option>
-        <option>November</option>
-        <option>December</option>
-    </select>
-  </div>
-    </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">Phone Number</label>
+                                        <input type="number" required class="form-control" name="phone"
+                                            placeholder="Enter City">
+                                    </div>
+                                </div>
 
-   
-
-    <div class="col-sm-12">
-    <div class="form-group">
-    <label for="Name">Additional Message</label>
-    <textarea name="" id="" cols="30" rows="3" placeholder="Enter Additional Message"></textarea>
-  </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Name">Number of Guest</label>
+                                        <input type="text" class="form-control" required name="tGuest"
+                                            placeholder="Enter Number of Guest">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="Name">Travel Month</label>
+                                        <select name="tMonth">
+                                            <option>Select Travel Month</option>
+                                            <option>January</option>
+                                            <option>February</option>
+                                            <option>March</option>
+                                            <option>April</option>
+                                            <option>May</option>
+                                            <option>June</option>
+                                            <option>July</option>
+                                            <option>August</option>
+                                            <option>September</option>
+                                            <option>October</option>
+                                            <option>November</option>
+                                            <option>December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="Name">Additional Message</label>
+                                        <textarea name="aMessage" id="" cols="30" rows="3"
+                                            placeholder="Enter Additional Message"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sbt_pop">
+                                <button type="submit" class="btn-grad ftbtn_src submit_form">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    
 </div>
-      
-      
-<div class="sbt_pop">
-<button type="submit" class="btn-grad ftbtn_src">Submit</button>
-</div>
-
-
-
-       </div>
-      </div>
-
-     
-    </div>
-  </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
 
 <div class="modifyhead">
     <div class="mobile-filter">
@@ -182,7 +172,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" href="#Popularfilters" aria-expanded="true">
+                                <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true"
+                                    href="#Popularfilters" aria-expanded="true">
                                     <div class="txtftr">
                                         <h6>Flights</h6>
                                         <span>Clear</span>
@@ -195,12 +186,16 @@
                                 <div class="checkftr">
                                     <ul class="check-boxes-custom list-checkboxes">
                                         <li>
-                                            <label for="WithFlight1" class="label-container checkbox-default">With Flight <input name="WithFlight" class="flightfilter" id="WithFlight1" type="checkbox" value="1">
+                                            <label for="WithFlight1" class="label-container checkbox-default">With
+                                                Flight <input name="WithFlight" class="flightfilter" id="WithFlight1"
+                                                    type="checkbox" value="1">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
-                                            <label for="WithoutFlight1" class="label-container checkbox-default">Without Flight <input name="WithoutFlight" class="Verygoodrating" id="WithoutFlight1" type="checkbox" value="1">
+                                            <label for="WithoutFlight1" class="label-container checkbox-default">Without
+                                                Flight <input name="WithoutFlight" class="Verygoodrating"
+                                                    id="WithoutFlight1" type="checkbox" value="1">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </li>
@@ -213,7 +208,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#Hotelrating" aria-expanded="true">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Hotelrating"
+                                    aria-expanded="true">
                                     <div class="txtftr">
                                         <h6>Duration</h6>
                                         <span>Clear</span>
@@ -234,7 +230,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#Facilities" aria-expanded="true">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#Facilities"
+                                    aria-expanded="true">
                                     <div class="txtftr">
                                         <h6>Destination</h6>
                                         <span>Clear</span>
@@ -284,7 +281,8 @@
                         <div class="list_hotel_img">
                             <div class="lgzoomimg">
                                 <a href="#">
-                                    <img src="{{asset('public/assets/images/Hera.jpg')}}" class="img-res" alt="{{$pckg->package_image_alt}}" />
+                                    <img src="{{asset('public/assets/images/Hera.jpg')}}" class="img-res"
+                                        alt="{{$pckg->package_image_alt}}" />
                                 </a>
                             </div>
                         </div>
@@ -308,11 +306,13 @@
                         <div class="pribtns">
                             <div class="priceshow">
                                 <h3>
-                                    <i class="fa fa-dollar mr-1"></i>{{number_format($pckg->sales_price, 0)}} <span>Price/Person</span>
+                                    <i class="fa fa-dollar mr-1"></i>{{number_format($pckg->sales_price, 0)}}
+                                    <span>Price/Person</span>
                                 </h3>
                             </div>
                             <div class="hotslc btns_ltr ">
-                                <a href="#" data-toggle="modal" data-target="#sendquery" class="btn-orng ftbtn_src">
+                                <a href="#" data-toggle="modal" data-id="{{$pckg->slug}}"
+                                    class="btn-orng ftbtn_src sendquery">
                                     <i class="fa fa-envelope mr-1"></i>Send Enquiry </i>
                                 </a>
                                 <a href="{{url('package/'.$citySlug.'/'.$pckg->slug)}}" class="btn-grad ftbtn_src">
@@ -334,6 +334,14 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+
+        $(".sendquery").click(function(e){
+            e.preventDefault();
+            $("#sendquery").modal("show");
+            const package_slug = $(this).data('id');
+            $("#package_slug").val(package_slug);
+        });
+
         $('.airlist').slick({
             dots: false,
             infinite: false,
@@ -382,6 +390,58 @@
             $(".checkftr").toggleClass("showhide");
         });
     });
+
+
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var form = document.getElementById('needs-validation');
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
+
+
+  $(document).ready(function() {
+    $(".inqueryForm").on('submit',function(event){
+            event.preventDefault();
+            var strData = $(".inqueryForm").serializeArray();
+            $.ajax({
+                url   : '/query/package/store',
+                type:"POST",
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:strData,
+                dataType:'json',
+            beforeSend: function(msg) {
+                $('.submit_form').html(
+                    '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+                );
+                $('.submit_form').prop("disabled", true);
+            },
+            success:function(response){
+                if(response.status == 200) {
+                    toastr["success"]("Success!", response.message);
+                    $('.submit_form').prop("disabled", false);
+                    setTimeout(function(){
+                    window.location.reload();
+                    }, 5000);
+                }else{
+                    $('.submit_form').prop("disabled", false);
+                    toastr["error"]("Error!", response.message);
+                }
+                $('.loading-div').css('display','none');
+            },
+            error: function(response) {
+                $('.submit_form').prop("disabled", false);
+            }
+        });
+    });
+});
     // Requires jQuery
     // Initialize slider:
     $(document).ready(function() {

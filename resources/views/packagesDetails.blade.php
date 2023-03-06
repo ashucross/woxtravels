@@ -17,24 +17,25 @@
             <div class="modal-content">
                 <h4 class="modal-title"><i class="fa fa-envelope mr-2"></i>Send Enquiry </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-
                 <div class="modal-body">
                     <div class="form_pop_send">
-                        <form method="POST" action="{{ url('/query/package/store') }}">
+                        <form method="POST" class="inqueryForm" id="needs-validation" novalidate>
                             @csrf
-                            <input type="hidden" name="package_id" value="{{ $data['package']->id }}">
-                        <div class="row">
+                            <input type="hidden" name="package_id" value="{{ $data['package']->slug }}">
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="Name">Name</label>
-                                        <input type="text" required class="form-control" name="cname" placeholder="Enter Name">
+                                        <input type="text" required class="form-control" name="cname"
+                                            placeholder="Enter Name">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="Name">Email</label>
-                                        <input type="text" required class="form-control" name="email" placeholder="Enter Email">
+                                        <input type="text" required class="form-control" name="email"
+                                            placeholder="Enter Email">
                                     </div>
                                 </div>
 
@@ -49,21 +50,23 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="Name">City</label>
-                                        <input type="text" required class="form-control" name="city" placeholder="Enter City">
+                                        <input type="text" required class="form-control" name="city"
+                                            placeholder="Enter City">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="Name">Phone Number</label>
-                                        <input type="number" required class="form-control" name="phone" placeholder="Enter City">
+                                        <input type="number" required class="form-control" name="phone"
+                                            placeholder="Enter City">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="Name">Number of Guest</label>
-                                        <input type="text" class="form-control" name="tGuest"
+                                        <input type="text" class="form-control" required name="tGuest"
                                             placeholder="Enter Number of Guest">
                                     </div>
                                 </div>
@@ -94,10 +97,10 @@
                                             placeholder="Enter Additional Message"></textarea>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="sbt_pop">
-                            <button type="submit" class="btn-grad ftbtn_src">Submit</button>
-                        </div>
+                            </div>
+                            <div class="sbt_pop">
+                                <button type="submit" class="btn-grad ftbtn_src">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -124,7 +127,7 @@
                     <h2>
                         <i class="fa fa-dollar mr-1"></i>{{number_format($data['package']->sales_price, 0)}}
                     </h2>
-                    <a href="#" data-toggle="modal" data-target="#sendquery" class="btn-orng ftbtn_src">
+                    <a href="#" data-toggle="modal" data-target="#sendquery" class="btn-orng ">
                         <i class="fa fa-envelope mr-1"></i>Send Enquiry </i>
                     </a>
                 </div>
@@ -601,5 +604,56 @@
 
 @endsection
 @section('scripts')
+<script>
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var form = document.getElementById('needs-validation');
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    }, false);
+  })();
 
+
+  $(document).ready(function() {
+    $(".inqueryForm").on('submit',function(event){
+            event.preventDefault();
+            var strData = $(".inqueryForm").serializeArray();
+            $.ajax({
+                url   : '/query/package/store',
+                type:"POST",
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:strData,
+                dataType:'json',
+            beforeSend: function(msg) {
+                $('.ftbtn_src').html(
+                    '<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Please Wait...'
+                );
+                $('.ftbtn_src').prop("disabled", true);
+            },
+            success:function(response){
+                if(response.status == 200) {
+                    toastr["success"]("Success!", response.message);
+                    $('.ftbtn_src').prop("disabled", false);
+                    setTimeout(function(){
+                    window.location.reload();
+                    }, 5000);
+                }else{
+                    $('.ftbtn_src').prop("disabled", false);
+                    toastr["error"]("Error!", response.message);
+                }
+                $('.loading-div').css('display','none');
+            },
+            error: function(response) {
+                $('.ftbtn_src').prop("disabled", false);
+            }
+        });
+    });
+});
+</script>
 @endsection

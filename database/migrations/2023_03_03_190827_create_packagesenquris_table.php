@@ -20,7 +20,7 @@ class CreatePackagesenqurisTable extends Migration
             $table->string('residence');
             $table->string('city');
             $table->string('phone');
-            $table->integer('package_id');
+            $table->string('package_id');
             $table->integer('tGuest')->nullable();
             $table->string('tMonth')->nullable();
             $table->text('aMessage')->nullable();
