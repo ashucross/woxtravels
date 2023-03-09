@@ -34,7 +34,7 @@
                                 {{ csrf_field() }}
                                 <div class="boxsearching ">
                                     <div class="d-flex justify-content-between">
-                                        <div class="search_location d-flex justify-content-between ">
+                                        <div class="search_location d-flex justify-content-between  ">
                                             <div class="Fromwhere position-relative">
                                                 <h3 class="search_title">From </h3>
                                                 <div class="position-relative">
@@ -52,11 +52,16 @@
                                                             <ul id="autocomplete-source">
                                                                 @if(!empty(getinitalAirpot() ))
                                                                 @foreach ( getinitalAirpot() as $airport)
-                                                                <li class="airport-select" type="source" code="{{ $airport->airport_code }}" location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                <li class="airport-select" type="source"
+                                                                    code="{{ $airport->airport_code }}"
+                                                                    location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
                                                                     <div class="fli_name"><i class="fa fa-plane">
-                                                                    </i>{{ $airport->city_name }} ({{ $airport->airport_code }})</div>
+                                                                        </i>{{ $airport->city_name }} ({{
+                                                                        $airport->airport_code }})</div>
                                                                     <div class="airport_name">
-                                                                        <span>{{ $airport->airport_name }}</span><span>>{{ $airport->country_name }}</span>
+                                                                        <span>{{ $airport->airport_name
+                                                                            }}</span><span>>{{ $airport->country_name
+                                                                            }}</span>
                                                                     </div>
                                                                 </li>
                                                                 @endforeach
@@ -112,11 +117,16 @@
                                                             <ul id="autocomplete-destination">
                                                                 @if(!empty(getinitalAirpot() ))
                                                                 @foreach ( getinitalAirpot() as $airport)
-                                                                <li class="airport-select" type="destination" code="{{ $airport->airport_code }}" location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                <li class="airport-select" type="destination"
+                                                                    code="{{ $airport->airport_code }}"
+                                                                    location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
                                                                     <div class="fli_name"><i class="fa fa-plane">
-                                                                    </i>{{ $airport->city_name }} ({{ $airport->airport_code }})</div>
+                                                                        </i>{{ $airport->city_name }} ({{
+                                                                        $airport->airport_code }})</div>
                                                                     <div class="airport_name">
-                                                                        <span>{{ $airport->airport_name }}</span><span>>{{ $airport->country_name }}</span>
+                                                                        <span>{{ $airport->airport_name
+                                                                            }}</span><span>>{{ $airport->country_name
+                                                                            }}</span>
                                                                     </div>
                                                                 </li>
                                                                 @endforeach
@@ -311,8 +321,24 @@
                                                     <div class="dropdown-menu drp_plane">
                                                         <div class="plane_list">
                                                             <span>Search</span>
+                                                            {{-- <span>Top Cities</span> --}}
                                                             <ul id="autocomplete-source-oneway">
-
+                                                                @if(!empty(getinitalAirpot() ))
+                                                                @foreach ( getinitalAirpot() as $airport)
+                                                                <li class="airport-select" type="source-oneway"
+                                                                    code="{{ $airport->airport_code }}"
+                                                                    location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                    <div class="fli_name"><i class="fa fa-plane">
+                                                                        </i>{{ $airport->city_name }} ({{
+                                                                        $airport->airport_code }})</div>
+                                                                    <div class="airport_name">
+                                                                        <span>{{ $airport->airport_name
+                                                                            }}</span><span>>{{ $airport->country_name
+                                                                            }}</span>
+                                                                    </div>
+                                                                </li>
+                                                                @endforeach
+                                                                @endif
                                                             </ul>
                                                             {{-- <span>Top Cities</span>
                                                             <ul>
@@ -363,7 +389,22 @@
                                                         <div class="plane_list">
                                                             <span>Search</span>
                                                             <ul id="autocomplete-destination-oneway">
-
+                                                                @if(!empty(getinitalAirpot() ))
+                                                                @foreach ( getinitalAirpot() as $airport)
+                                                                <li class="airport-select" type="destination-oneway"
+                                                                    code="{{ $airport->airport_code }}"
+                                                                    location="{{ $airport->city_name }} ({{ $airport->airport_code }})">
+                                                                    <div class="fli_name"><i class="fa fa-plane">
+                                                                        </i>{{ $airport->city_name }} ({{
+                                                                        $airport->airport_code }})</div>
+                                                                    <div class="airport_name">
+                                                                        <span>{{ $airport->airport_name
+                                                                            }}</span><span>>{{ $airport->country_name
+                                                                            }}</span>
+                                                                    </div>
+                                                                </li>
+                                                                @endforeach
+                                                                @endif
                                                             </ul>
                                                             {{-- <span>Top Cities</span>
                                                             <ul>
@@ -544,9 +585,11 @@
                                                 <span class="iconint">
                                                     <i class="fa fa-map-marker"></i>
                                                 </span>
-                                                <input type="text" class="input_src leftri input_hgt airport-search"  name="sourceName" id="source-multicity" token="source-multicity" slug="autocomplete-source-multicity"
-                                                    placeholder="City or Airport" data-toggle="dropdown" />
-                                                    <input type="hidden" name="sourceCode" id="source-multicityCode" />
+                                                <input type="text" class="input_src leftri input_hgt airport-search"
+                                                    name="sourceName" id="source-multicity" token="source-multicity"
+                                                    slug="autocomplete-source-multicity" placeholder="City or Airport"
+                                                    data-toggle="dropdown" />
+                                                <input type="hidden" name="sourceCode" id="source-multicityCode" />
                                                 <div class="dropdown-menu drp_plane">
                                                     <div class="plane_list">
                                                         <span>Search</span>
@@ -692,8 +735,10 @@
                                                 <span class="iconint">
                                                     <i class="fa fa-map-marker"></i>
                                                 </span>
-                                                <input type="text" class="input_src rightri input_hgt"  name="destinationName" id="destination-multicity"
-                                                token="destination-multicity" slug="autocomplete-destination-multicity"
+                                                <input type="text" class="input_src rightri input_hgt"
+                                                    name="destinationName" id="destination-multicity"
+                                                    token="destination-multicity"
+                                                    slug="autocomplete-destination-multicity"
                                                     placeholder="City or Airport" data-toggle="dropdown" />
                                                 <div class="dropdown-menu drp_plane">
                                                     <div class="plane_list">
@@ -816,43 +861,49 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between lcchange mt-4">
-                                    <div class="search_location d-flex justify-content-between ">
-                                        <div class="Fromwhere position-relative">
-                                            <h3 class="search_title">From </h3>
-                                            <div class="position-relative">
-                                                <span class="iconint">
-                                                    <i class="fa fa-map-marker"></i>
-                                                </span>
-                                                <input type="text" class="input_src leftri input_hgt"
-                                                    placeholder="City or Airport" id="airport" data-toggle="dropdown" />
-                                                <div class="dropdown-menu drp_plane">
-                                                    <div class="plane_list">
-                                                        <span>SUGGESTIONS </span>
+                                <div class="d-flex justify-content-between lcchange mt-">
+                                    <div class="repeater-default">
+                                        <div data-repeater-list="car" class="drag">
+                                            <div data-repeater-item="">
+                                                <div class="search_location d-flex justify-content-between" style="width: 164% !important">
+                                                    <div class="Fromwhere position-relative">
+                                                        <h3 class="search_title">From </h3>
+                                                        <div class="position-relative">
+                                                            <span class="iconint">
+                                                                <i class="fa fa-map-marker"></i>
+                                                            </span>
+                                                            <input type="text" class="input_src leftri input_hgt"
+                                                                placeholder="City or Airport" id="airport"
+                                                                data-toggle="dropdown" />
+                                                            <div class="dropdown-menu drp_plane">
+                                                                <div class="plane_list">
+                                                                    <span>SUGGESTIONS </span>
 
-                                                        <span>Top Cities</span>
-                                                        <ul>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
+                                                                    <span>Top Cities</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="excng_bx">
-                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                    viewBox="0 0 36.5 46.8" style="enable-background:new 0 0 36.5 46.8;"
-                                                    xml:space="preserve">
-                                                    <g>
-                                                        <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <span class="excng_bx">
+                                                            <svg version="1.1" id="Layer_1"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                                                y="0px" viewBox="0 0 36.5 46.8"
+                                                                style="enable-background:new 0 0 36.5 46.8;"
+                                                                xml:space="preserve">
+                                                                <g>
+                                                                    <path class="excng_bx_w" d="M25.6,6.7c2.2,1.9,4.4,3.7,6.5,5.5c0.6,0.5,1.2,1,1.8,1.5c0.2,0.2,0.4,0.2,0.6,0c0.5-0.6,1.1-1.3,1.6-1.9
 
 
 
@@ -865,7 +916,7 @@
 
 
                                                        c0-9.3,0-18.6,0-28C25.6,7.1,25.6,7,25.6,6.7z" />
-                                                        <path class="excng_bx_w" d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6
+                                                                    <path class="excng_bx_w" d="M10.8,40c-1.1-0.9-2.2-1.9-3.3-2.8c-1.6-1.4-3.3-2.8-4.9-4.2c-0.3-0.2-0.4-0.2-0.7,0c-0.4,0.5-0.9,1.1-1.3,1.6
 
 
 
@@ -878,283 +929,288 @@
 
 
                                                        c0,8.8,0,17.6,0,26.3C10.9,39.6,10.9,39.8,10.8,40z" />
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                        <div class="Towhere ">
-                                            <h3 class="search_title">To </h3>
-                                            <div class="position-relative">
-                                                <span class="iconint">
-                                                    <i class="fa fa-map-marker"></i>
-                                                </span>
-                                                <input type="text" class="input_src rightri input_hgt"
-                                                    placeholder="City or Airport" data-toggle="dropdown" />
-                                                <div class="dropdown-menu drp_plane">
-                                                    <div class="plane_list">
-                                                        <span>Top Cities</span>
-                                                        <ul>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                </g>
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="Towhere ">
+                                                        <h3 class="search_title">To </h3>
+                                                        <div class="position-relative">
+                                                            <span class="iconint">
+                                                                <i class="fa fa-map-marker"></i>
+                                                            </span>
+                                                            <input type="text" class="input_src rightri input_hgt"
+                                                                placeholder="City or Airport" data-toggle="dropdown" />
+                                                            <div class="dropdown-menu drp_plane">
+                                                                <div class="plane_list">
+                                                                    <span>Top Cities</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="fli_name">
+                                                                                <i class="fa fa-plane"></i> Delhi (DEL)
+                                                                            </div>
+                                                                            <div class="airport_name">
+                                                                                <span>Indira Gandhi Airport</span>
+                                                                                <span>India</span>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="fli_name">
-                                                                    <i class="fa fa-plane"></i> Delhi (DEL)
-                                                                </div>
-                                                                <div class="airport_name">
-                                                                    <span>Indira Gandhi Airport</span>
-                                                                    <span>India</span>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="search_date" >
+                                                        <h3 class="search_title">Depart</h3>
+                                                        <div class="position-relative">
+                                                            <span class="iconint">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                            <input aut type="text" name="daterange2"
+                                                                class="input_src  input_hgt">
+                                                        </div>
+                                                    </div>
+                                                    <div class="close_search " data-repeater-delete="">
+                                                        <h3 class="search_title blknone">&nbsp;</h3>
+                                                        <span class="clids">
+                                                            <img src="{{asset('public/assets/images/close.svg')}}" alt=""
+                                                                class="imgres" />
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="search_date ">
-                                        <h3 class="search_title">Depart</h3>
-                                        <div class="position-relative">
-                                            <span class="iconint">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
-                                            <input aut type="text" name="daterange2" class="input_src  input_hgt">
+                                        <div class="addbtn" data-repeater-create="">
+                                            <button type="button" class="anotherflight_btn">
+                                                <i class="fa fa-plus mr-2"></i>Add another flight </button>
                                         </div>
-                                    </div>
-                                    <div class="close_search">
-                                        <h3 class="search_title blknone">&nbsp;</h3>
-                                        <span class="clids">
-                                            <img src="{{asset('public/assets/images/close.svg')}}" alt=""
-                                                class="imgres" />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="addbtn">
-                                    <button type="button" class="anotherflight_btn">
-                                        <i class="fa fa-plus mr-2"></i>Add another flight </button>
-                                </div>
-                                <div class="searchbtn d-flex align-items-center">
-                                    <div class="search_adult Travelers_withcng">
-                                        <h3 class="search_title">Travelers</h3>
-                                        <div class="position-relative ">
-                                            <span class="iconint">
-                                                <i class="fa fa-user-o"></i>
-                                            </span>
-                                            <input aut type="text" value="1 Adult - Economy"
-                                                class="input_src input_hgt ups" data-toggle="dropdown">
-                                            <!-- <span class="ar_tv"><i class="ml-2 fa fa-angle-down"></i></span> -->
-                                            <div class="dropslct">
-                                                <div class="dropdown-menu dropdown-menu-right hiclk3">
-                                                    <div class="tg_title">
-                                                        <h3>Cabin and passenger selection</h3>
-                                                    </div>
-                                                    <div class="cabin_box d-flex justify-content-between">
-                                                        <div class="cb1">
-                                                            <input type="radio" id="Economy" name="fav_language"
-                                                                value="Economy">
-                                                            <label for="Economy">Economy </label>
-                                                        </div>
-                                                        <div class="cb1">
-                                                            <input type="radio" id="Premium economy" name="fav_language"
-                                                                value="Premium economy">
-                                                            <label for="Premium economy">Premium economy</label>
-                                                        </div>
-                                                        <div class="cb1">
-                                                            <input type="radio" id="Business " name="fav_language"
-                                                                value="Business ">
-                                                            <label for="Business ">Business </label>
-                                                        </div>
-                                                        <div class="cb1">
-                                                            <input type="radio" id="Firstclass " name="fav_language"
-                                                                value="First class ">
-                                                            <label for="Firstclass ">First class </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="passenger_box">
-                                                        <div class="qty_box">
-                                                            <div
-                                                                class=" d-flex justify-content-between align-items-center">
-                                                                <span>Adult: </span>
-                                                                <div id='myform' method='POST' class='quantity'
-                                                                    action='#'>
-                                                                    <input type='button' value='-'
-                                                                        class='qtyminus minus' field='quantity' />
-                                                                    <input type='text' name='quantity' value='0'
-                                                                        class='qty' />
-                                                                    <input type='button' value='+' class='qtyplus plus'
-                                                                        field='quantity' />
+                                        <div class="d-flex serch">
+                                            <div class="search_adult Travelers_withcng">
+                                                <h3 class="search_title">Travelers</h3>
+                                                <div class="position-relative ">
+                                                    <span class="iconint">
+                                                        <i class="fa fa-user-o"></i>
+                                                    </span>
+                                                    <input aut type="text" value="1 Adult - Economy"
+                                                        class="input_src input_hgt ups" data-toggle="dropdown">
+                                                    <!-- <span class="ar_tv"><i class="ml-2 fa fa-angle-down"></i></span> -->
+                                                    <div class="dropslct">
+                                                        <div class="dropdown-menu dropdown-menu-right hiclk3">
+                                                            <div class="tg_title">
+                                                                <h3>Cabin and passenger selection</h3>
+                                                            </div>
+                                                            <div class="cabin_box d-flex justify-content-between">
+                                                                <div class="cb1">
+                                                                    <input type="radio" id="Economy" name="fav_language"
+                                                                        value="Economy">
+                                                                    <label for="Economy">Economy </label>
+                                                                </div>
+                                                                <div class="cb1">
+                                                                    <input type="radio" id="Premium economy"
+                                                                        name="fav_language" value="Premium economy">
+                                                                    <label for="Premium economy">Premium economy</label>
+                                                                </div>
+                                                                <div class="cb1">
+                                                                    <input type="radio" id="Business " name="fav_language"
+                                                                        value="Business ">
+                                                                    <label for="Business ">Business </label>
+                                                                </div>
+                                                                <div class="cb1">
+                                                                    <input type="radio" id="Firstclass " name="fav_language"
+                                                                        value="First class ">
+                                                                    <label for="Firstclass ">First class </label>
                                                                 </div>
                                                             </div>
+                                                            <div class="passenger_box">
+                                                                <div class="qty_box">
+                                                                    <div
+                                                                        class=" d-flex justify-content-between align-items-center">
+                                                                        <span>Adult: </span>
+                                                                        <div id='myform' method='POST' class='quantity'
+                                                                            action='#'>
+                                                                            <input type='button' value='-'
+                                                                                class='qtyminus minus' field='quantity' />
+                                                                            <input type='text' name='quantity' value='0'
+                                                                                class='qty' />
+                                                                            <input type='button' value='+'
+                                                                                class='qtyplus plus' field='quantity' />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="qty_box">
+                                                                    <div
+                                                                        class=" d-flex justify-content-between align-items-center">
+                                                                        <span>Child: <span class="agetxt">Ages 2 to 9</span>
+                                                                        </span>
+                                                                        <div id='myform' method='POST' class='quantity'
+                                                                            action='#'>
+                                                                            <input type='button' value='-'
+                                                                                class='qtyminus minus' field='quantity' />
+                                                                            <input type='text' name='quantity' value='0'
+                                                                                class='qty' />
+                                                                            <input type='button' value='+'
+                                                                                class='qtyplus plus' field='quantity' />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex box_child flex-wrap">
+                                                                        <div class="childxd">
+                                                                            <select>
+                                                                                <option>Child 1 age</option>
+                                                                                <option>2</option>
+                                                                                <option>3</option>
+                                                                                <option>4</option>
+                                                                                <option>5</option>
+                                                                                <option>6</option>
+                                                                                <option>7</option>
+                                                                                <option>8</option>
+                                                                                <option>9</option>
+                                                                                <option>10</option>
+                                                                                <option>11</option>
+                                                                                <option>12</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="childxd">
+                                                                            <select>
+                                                                                <option>Child 2 age</option>
+                                                                                <option>2</option>
+                                                                                <option>3</option>
+                                                                                <option>4</option>
+                                                                                <option>5</option>
+                                                                                <option>6</option>
+                                                                                <option>7</option>
+                                                                                <option>8</option>
+                                                                                <option>9</option>
+                                                                                <option>10</option>
+                                                                                <option>11</option>
+                                                                                <option>12</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="qty_box">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center">
+                                                                        <span>Infant: <span class="agetxt">Ages 2 -12</span>
+                                                                        </span>
+                                                                        <div id='myform' method='POST' class='quantity'
+                                                                            action='#'>
+                                                                            <input type='button' value='-'
+                                                                                class='qtyminus minus' field='quantity' />
+                                                                            <input type='text' name='quantity' value='0'
+                                                                                class='qty' />
+                                                                            <input type='button' value='+'
+                                                                                class='qtyplus plus' field='quantity' />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex box_child flex-wrap">
+                                                                        <div class="childxd">
+                                                                            <select>
+                                                                                <option>Infant 1 age</option>
+                                                                                <option>Under 1</option>
+                                                                                <option>1</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="btntv">
+                                                                <button type="submit"
+                                                                    class="btn-grad ftbtn_src">Done</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="qty_box">
-                                                            <div
-                                                                class=" d-flex justify-content-between align-items-center">
-                                                                <span>Child: <span class="agetxt">Ages 2 to 9</span>
-                                                                </span>
-                                                                <div id='myform' method='POST' class='quantity'
-                                                                    action='#'>
-                                                                    <input type='button' value='-'
-                                                                        class='qtyminus minus' field='quantity' />
-                                                                    <input type='text' name='quantity' value='0'
-                                                                        class='qty' />
-                                                                    <input type='button' value='+' class='qtyplus plus'
-                                                                        field='quantity' />
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex box_child flex-wrap">
-                                                                <div class="childxd">
-                                                                    <select>
-                                                                        <option>Child 1 age</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                        <option>6</option>
-                                                                        <option>7</option>
-                                                                        <option>8</option>
-                                                                        <option>9</option>
-                                                                        <option>10</option>
-                                                                        <option>11</option>
-                                                                        <option>12</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="childxd">
-                                                                    <select>
-                                                                        <option>Child 2 age</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                        <option>6</option>
-                                                                        <option>7</option>
-                                                                        <option>8</option>
-                                                                        <option>9</option>
-                                                                        <option>10</option>
-                                                                        <option>11</option>
-                                                                        <option>12</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="qty_box">
-                                                            <div
-                                                                class="d-flex justify-content-between align-items-center">
-                                                                <span>Infant: <span class="agetxt">Ages 2 -12</span>
-                                                                </span>
-                                                                <div id='myform' method='POST' class='quantity'
-                                                                    action='#'>
-                                                                    <input type='button' value='-'
-                                                                        class='qtyminus minus' field='quantity' />
-                                                                    <input type='text' name='quantity' value='0'
-                                                                        class='qty' />
-                                                                    <input type='button' value='+' class='qtyplus plus'
-                                                                        field='quantity' />
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex box_child flex-wrap">
-                                                                <div class="childxd">
-                                                                    <select>
-                                                                        <option>Infant 1 age</option>
-                                                                        <option>Under 1</option>
-                                                                        <option>1</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="btntv">
-                                                        <button type="submit" class="btn-grad ftbtn_src">Done</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="btnall_way">
+                                                <h3 class="search_title blknone">&nbsp;</h3>
+                                                <button type="submit" class="btn-grad ftbtn_src">
+                                                    <i class="fa fa-paper-plane-o mr-2" aria-hidden="true"></i>Search
+                                                    Flights
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="btnall_way">
-                                        <h3 class="search_title blknone">&nbsp;</h3>
-                                        <button type="submit" class="btn-grad ftbtn_src">
-                                            <i class="fa fa-paper-plane-o mr-2" aria-hidden="true"></i>Search Flights
-                                        </button>
-                                    </div>
                                 </div>
-                            </div>
                         </article>
                     </div>
                 </div>
@@ -1599,6 +1655,9 @@
 @endsection
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
 <script>
     $(document).ready(function() {
         $("body #flight-round-trip").validate({
@@ -1781,5 +1840,26 @@
         event.stopPropagation();
     });
 })
+
+
+
+var repeater = $('.repeater-default').repeater({
+  initval: 1,
+});
+
+
+jQuery(".drag").sortable({
+    axis: "y",
+    cursor: 'pointer',
+    opacity: 0.5,
+    placeholder: "row-dragging",
+    delay: 150,
+    update: function(event, ui) {
+      console.log('repeaterVal');
+      console.log(repeater.repeaterVal());
+      console.log('serializeArray');
+      console.log($('form').serializeArray());
+    }
+}).disableSelection();
 </script>
 @endsection
