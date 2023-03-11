@@ -57,6 +57,32 @@ trait FlightTrait
     // Get Flight Search list
     public function flightSearch(Request $request)
     {
+
+        $curlF = curl_init();
+            curl_setopt_array($curlF, array(
+                CURLOPT_URL => 'https://test.api.amadeus.com/v2/shopping/flight-offers?' .
+                'originLocationCode=LAX&destinationLocationCode=LON&departureDate=2023-08-01&' .
+                'originLocationCode=LON&destinationLocationCode=PAR&departureDate=2023-08-05&' .
+                'originLocationCode=PAR&destinationLocationCode=LAX&departureDate=2023-08-10&' .
+                'adults=1&max=3&currencyCode=USD',
+                // CURLOPT_URL => env('FLIGHT_API_URL') . 'shopping/flight-offers?originLocationCode=' . $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/x-www-form-urlencoded'
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $this->Token . ''
+                ),
+            ));
+
+            $response = curl_exec($curlF);
+            dd($response);
         try {
             $sourceName = $request->sourceName;
             $sourceCode = $request->sourceCode;
@@ -114,7 +140,6 @@ trait FlightTrait
             ));
 
             $response = curl_exec($curlF);
-            dd($response);
             curl_close($curlF);
             $dataArray = json_decode($response, true);
             $httpcode = curl_getinfo($curlF, CURLINFO_HTTP_CODE);

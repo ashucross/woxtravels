@@ -843,12 +843,12 @@ header {
     background: rgba(22, 22, 22, 0.5);
     left: 0;
     top: 0;
-    
+
     transition: var(--transition);
 }
 
 .img_animation:hover::after {
-   
+
     background: rgb(252 207 19 / 50%);
 }
 
@@ -8338,7 +8338,7 @@ faresm2 {
 .box_pkdeal>a{position: relative; display: block; margin: 10px;
     background-color: #fff;
    border-radius: 10px; overflow: hidden;
-   
+
     -webkit-box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 10%);
     -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 10%);}
@@ -8389,7 +8389,7 @@ faresm2 {
                     /*======package listing=======*/
                     .inp_dr>input{border: 1px solid #ddd; padding: 7px 10px; width: 100%; outline: none; font-size: 14px;}
                     .chan_pckl .rightlist>h2{margin-bottom: 0;}
-                  
+
                    .rmk {background: #fdf4cb;
                         padding: 5px; display: flex;
                         border-radius: 2px;}
@@ -8397,10 +8397,10 @@ faresm2 {
                     .rmk>span{font-size: 12px; line-height: normal; display: inline-block;    background: #67ab0d;
                         padding: 4px 10px;
                         border-radius: 5px;
-                       
+
                         color: #fff;}
 
-                        
+
                     /*======package Details=======*/
                     .left_top_txt>h6{background: #0a649d;
                         display: inline-block;
@@ -8446,7 +8446,7 @@ faresm2 {
                             }
                             .cbp_tmtimeline>li .cbp_tmtime span:first-child {
                                 font-size: 0.9em;
-                                
+
                                 margin-bottom: 0;
                             }
 
@@ -8464,7 +8464,7 @@ faresm2 {
                                 font-size: 24px;
                                 line-height: 50px;
                                 position: absolute;
-                               
+
                                 border-radius: 50%;
                                 box-shadow: 0 0 0 2px #999;
                                 text-align: center;
@@ -8554,10 +8554,10 @@ faresm2 {
                                     width: 30px;
                                     height: 30px;
                                     border-radius: 50%;}
-                                
+
                                     .form_pop_send .form-group>label{    font-size: 14px;
                                     color: #000;}
-                                    .form_pop_send .form-group input,.form_pop_send .form-group textarea,.form_pop_send .form-group select{ 
+                                    .form_pop_send .form-group input,.form_pop_send .form-group textarea,.form_pop_send .form-group select{
                                         border: 1px solid #ddd;
                                     font-size: 13px;
                                     height: auto;
@@ -8570,11 +8570,11 @@ faresm2 {
                                     .box_dea .slick-initialized .slick-slide{padding: 10px;}
                                    .box_dea .topdeal .slick-prev {
                                         left: 20px;
-                                       
+
                                     }
                                    .box_dea .topdeal .slick-next {
                                         right: 0px;
-                                       
+
                                     }
                                     .logosml{    width: 150px;
                                         margin: 20px auto;
