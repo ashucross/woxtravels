@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 
 function sendWhatsAppMessage(string $message, string $recipient)
-{ 
+{
     $twilio_whatsapp_number = env('TWILIO_WHATSAPP_NUMBER');
     $account_sid = env("TWILIO_SID");
     $auth_token = env("TWILIO_AUTH_TOKEN");
@@ -220,7 +220,7 @@ function getHotel($data, $pagination, $init)
 function getCountryName($country, $city)
 {
     $airports = DB::table('airports')->where(['country_code' => $country, 'city_code' => $city])->first();
-    return $airports;
+    return $airports ?? '';
 }
 function getdestinationName($code)
 {

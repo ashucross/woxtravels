@@ -1518,6 +1518,7 @@
                                                             </h6>
                                                         </div>
                                                     </li>
+
                                                     @php $depaturecountryDetails =
                                                     getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']]["countryCode"],$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']);
                                                     @endphp
@@ -1525,9 +1526,14 @@
                                                         <p> {{ date('H:i',
                                                             strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
                                                             }}&nbsp;<span>({{$searchFlight['itineraries'][0]["segments"][0]['departure']['iataCode']}})</span>
+                                                                                            @php
+
+                                                                                            // dd($depaturecountryDetails);
+                                                                                        @endphp
                                                         </p><span class="blkts">{{
-                                                            $depaturecountryDetails->country_name}} ({{
-                                                            $depaturecountryDetails->city_name}})</span>
+                                                            !empty($depaturecountryDetails) ? $depaturecountryDetails->country_name : '';}} ({{
+                                                                !empty($depaturecountryDetails) ? $depaturecountryDetails->city_name : '' ;}})</span>
+
                                                         <div class="tooltiptext">
                                                             <h6><strong>{{ date('H:i',
                                                                     strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
@@ -1535,8 +1541,8 @@
                                                                 strtotime($searchFlight['itineraries'][0]["segments"][0]['departure']['at']))
                                                                 }}
                                                                 <span>
-                                                                    {{ $depaturecountryDetails->country_name}} ({{
-                                                                    $depaturecountryDetails->city_name}})
+                                                                    {{ $depaturecountryDetails ? $depaturecountryDetails->country_name : ''}} ({{
+                                                                       $depaturecountryDetails ? $depaturecountryDetails->city_name : ''}})
                                                                 </span>
                                                             </h6>
                                                         </div>
@@ -1552,6 +1558,7 @@
                                                     @php $arrivalcountryDetails =
                                                     getCountryName($flightresult['dictionaries']['locations'][$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']]["countryCode"],$searchFlight['itineraries'][0]["segments"][(count($searchFlight['itineraries'][0]["segments"])-1)]['arrival']['iataCode']);
                                                     @endphp
+
                                                     <li class="tooltip1 text-right">
 
                                                         <p>
@@ -1609,8 +1616,8 @@
                                                             strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
                                                             }}&nbsp;<span>({{$searchFlight['itineraries'][1]["segments"][0]['departure']['iataCode']}})</span>
                                                         </p><span class="blkts">{{
-                                                            $depaturecountryDetails->country_name}} ({{
-                                                            $depaturecountryDetails->city_name}})</span>
+                                                            !empty($depaturecountryDetails) ? $depaturecountryDetails->country_name : ''}} ({{
+                                                            !empty($depaturecountryDetails) ? $depaturecountryDetails->city_name : ''}})</span>
                                                         <div class="tooltiptext">
                                                             <h6><strong>{{ date('H:i',
                                                                     strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
@@ -1618,8 +1625,8 @@
                                                                 strtotime($searchFlight['itineraries'][1]["segments"][0]['departure']['at']))
                                                                 }}
                                                                 <span>
-                                                                    {{ $depaturecountryDetails->country_name}} ({{
-                                                                    $depaturecountryDetails->city_name}})
+                                                                    {{ !empty($depaturecountryDetails) ? $depaturecountryDetails->country_name : ''}} ({{
+                                                                    !empty($depaturecountryDetails) ? $depaturecountryDetails->city_name : ''}})
                                                                 </span>
                                                             </h6>
                                                         </div>

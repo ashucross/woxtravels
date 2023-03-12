@@ -652,7 +652,7 @@
                                                         token="destination-multicity"
                                                         slug="autocomplete-destination-multicity"
                                                         placeholder="City or Airport" data-toggle="dropdown" />
-                                                    <input type="hidden" name="sourceCode" id="source-multicityCode" />
+                                                    <input type="hidden" name="destinationCode" id="destination-multicityCode" />
                                                     <div class="dropdown-menu drp_plane">
                                                         <div class="plane_list">
                                                             <span>Search</span>
@@ -797,7 +797,7 @@
                                                                     slug="autocomplete-destination-multicity0"
                                                                     placeholder="City or Airport"
                                                                     data-toggle="dropdown" />
-                                                                <input type="hidden" name="sourceCode"
+                                                                <input type="hidden" name="destination"
                                                                     id="destination-multicity0Code" />
                                                                 <div class="dropdown-menu drp_plane">
                                                                     <div class="plane_list">
@@ -835,7 +835,7 @@
                                                                     <i class="fa fa-calendar"></i>
                                                                 </span>
                                                                 <input aut type="text" name="daterange2"
-                                                                    class="input_src  input_hgt">
+                                                                    class="input_src daterange2 input_hgt">
                                                             </div>
                                                         </div>
                                                         <div class="close_search " data-repeater-delete="">
@@ -1434,6 +1434,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
 <script>
     $(document).ready(function() {
+        $('.daterange2').daterangepicker({
+                singleDatePicker: true,
+                opens: "left",
+                autoApply: true,
+            },
+            function(start, end, label) {
+                console.log(
+                    "A new date selection was made: " +
+                    start.format("YYYY-MM-DD") +
+                    " to " +
+                    end.format("YYYY-MM-DD")
+                );
+            }
+        );
         $("body #flight-round-trip").validate({
                 rules: {
                         sourceName: "required",
@@ -1650,6 +1664,23 @@
         $('#' + _Type + 'Code').val(_Code);
     });
 
+
+    $(document).on('click', ".anotherflight_btn", function() {
+        $('.daterange2').daterangepicker({
+                singleDatePicker: true,
+                opens: "left",
+                autoApply: true,
+            },
+            function(start, end, label) {
+                console.log(
+                    "A new date selection was made: " +
+                    start.format("YYYY-MM-DD") +
+                    " to " +
+                    end.format("YYYY-MM-DD")
+                );
+            }
+        );
+    });
     $("body .anotherflight_btn").on("click", function() {
      const res = $(".repeater-default").find(".multicitySearch");
      const length = $(".repeater-default").find(".multicitySearch").length;
@@ -1670,7 +1701,8 @@
         $( this ).attr('token', 'source-multicity' + length);
         $( this ).attr('slug',  'autocomplete-source-multicity' + length);
      });
-    });
+     });
+
 
     $("body .anotherflight_btn").on("click", function() {
      const res = $(".repeater-default").find(".multicitySearchdestination");

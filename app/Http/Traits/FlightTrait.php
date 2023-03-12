@@ -58,31 +58,6 @@ trait FlightTrait
     public function flightSearch(Request $request)
     {
 
-        $curlF = curl_init();
-            curl_setopt_array($curlF, array(
-                CURLOPT_URL => 'https://test.api.amadeus.com/v2/shopping/flight-offers?' .
-                'originLocationCode=LAX&destinationLocationCode=LON&departureDate=2023-08-01&' .
-                'originLocationCode=LON&destinationLocationCode=PAR&departureDate=2023-08-05&' .
-                'originLocationCode=PAR&destinationLocationCode=LAX&departureDate=2023-08-10&' .
-                'adults=1&max=3&currencyCode=USD',
-                // CURLOPT_URL => env('FLIGHT_API_URL') . 'shopping/flight-offers?originLocationCode=' . $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/x-www-form-urlencoded'
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer ' . $this->Token . ''
-                ),
-            ));
-
-            $response = curl_exec($curlF);
-            dd($response);
         try {
             $sourceName = $request->sourceName;
             $sourceCode = $request->sourceCode;
@@ -114,16 +89,38 @@ trait FlightTrait
             $sourceCode = $request->sourceCode;
             $sourceCode = $request->sourceCode;
             $sourceCode = $request->sourceCode;
-            if ($retD != '') {
-                $url = $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&returnDate=' . $retD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
+
+            /**** start date  */
+            if (isset($request->city) && isset($request->daterange2)) {
+                $dateGEt = date_create($request['daterange2']);
+                $dateset = date_format($dateGEt, "Y-m-d");
+                $url = 'originLocationCode=' . $sourceCode . '&destinationLocationCode=' .  $destiCode . '&departureDate=' . $dateset . '&';
+                foreach ($request->city as $city) {
+                    $_returnDate = date_create($city['daterange2']);
+                    $datef = date_format($_returnDate, "Y-m-d");
+                    $url .= 'originLocationCode=' . $city['sourceCode'] . '&destinationLocationCode=' . $city['destination'] . '&departureDate=' . $datef . '&';
+                }
+                $url .= '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD&';
             } else {
-                $url = $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
+                if ($retD != '') {
+                    $url = 'originLocationCode=' . $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&returnDate=' . $retD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
+                } else {
+                    $url = 'originLocationCode=' . $sourceCode . '&destinationLocationCode=' . $destiCode . '&departureDate=' . $deptD . '&adults=' . $adult . '&children=' . $child . '&infants=' . $infant . '&max=10&currencyCode=USD';
+                }
             }
+
+            // dd($url);
+            // CURLOPT_URL => 'https://test.api.amadeus.com/v2/shopping/flight-offers?' .
+            //     'originLocationCode=LAX&destinationLocationCode=LON&departureDate=2023-08-01&' .
+            //     'originLocationCode=LON&destinationLocationCode=PAR&departureDate=2023-08-05&' .
+            //     'originLocationCode=PAR&destinationLocationCode=LAX&departureDate=2023-08-10&' .
+            //     'adults=1&max=3&currencyCode=USD',
 
             // API Call
             $curlF = curl_init();
             curl_setopt_array($curlF, array(
-                CURLOPT_URL => env('FLIGHT_API_URL') . 'shopping/flight-offers?originLocationCode=' . $url,
+                CURLOPT_URL => env('FLIGHT_API_URL') . 'shopping/flight-offers?' . $url,
+                // CURLOPT_URL => env('FLIGHT_API_URL') . 'shopping/flight-offers?' . $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -141,7 +138,84 @@ trait FlightTrait
 
             $response = curl_exec($curlF);
             curl_close($curlF);
+            // Set up the endpoint and necessary headers
+        // $endpoint = 'https://test.api.amadeus.com/v2/shopping/flight-offers';
+        // $api_key = '<YOUR_API_KEY>';
+        // $headers = [
+        //     'Authorization: Bearer ' . $this->Token . '',
+        //     'Content-Type: application/json'
+        // ];
+
+        // // Set up the request body with your desired search parameters
+        // $search_params = [
+        //     "originDestinations" => [
+        //         [
+        //             "id" => "1",
+        //             "originLocationCode" => "MAD",
+        //             "destinationLocationCode" => "PAR",
+        //             "departureDateTimeRange" => [
+        //                 "date" => "2023-10-03"
+        //             ]
+        //         ],
+        //         [
+        //             "id" => "2",
+        //             "originLocationCode" => "PAR",
+        //             "destinationLocationCode" => "MUC",
+        //             "departureDateTimeRange" => [
+        //                 "date" => "2023-10-05"
+        //             ]
+        //         ],
+        //         [
+        //             "id" => "3",
+        //             "originLocationCode" => "MUC",
+        //             "destinationLocationCode" => "AMS",
+        //             "departureDateTimeRange" => [
+        //                 "date" => "2023-10-08"
+        //             ]
+        //         ]
+        //     ],
+        //     "travelers" => [
+        //         [
+        //             "id" => "1",
+        //             "travelerType" => "ADULT",
+        //             "fareOptions" => [
+        //                 "STANDARD"
+        //             ]
+        //         ]
+        //     ],
+        //     "sources" => [
+        //         "GDS"
+        //     ],
+        //     "searchCriteria" => [
+        //         "maxFlightOffers" => 2
+        //     ]
+        // ];
+
+        // // Convert the search parameters to a JSON string
+        // $search_params_json = json_encode($search_params);
+
+        // // Set up the cURL request
+        // $curl = curl_init();
+        // curl_setopt_array($curl, [
+        //     CURLOPT_URL => $endpoint,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_HTTPHEADER => $headers,
+        //     CURLOPT_POST => true,
+        //     CURLOPT_POSTFIELDS => $search_params_json
+        // ]);
+
+        // // Execute the request and get the response
+        // $response = curl_exec($curl);
+
+        // // Close the cURL session
+    // curl_close($curl);
+
+        // Output the response
+        // echo $response;
+        // var_dump($response);die;
+
             $dataArray = json_decode($response, true);
+            // dd($dataArray);
             $httpcode = curl_getinfo($curlF, CURLINFO_HTTP_CODE);
             if ($httpcode == 200) {
                 // Multi row insert start
