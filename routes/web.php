@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\EmailLoginController;
 use App\Http\Controllers\PackageQueryController;
+use App\Http\Controllers\Agent\AgentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,25 +74,25 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 
-Route::controller(FacebookController::class)->group(function(){
+Route::controller(FacebookController::class)->group(function () {
     Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
     Route::get('auth/facebook/callback', 'handleFacebookCallback');
 });
 
 
-Route::controller(EmailLoginController::class)->group(function(){
+Route::controller(EmailLoginController::class)->group(function () {
     Route::any('request_otp', 'requestOtp')->name('requestOtp');
     Route::post('verify-otp', 'verifyOtp')->name('verifyOtp');
 });
 
 
-Route::controller(PackageQueryController::class)->group(function(){
+Route::controller(PackageQueryController::class)->group(function () {
     Route::post('query/package/store', 'store')->name('query.package');
 });
 
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::prefix('dashboard')->name('dashboard.')->group( function(){
+Route::group(['middleware' => ['auth']], function () {
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard-index');
         Route::get('/logout', [DashboardController::class, 'logout'])->name('logout');
         Route::post('/profile/update', [DashboardController::class, 'profileUpdate'])->name('profileUpdate');
@@ -100,7 +101,6 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 
-
-
-
-
+Route::prefix('agent')->name('agent.')->group(function () {
+    Route::get('/signup', [AgentController::class, 'index'])->name('agent-signup.index');
+});
