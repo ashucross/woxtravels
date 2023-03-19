@@ -102,5 +102,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::prefix('agent')->name('agent.')->group(function () {
-    Route::get('/signup', [AgentController::class, 'index'])->name('agent-signup.index');
+    Route::get('/login', [AgentController::class, 'index'])->name('agent-signup.index');
+    Route::get('/signup', [AgentController::class, 'register'])->name('agent-signup.register');
+    Route::get('/thank', [AgentController::class, 'thank'])->name('agent-signup.thank');
+    Route::post('/signup/save', [AgentController::class, 'signup'])->name('agent-signup.registerSave');
 });
+
+
+Route::post('/state', [AgentController::class, 'state'])->name('state');
+Route::post('/city', [AgentController::class, 'city'])->name('city');

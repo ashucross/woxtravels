@@ -221,7 +221,7 @@
                             </div>
                             <form method="post" id='setRegion' action='{{url("setRegion")}}'>
                                 @csrf
-                               
+
                                 <input type="hidden" value="{{Request::ip();}}" name="ip">
                             <div class="d-flex flx_hv">
                                 <div class="email_box">
@@ -280,7 +280,7 @@
 
                                     <div class="position-relative">
                                         <select class="login_input" aria-invalid="false" id="culture-selector-market"
-                                            name="country"> 
+                                            name="country">
                                             <option value="">Select</option>
                                             @if(!empty(getcountries()))
                                             @foreach(getcountries() as $countries)

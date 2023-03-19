@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -9,10 +9,10 @@ class Agent extends Authenticatable
 {
     use Notifiable;
 	use Sortable;
-	
+
 	// The authentication guard for admin
     protected $guard = 'agents';
-	
+
 	/**
       * The attributes that are mass assignable.
       *
@@ -21,7 +21,7 @@ class Agent extends Authenticatable
 	protected $fillable = [
         'id', 'role', 'first_name', 'last_name', 'email', 'password', 'decrypt_password', 'country', 'state', 'city', 'address', 'zip', 'profile_img', 'status', 'created_at', 'updated_at'
     ];
-    
+
 	/**
       * The attributes that should be hidden for arrays.
       *
@@ -30,14 +30,14 @@ class Agent extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-	
+
 	public $sortable = ['id', 'first_name', 'last_name', 'email', 'created_at', 'updated_at'];
-	
+
 	public function countryData()
     {
         return $this->belongsTo('App\Country','country');
     }
-	
+
 	public function stateData()
     {
         return $this->belongsTo('App\State','state');
@@ -47,3 +47,5 @@ class Agent extends Authenticatable
         return $this->belongsTo('App\UserType', 'role', 'id');
     }
 }
+
+

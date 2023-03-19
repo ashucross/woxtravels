@@ -17,7 +17,7 @@
     }
 
     .banner {
-        background: url(./images/perto-rico-flights.webp);
+        background: url({{asset('public/assets/images/images/perto-rico-flights.webp')}});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -183,9 +183,18 @@
 @endsection
 @section('pageContent')
 
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 
 <div class="banner">
+    <h1>Agent
+        Registration</h1>
     <div class="container">
         <div class="owl-carousel owl-theme">
             <div class="item">
