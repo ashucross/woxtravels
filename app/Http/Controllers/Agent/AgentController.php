@@ -41,37 +41,37 @@ class AgentController extends Controller
     {
 
 
-        // $this->validate($request, [
-        //     'company_name' => 'required|max:255|unique:agents,company_name',
-        //     'username' => 'required|max:255|unique:agents,username',
-        //     'email' => 'required|unique:agents,email',
-        //     'password' => 'required|string|min:6|same:password_confirmation',
-        //     // "sur_name" => "required|in:Miss,Mr,Mrs",
-        //     "first_name" => "required|max:255",
-        //     // "mobile_no" => "required|unique:agents,mobile_no",
-        //     "phone" => " required|unique:agents,phone",
-        //     "mobCode" => " required",
-        //     "faxNumber" => " required|unique:agents,faxno",
-        //     "faxcode" => " required",
-        //     // "email" => 'required|email|unique:agents,email',
+        $this->validate($request, [
+            'company_name' => 'required|max:255|unique:agents,company_name',
+            'username' => 'required|max:255|unique:agents,username',
+            'email' => 'required|unique:agents,email',
+            'password' => 'required|string|min:6|same:password_confirmation',
+            // "sur_name" => "required|in:Miss,Mr,Mrs",
+            "first_name" => "required|max:255",
+            // "mobile_no" => "required|unique:agents,mobile_no",
+            "phone" => " required|unique:agents,phone",
+            "mobCode" => " required",
+            "faxNumber" => " required|unique:agents,faxno",
+            "faxcode" => " required",
+            // "email" => 'required|email|unique:agents,email',
 
-        //     "address" => "required|max:255",
-        //     // "address2" => "nullable|max:255",
-        //     "country" => "required",
-        //     "state" => "nullable",
-        //     "city" => "nullable",
-        //     "postal_code" => "nullable|max:255",
-        //     "vatNumber" => "nullable|max:255",
-        //     "password_confirmation" => "required",
-        //     // "clicking" => "nullable",
-        //     // "logo" =>'required|mimes:jpeg,jpg,png',
-        //     // "company_pancard" =>'required|mimes:jpeg,jpg,png',
-        //     // "aadhaar_card" => 'required|mimes:jpeg,jpg,png',
-        //     "accountName" => "required",
-        //     "accountEmail" => "required",
-        //     // "accountEmail" => "required|accountEmail|unque:agents,accountEmail",
-        //     // "accountcontactno" => "required",
-        // ]);
+            "address" => "required|max:255",
+            // "address2" => "nullable|max:255",
+            "country" => "required",
+            "state" => "nullable",
+            "city" => "nullable",
+            "postal_code" => "nullable|max:255",
+            "vatNumber" => "nullable|max:255",
+            "password_confirmation" => "required",
+            // "clicking" => "nullable",
+            // "logo" =>'required|mimes:jpeg,jpg,png',
+            // "company_pancard" =>'required|mimes:jpeg,jpg,png',
+            // "aadhaar_card" => 'required|mimes:jpeg,jpg,png',
+            "accountName" => "required",
+            "accountEmail" => "required",
+            // "accountEmail" => "required|accountEmail|unque:agents,accountEmail",
+            // "accountcontactno" => "required",
+        ]);
 
         $data = $request->all();
         if ($request->hasfile('logo')) {
@@ -112,12 +112,23 @@ class AgentController extends Controller
         // $obj->aadhaar_card = @$aadhaar_card;
         // $obj->timestamps = false;
         $saved  =  $obj->save();
+        $agentId = $obj->id;
 
 
+        if (isset($data['documnet']) && !empty($data['documnet'])) {
+            foreach ($data['documnet'] as  $val) {
+                $filename = $val['document_name'] . time() . '.' . $val['docImg']->getClientOriginalExtension();
+                $val['docImg']->move(public_path('agentDoc'), $filename);
 
-        $agentId = Agent::find($obj->id);
-
-
+                $agentDoc = new AgentDocument;
+                $agentDoc->agentId = @$agentId;
+                $agentDoc->meta_key = @$val['document_name'];
+                $agentDoc->timestamps = false;
+                $agentDoc->Meta_val = @$filename;
+                $agentDoc->description = @$val['docdescrpition'];
+                $agentDoc->save();
+            }
+        }
 
         /* if($result != ''){
 				$od->username = strtoupper($result).str_pad(@$obj->id, 5, '0', STR_PAD_LEFT);
@@ -143,22 +154,7 @@ class AgentController extends Controller
         // 	$replace_with = array(\URL::to('/public/img/profile_imgs').'/'.@$set->logo, @$userData->first_name.' '.@$userData->last_name, @$userData->username, @$userData->email, @$userData->phone, @$set->company_name);
 
         // $this->send_email_template($replace, $replace_with, 'welcome-mail-agent', @$set->primary_email,'Welcome to Zap Booking Family!',$set->primary_email);
-        if (isset($data['documnet']) && !empty($data['documnet']) && !empty($agentId)) {
-            foreach ($data['documnet'] as  $val) {
-                $filename = $val['document_name'] . time() . '.' . $val['docImg']->getClientOriginalExtension();
-                $val['docImg']->move(public_path('agentDoc'), $filename);
 
-                $agentDoc = new AgentDocument;
-                $agentDoc->agentId = @$agentId;
-                $agentDoc->meta_key = @$val['document_name'];
-                // $agentDoc->timestamps = false;
-                $agentDoc->Meta_val = @$filename;
-                $agentDoc->description = @$val['docdescrpition'];
-                $agentDoc->save();
-            }
-            dd($filename);
-        }
-        die;
         /*Welecome Email to admin*/
         if (!$saved) {
             return redirect()->back()->with('error', Config::get('constants.server_error'));
