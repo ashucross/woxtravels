@@ -39,8 +39,6 @@ class AgentController extends Controller
 
     public function signup(Request $request)
     {
-
-
         $this->validate($request, [
             'company_name' => 'required|max:255|unique:agents,company_name',
             'username' => 'required|max:255|unique:agents,username',

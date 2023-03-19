@@ -266,7 +266,7 @@
                 lot to us, just like you do! We really appreciate you giving us a moment of your time today. Thanks for
                 being you.</p>
 
-            <a class="pageLink" href="#">Go to Home</a>
+            <a class="pageLink" href="{{ url('/') }}">Go to Home</a>
         </div>
     </div>
 
