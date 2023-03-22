@@ -16,9 +16,9 @@ function sendWhatsAppMessage(string $message, string $recipient)
     $client = new Client($account_sid, $auth_token);
     $res = $client->messages
         ->create(
-            'whatsapp:'.$recipient, // to
+            'whatsapp:' . $recipient, // to
             [
-                "from" => 'whatsapp:'.$twilio_whatsapp_number,
+                "from" => 'whatsapp:' . $twilio_whatsapp_number,
                 "body" => $message
             ]
         );
@@ -270,6 +270,7 @@ function getHoteldetail($data, $hotel = null)
     }
 }
 
+
 function searchHotel($data, $params = null)
 {
     $signature = $data;
@@ -334,4 +335,108 @@ function searchHotel($data, $params = null)
             'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
         ]);
     }
+}
+
+
+
+function getHotelImage($hotelCode, $data)
+{
+    $signature = $data;
+    $apiKey = env('HOTEL_API_KEY');
+    $Secret = env('HOTEL_SECRET_KEY');
+    // Set up the API endpoint and request parameters
+    $url = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels/{$hotelCode}/details";
+
+    try {
+        // Set up the cURL request
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            // CURLOPT_URL => $url . "?" . http_build_query($params),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => array(
+                "Accept: application/json",
+                'Api-key:' . $apiKey . '',
+                'X-Signature:' . $signature . ''
+            ),
+        ));
+
+        // Execute the cURL request and get the response
+        $response = curl_exec($curl);
+        // Check for errors
+        if (curl_errno($curl)) {
+            echo "cURL error: " . curl_error($curl);
+        }
+
+        // Close the cURL request
+        curl_close($curl);
+
+        if (!curl_errno($curl)) {
+            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                case 400:  # Fail
+                    $responseData = json_decode($response, true);
+                    return ([
+                        'status' => 203,
+                        'data' => '',
+                        'message' => $responseData->error->message ?? '',
+                    ]);
+                    break;
+                case 200:  # OK
+                    $responseData = json_decode($response, true);
+                    return ([
+                        'status' => 200,
+                        'data' => $responseData
+                    ]);
+                    break;
+                default:
+                    return ([
+                        'status' => $http_code,
+                        'data' => ''
+                    ]);
+            }
+        }
+    } catch (Exception $ex) {
+        return ([
+            'status' => 'error',
+            'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
+        ]);
+    }
+}
+
+
+function hotelApisAminities(){
+	$apiKey =env('HOTEL_API_KEY');
+	$sharedSecret =env('HOTEL_SECRET_KEY');
+	$signature = hash("sha256", $apiKey.$sharedSecret.time());
+	$r = array(
+		   'Content-Type:application/json',
+			'Accept: application/json',
+			'Api-key:'. $apiKey,
+			'X-Signature:'.$signature,
+			'Accept-Encoding:gzip'
+	);
+	//  dd($r);
+    $curl = curl_init();
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => 'https://api.test.hotelbeds.com/hotel-content-api/1.0/types/facilities',
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => '',
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 0,
+		  CURLOPT_FOLLOWLOCATION => true,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => 'GET',
+		  CURLOPT_HTTPHEADER => array(
+			'Content-Type:application/json',
+			'Accept: application/json',
+			'Api-key:d0f27614d49932fcdc296ce8bcfffb42',
+			'X-Signature:'.$signature.'',
+			'Accept-Encoding:gzip'
+		  ),
+		));
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$accessresponse = json_decode($response, true);
+        dd($accessresponse);die;
+        return $accessresponse;
 }

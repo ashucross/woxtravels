@@ -27,8 +27,9 @@ class HotelsData extends Model
         'phones',
         'ranking',
         'images',
-        'web', 
-        'noDecimalPrice', 
+        'web',
+        'noDecimalPrice',
+        'response_data',
     ];
 //ALTER TABLE `hotel_data` ADD `noDecimalPrice` INT(20) NULL AFTER `web`;
 

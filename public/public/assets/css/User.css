@@ -477,7 +477,7 @@ header {
 
 .search_box {
     position: relative;
-    background: #02588f;
+    background: #FFFFFF;
     box-shadow: 4px 14px 28px rgb(0 0 0 / 10%);
     border-radius: 20px;
     padding: 30px 30px;
@@ -489,7 +489,7 @@ header {
 }
 
 .tab_nav .nav-tabs .nav-link {
-    color: #fff;
+    color: #000;
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -806,7 +806,7 @@ header {
     font-weight: 500;
 }
 
-.inter_txt{padding-bottom: 20px;}
+
 /* --Top Destinations Area-- */
 
 .section_padding_top {
@@ -840,16 +840,17 @@ header {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(22, 22, 22, 0.5);
+    background: rgb(252 207 19 / 50%);
     left: 0;
     top: 0;
-    
+    opacity: 0;
+    visibility: hidden;
     transition: var(--transition);
 }
 
 .img_animation:hover::after {
-   
-    background: rgb(252 207 19 / 50%);
+    opacity: 1;
+    visibility: visible;
 }
 
 .img_animation:hover img {
@@ -1091,7 +1092,6 @@ header {
     color: #fff;
     position: relative;
     font-size: 20px;
-    padding: 10px 10px;
 }
 
 .sbt1>label {
@@ -1149,7 +1149,7 @@ header {
 }
 
 .tabsb {
-    padding: 0 0px;
+    padding: 0 10px;
 }
 
 
@@ -1466,10 +1466,6 @@ header {
     color: #000;
 }
 
-.fli_name>i {
-    margin-right: 5px;
-}
-
 .airport_name {
     display: flex;
     justify-content: space-between;
@@ -1488,7 +1484,7 @@ header {
 }
 
 .ftbtn_src {
-    padding: 9px 21px;
+    padding: 12px 21px;
     display: inline-block;
     color: #fff;
     border-radius: 5px;
@@ -1588,7 +1584,7 @@ header {
 
 .allheading>h1,
 .allheading>h2 {
-    font-size: 34px;
+    font-size: 40px;
     font-weight: bold;
     color: #000;
 }
@@ -1648,7 +1644,7 @@ header {
 /*=====booking=====*/
 
 .booking_box {
-    width: 23%;
+    width: 18%;
     margin: 10px;
     box-shadow: 0px 0px 20px #ddd;
 }
@@ -1667,9 +1663,8 @@ header {
 .mapimg>img {
     position: relative;
     margin-right: 5px;
-    top: -1px;
+    top: 4px;
 }
-.pricebx{padding-bottom: 20px; margin-top: 20px;}
 
 .imgbook {
     margin-bottom: 10px;
@@ -1739,6 +1734,427 @@ header {
 
 .booking_box:hover .imgbook>img {
     transform: scale(1.1);
+}
+
+.bggr {
+    background: #f7f7f7;
+    padding: 15px 15px;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.price_right>h3 {
+    color: #d20f0f;
+    font-size: 13px;
+}
+
+.pd15 {
+    padding: 15px;
+}
+
+.detail_hotel {
+    column-gap: 20px;
+}
+
+.rst_dtls {
+    width: calc(100% - 300px);
+}
+
+.dtls_sp {
+    width: 300px;
+}
+
+.clklist>li>h6 {
+    color: #000;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0 0 2px;
+}
+
+.clklist>li>h3 {
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 5px;
+}
+
+.clklist>li>h4 {
+    color: #000;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.clklist>li>h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #525252;
+    padding: 10px 20px 0;
+    border-top: 1px dashed #000;
+}
+
+.clklist>li>a {
+    color: #19478a;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.clklist>li>span {
+    font-size: 12px;
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border: 1px solid #bdd3e5;
+    background: #e7f4ff;
+    height: 26px;
+    padding: 0 7px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.clklist>li>span>svg {
+    width: 10px;
+    margin-right: 5px;
+}
+
+.sm_ds {
+    color: #525252;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.clklist1>li>h3 {
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    margin: 0 0 5px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.clklist1>li>h4 {
+    font-size: 18px;
+    color: #000;
+    font-weight: 700;
+    line-height: 16px;
+    margin-bottom: 5px;
+}
+
+.clklist1>li>h4>span {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.clklist1>li>a {
+    font-size: 12px;
+    color: #19478a;
+    font-weight: 400;
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    margin-left: 10px;
+    text-decoration: none;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+
+.clklist1>li>a:hover {
+    color: #066fe7;
+}
+
+.clklist1>li>a::before {
+    content: '';
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background: #9aa7c2;
+}
+
+.clklist1>li>a::after {
+    content: '';
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    position: absolute;
+    background: #066fe7;
+    transition: all .5s ease;
+}
+
+.clklist1>li>a:hover:after {
+    width: 100%;
+}
+
+.dts_heading1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+.dts_heading1>h1,
+.dts_heading1>h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+}
+
+.undr {
+    text-decoration: underline;
+}
+
+.error_info {
+    color: #b84a01;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 3px;
+}
+
+.slideform #faq .card .card-header .btn-header-link::before,
+.fare_ic #farenew .card .card-header .btn-header-link::before {
+    content: "\f107";
+    font-family: 'FontAwesome';
+    font-weight: 900;
+    float: left;
+    margin-right: 10px;
+}
+
+.slideform #faq .card .card-header .btn-header-link.collapsed:before {
+    content: "\f106";
+}
+
+.fare_ic #farenew .card .card-header .btn-header-link::before {
+    content: "\f107";
+}
+
+.fare_ic #farenew .card .card-header .btn-header-link.collapsed:before {
+    content: "\f105";
+}
+
+.fare_ic .card-header {
+    padding: 0;
+}
+
+.fare_ic .card-header>a {
+    display: block;
+    text-align: left;
+    padding: 10px 10px 10px 10px;
+}
+
+.detailspop_sm .modal-title,
+.detailspop_lg .modal-title {
+    font-weight: 700;
+}
+
+.prs>p {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.prs>ul {
+    column-gap: 20px;
+}
+
+.prs>ul>li {
+    position: relative;
+    padding: 0px 17px;
+}
+
+.prs>ul>li::before {
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    background: #000;
+    content: '';
+    border-radius: 50px;
+}
+
+.wid3>li {
+    width: 30%;
+    font-size: 15px;
+}
+
+.detailspop_sm .modal-dialog {
+    max-width: 700px;
+}
+
+.detailspop_lg .modal-dialog {
+    max-width: 900px;
+}
+
+.wid2>li {
+    width: 48%;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.prs {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.prs::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.prs::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.prs::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.prs::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.fare_ic .card-header>a:hover {
+    color: #000;
+}
+
+.fare_ic .card-body {
+    padding: 0px 10px;
+}
+
+.fare_ic .card-header {
+    background: none;
+    border: none;
+    outline: none !important;
+    box-shadow: initial;
+}
+
+.fare_ic .card-header>a::before {
+    position: absolute;
+    left: 13px;
+}
+
+.fare_ic .card-header>a>h5 {
+    margin-left: 20px;
+}
+
+.fare_ic .card-header>a>h5,
+.fare_ic .card-header>a>span {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.fare_ic .btn.focus,
+.fare_ic .btn:focus {
+    outline: 0;
+    box-shadow: inherit;
+}
+
+.slideform .card-header {
+    padding: 0;
+}
+
+.slideform .card-header>a {
+    display: block;
+    text-align: left;
+    padding: 10px 23px;
+}
+
+.prce {
+    padding: 1px 0px 10px 21px
+}
+
+.prce>span {
+    font-size: 14px;
+}
+
+.totalpd {
+    padding: 15px 15px;
+    font-weight: 700;
+}
+
+.totalpd>h6 {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.adbox {
+    column-gap: 20px;
+}
+
+.adbox .droptitle {
+    margin-right: 0;
+    width: 120px;
+}
+
+.adbox {
+    margin-bottom: 15px;
+}
+
+.adbox>h2 {
+    width: 70px;
+}
+
+.add_details .adbox:last-child {
+    margin-bottom: 0;
+}
+
+.slideform .btn:hover {
+    color: #000;
+}
+
+.inpse1 .form-input {
+    width: 230px;
+}
+
+.cj_data {
+    margin: 20px 0 10px 0px;
+}
+
+.cj_data>label {
+    font-size: 15px;
+}
+
+.titxt {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.enh_txt>h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 7px;
+    text-transform: uppercase;
+}
+
+.enh_txt>h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 5px 0 10px;
+    text-transform: uppercase;
+}
+
+.enh_txt>p {
+    font-size: 13px!important;
+    font-weight: 400;
+    color: #363636;
+    line-height: 22px;
+    margin: 0 0 10px;
 }
 
 
@@ -4482,22 +4898,9 @@ faresm2 {
     transition: all .5s ease-in-out;
 }
 
-.rds {
-    border-radius: 10px;
-}
-
 .btnnxt:hover {
     background: #3264ab;
     ;
-}
-
-.held>h2 {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-    text-decoration: underline;
-    margin-bottom: 30px;
-    color: #3264ab;
 }
 
 .btnnxt1 {
@@ -4547,7 +4950,6 @@ faresm2 {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 10px;
-    color: #fff;
 }
 
 .packege_src>input {
@@ -4662,7 +5064,8 @@ faresm2 {
 }
 
 .para_aball>h2 {
-    font-size: 20px;
+    font-size: 25px;
+    color: #0278ae;
     margin-bottom: 10px;
     display: block;
     font-weight: 600;
@@ -4680,7 +5083,7 @@ faresm2 {
 }
 
 .bg_ylc {
-    background: #b0e2fb;
+    background: #fffef2;
     padding: 30px 0px;
 }
 
@@ -4689,7 +5092,6 @@ faresm2 {
     font-size: 17px;
     line-height: 36px;
 }
-.bg_ylc .para_aball>h2{color: #000;}
 
 .airul>li {
     position: relative;
@@ -4697,13 +5099,10 @@ faresm2 {
     text-align: left;
     padding: 7px 33px;
     font-size: 16px;
-    border: 1px dashed #5cb2dc;
+    border: 1px dashed #ddd;
     margin-bottom: 10px;
     border-radius: 5px;
-    color: #000;
 }
-
-.imagri{    margin-bottom: 20px;}
 
 .airul>li::before {
     font-family: 'FontAwesome';
@@ -4721,11 +5120,11 @@ faresm2 {
 }
 
 .para_aball>p {
-    font-size: 14px;
+    font-size: 17px;
     color: #424242;
     margin-bottom: 20px;
     display: block;
-    line-height: 27px;
+    line-height: 32px;
 }
 
 .upcase_h2>h2 {
@@ -4859,7 +5258,6 @@ faresm2 {
 }
 
 .login_trip_dts {
-    text-align: right;
     width: 50%;
 }
 
@@ -5065,13 +5463,6 @@ faresm2 {
 .triptop .nav-tabs .nav-link.active {
     border-bottom: 2px solid #0d78ae;
     color: #0d78ae;
-}
-
-.search_box .nav-tabs .nav-item.show .nav-link,
-.search_box .nav-tabs .nav-link.active {
-    background-color: #ffba03;
-    border-color: #ffba03 #ffba03 #ffba03;
-    color: #000;
 }
 
 .twotop .nav-tabs {
@@ -6808,7 +7199,7 @@ faresm2 {
 .mels_ck>h5 {
     margin-bottom: 0;
     color: #020180 !important;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .imagewhite {
@@ -6903,13 +7294,6 @@ faresm2 {
 
 .imgvs {
     width: 60%;
-}
-
-.drp_plane {
-    transform: initial !important;
-    top: 20px !important;
-    top: initial !important;
-    z-index: 9;
 }
 
 .formbox_visa {
@@ -7247,7 +7631,6 @@ faresm2 {
 
 .theme_two_box_content h4 a {
     color: var(--black-color);
-    text-transform: uppercase;
 }
 
 .theme_two_box_content h4 a:hover {
@@ -7345,11 +7728,12 @@ faresm2 {
 }
 
 .bookmark_txt {
-       margin-bottom: 20px;
+    margin-bottom: 20px;
     position: -webkit-sticky;
+    /* Safari */
     position: sticky;
-    z-index: 3;
-    top: 73px;
+    z-index: 1;
+    top: 0;
     border: 2px solid #e7eaf3;
     border-radius: 50px;
     background: #fff;
@@ -7477,14 +7861,16 @@ faresm2 {
     margin-top: 20px;
 }
 
-.left_top_txt>h1 {
+.left_top_txt>h1,
+.left_top_txt>h2 {
     display: flex;
     font-size: 20px;
     font-weight: 500;
     align-items: center;
 }
 
-.left_top_txt>h1>span {
+.left_top_txt>h1>span,
+.left_top_txt>h2>span {
     font-size: 15px;
     color: #ffb91d;
     column-gap: 5px;
@@ -7557,7 +7943,7 @@ faresm2 {
 }
 
 
-/*accordian*/
+
 
 .leftnav .accordion ul {
     background: #E2E2E2;
@@ -7691,6 +8077,8 @@ faresm2 {
     align-items: center;
     justify-content: center;
 }
+
+
 
 .close_side {
     display: none;
@@ -7923,7 +8311,7 @@ faresm2 {
 .box_pkdeal>a{position: relative; display: block; margin: 10px;
     background-color: #fff;
    border-radius: 10px; overflow: hidden;
-   
+
     -webkit-box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 10%);
     -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 10%);}
@@ -7974,7 +8362,7 @@ faresm2 {
                     /*======package listing=======*/
                     .inp_dr>input{border: 1px solid #ddd; padding: 7px 10px; width: 100%; outline: none; font-size: 14px;}
                     .chan_pckl .rightlist>h2{margin-bottom: 0;}
-                  
+
                    .rmk {background: #fdf4cb;
                         padding: 5px; display: flex;
                         border-radius: 2px;}
@@ -7982,10 +8370,10 @@ faresm2 {
                     .rmk>span{font-size: 12px; line-height: normal; display: inline-block;    background: #67ab0d;
                         padding: 4px 10px;
                         border-radius: 5px;
-                       
+
                         color: #fff;}
 
-                        
+
                     /*======package Details=======*/
                     .left_top_txt>h6{background: #0a649d;
                         display: inline-block;
@@ -8003,6 +8391,7 @@ faresm2 {
                         .Inclusion_tx>ul{padding-left: 15px;}
                         .Inclusion_tx>ul>li{list-style: decimal;    list-style: disc;
                             font-size: 14px;}
+
 
                             ul.cbp_tmtimeline {
                                 margin: 45px 0 45px 0;
@@ -8031,7 +8420,7 @@ faresm2 {
                             }
                             .cbp_tmtimeline>li .cbp_tmtime span:first-child {
                                 font-size: 0.9em;
-                                
+
                                 margin-bottom: 0;
                             }
 
@@ -8049,7 +8438,7 @@ faresm2 {
                                 font-size: 24px;
                                 line-height: 50px;
                                 position: absolute;
-                               
+
                                 border-radius: 50%;
                                 box-shadow: 0 0 0 2px #999;
                                 text-align: center;
@@ -8057,6 +8446,7 @@ faresm2 {
                                 top: 0;
                                 margin: 0 0 0 -25px;
                             }
+
                             .cbp_tmtimeline>li .cbp_tmlabel {
                                 margin: 0 0 15px 25%;
                                 background: #eef3f7;
@@ -8098,6 +8488,7 @@ faresm2 {
                                 color: #043379;
                             }
 
+
                             .cbp_tmlabel>ul>li{font-size: 13px;}
                             .cbp_tmtimeline>li .cbp_tmlabel:after {
                                 right: 100%;
@@ -8115,6 +8506,9 @@ faresm2 {
                                 margin-top: 20px;}
                                 .tst>h5{margin-bottom: 10px; margin-top: 20px;}
                                 .tst>p{font-size: 15px; display: block;}
+
+
+
 
 
                                 #section5 .inuot_bx {
@@ -8139,10 +8533,10 @@ faresm2 {
                                     width: 30px;
                                     height: 30px;
                                     border-radius: 50%;}
-                                
+
                                     .form_pop_send .form-group>label{    font-size: 14px;
                                     color: #000;}
-                                    .form_pop_send .form-group input,.form_pop_send .form-group textarea,.form_pop_send .form-group select{ 
+                                    .form_pop_send .form-group input,.form_pop_send .form-group textarea,.form_pop_send .form-group select{
                                         border: 1px solid #ddd;
                                     font-size: 13px;
                                     height: auto;
@@ -8155,12 +8549,14 @@ faresm2 {
                                     .box_dea .slick-initialized .slick-slide{padding: 10px;}
                                    .box_dea .topdeal .slick-prev {
                                         left: 20px;
-                                       
+
                                     }
                                    .box_dea .topdeal .slick-next {
                                         right: 0px;
-                                       
+
                                     }
+
+
                                     .logosml{    width: 150px;
                                         margin: 20px auto;
                                         display: block;}
@@ -8218,9 +8614,10 @@ faresm2 {
                                                     flex-wrap: wrap;
                                                     column-gap: 10px;}
 
-                                                    .logoflight{    border: 1px solid #ddd;
-                                                       margin: 0 10px;
-                                                        text-align: center;
-                                                        margin-bottom: 11px; padding: 10px;}
 
-                                                        .logoflight>span>img{margin: auto;}
+                                                    .logoflight{    border: 1px solid #ddd;
+                                                        margin: 0 10px;
+                                                         text-align: center;
+                                                         margin-bottom: 11px; padding: 10px;}
+
+                                                         .logoflight>span>img{margin: auto;}
