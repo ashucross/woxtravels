@@ -196,7 +196,7 @@ class StayController extends Controller
                                 'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
                                 'web' => $details['hoteldetail']->hotel->web ?? '',
                                 'response_data' => json_encode($details['data']),
-                                 'adult' => $request->adult ?? '',
+                                'adult' => $request->adult ?? '',
                                 'child' => $request->child ?? '',
                                 'rooms' => $request->rooms ?? '',
                                 'childages' => json_encode($request->childages) ?? '',
@@ -278,8 +278,8 @@ class StayController extends Controller
     }
     public function hotelDetails(Request $request)
     {
-         $segments = $request->segments(1);
-         $hotelDetails = HotelsData::where('code', $segments[1])->first();
+        $segments = $request->segments(1);
+        $hotelDetails = HotelsData::where('code', $segments[1])->first();
         $data = array(
             '_MetaTitle' => 'Hotel Detail',
             '_MetaKeywords' => '',
@@ -296,17 +296,39 @@ class StayController extends Controller
 
     public function book_now(Request $request)
     {
-        $data = array(
-            '_MetaTitle' => 'Book Now',
-            '_MetaKeywords' => '',
-            '_MetaDescription' => '',
-            '_Flight' => '',
-            '_Hotel' => 'active',
-            '_Packages' => '',
-            '_Visa' => '',
-            '_Insurance' => '',
-            '_Car' => '',
-        );
-        return view('book_now', compact('data'));
+        if (!empty($request->razkey)) {
+            $result = checkrates($request->razkey);
+            if ($result['status']) {
+                $rateKey = $result['data']->hotel->rooms[0]->rates[0]->rateKey;
+                if ($result['data']->hotel->rooms[0]->rates[0]->rateType == 'BOOKABLE') {
+                    $hotelDetailsGet = HotelsData::where('code', $request->hotelCode)->first();
+
+                    $data = array(
+                        '_MetaTitle' => 'Book Now',
+                        '_MetaKeywords' => '',
+                        '_MetaDescription' => '',
+                        '_Flight' => '',
+                        '_Hotel' => 'active',
+                        '_Packages' => '',
+                        '_Visa' => '',
+                        '_Insurance' => '',
+                        '_Car' => '',
+                    );
+                    return view('book_now', compact('data', 'rateKey', 'hotelDetailsGet', 'result'));
+                } else {
+                    return response()->json([
+                        'status' => 404,
+                        'rateKey' => "Room Not Avalable  Try another Room ",
+                        'hotelCode' => ''
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'html' => "Server error Try Again! ",
+                    'hotelCode' => ''
+                ]);
+            }
+        }
     }
 }

@@ -1,4 +1,10 @@
-<header>
+@php
+$segments = request()->segments();
+
+@endphp
+@if(isset($segments[0]) && $segments[0] == 'agent')
+ @else
+ <header>
     <section class="logo_menu_box d-flex justify-content-between  clearfix align-items-center">
         <div class="logo d-flex align-items-center">
             <div class="boxthems">
@@ -71,7 +77,8 @@
                         </span>
                         <span class="mobile_lg_hd">{{$setting->country ?? 'US'}}</span>
                         <span class="inr_c"> -
-                            <!-- <i class="fa fa-usd mr-1 ml-1"></i> -->{{$setting->currency ?? '$'}} </span>
+                            <!-- <i class="fa fa-usd mr-1 ml-1"></i> -->{{$setting->currency ?? '$'}}
+                        </span>
                     </a>
                 </li>
                 <li>
@@ -80,155 +87,173 @@
                 </li>
                 @auth
                 <li>
-                    <a href="{{ url('dashboard') }}" class="btnds_menu logcng" >
+                    <a href="{{ url('dashboard') }}" class="btnds_menu logcng">
                         <i class="fa fa-user-o mr-1"></i>Dashboard </a>
-                    </li>
+                </li>
                 @else
-                    <li>
+                <li>
                     <a href="#" class="btnds_menu logcng" data-toggle="modal" data-target="#poplogin">
                         <i class="fa fa-user-o mr-1"></i>Log&nbsp;in </a>
-                    </li>
-                    @endauth
-                </ul>
+                </li>
+                @endauth
+                <li>
+                    <a href="{{ url('/agent/login') }}" class="btnds_menu logcng" >
+                        <i class="fa fa-user-o mr-1"></i> Agent Log&nbsp;in </a>
+                </li>
+            </ul>
 
         </div>
     </section>
 </header>
 
 
- <!-- poplogin -->
- <div class="popds">
-        <div class="modal fade" id="poplogin">
-            <div class="modal-dialog">
-                <div class="modal-content">
+<!-- poplogin -->
+<div class="popds">
+    <div class="modal fade" id="poplogin">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                    <button type="button" class="close" data-dismiss="modal"><img src="{{asset('public/assets/images/close-w.svg')}}"
-                            class="imgres" /></button>
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <!--Page-->
-                        <div class="login_view1 ">
-                            <div class="imgtop">
-                                <img src="{{asset('public/assets/images/travel_log.svg')}}" alt="" class="imgres" />
+                <button type="button" class="close" data-dismiss="modal"><img
+                        src="{{asset('public/assets/images/close-w.svg')}}" class="imgres" /></button>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <!--Page-->
+                    <div class="login_view1 ">
+                        <div class="imgtop">
+                            <img src="{{asset('public/assets/images/travel_log.svg')}}" alt="" class="imgres" />
+                        </div>
+                        <div class="pdbx_pop">
+                            <div class="headingpop text-center">
+                                <h2>Get the full experience</h2>
+                                <p>Track prices, make trip planning easier and enjoy faster booking.</p>
                             </div>
-                            <div class="pdbx_pop">
-                                <div class="headingpop text-center">
-                                    <h2>Get the full experience</h2>
-                                    <p>Track prices, make trip planning easier and enjoy faster booking.</p>
-                                </div>
-                                <div class="btnslit">
-                                    <span id="email_cn">Continue with email</span>
-                                    <span>  <a href="{{ url('auth/google') }}"><img src="{{asset('public/assets/images/google_g.svg')}}" alt="" class="imgres mr-2" />Google</a></span>
-                                    <span><a href="{{ url('auth/facebook') }}"><img src="{{asset('public/assets/images/facebook_i.svg')}}" alt="" class="imgres mr-2" />Facebook</a></span>
+                            <div class="btnslit">
+                                <span id="email_cn">Continue with email</span>
+                                <span> <a href="{{ url('auth/google') }}"><img
+                                            src="{{asset('public/assets/images/google_g.svg')}}" alt=""
+                                            class="imgres mr-2" />Google</a></span>
+                                <span><a href="{{ url('auth/facebook') }}"><img
+                                            src="{{asset('public/assets/images/facebook_i.svg')}}" alt=""
+                                            class="imgres mr-2" />Facebook</a></span>
 
-                                    <div class="rmb_bx text-center">
-                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                        <label for="vehicle1"> Remember me</label>
+                                <div class="rmb_bx text-center">
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                    <label for="vehicle1"> Remember me</label>
 
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="click_txt">
-                                    <p>By continuing you agree to Luftin <a href="#">Terms of Service</a> and <a
-                                            href="#">Privacy Policy</a></p>
-                                </div>
+                            <div class="click_txt">
+                                <p>By continuing you agree to Luftin <a href="#">Terms of Service</a> and <a
+                                        href="#">Privacy Policy</a></p>
                             </div>
                         </div>
-                        <!--Login-->
-                        <div class="login_view2 pdbx_pop" style="display: none;">
-                            <div class="arrowbx d-flex">
-                                <i class="fa fa-angle-left " id="bck_1"></i>
-                                <h3>What's your email address?</h3>
-                            </div>
+                    </div>
+                    <!--Login-->
+                    <div class="login_view2 pdbx_pop" style="display: none;">
+                        <div class="arrowbx d-flex">
+                            <i class="fa fa-angle-left " id="bck_1"></i>
+                            <h3>What's your email address?</h3>
+                        </div>
 
-                         <form action="" method="POST"  id="requestemailOtp">
+                        <form action="" method="POST" id="requestemailOtp">
                             <div class="d-flex flx_hv">
-                                    <div class="email_box">
-                                        <label>Email</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="login_input" name="email" required placeholder="Enter email address" />
-                                        </div>
-                                    </div>
-
-                                    <div class="btn_poplog">
-                                        <button class="btnnxt requestemailOtpbtn"  type="submit">Next</button>
-                                        {{-- <button class="btnnxt" id="nxtotp" type="submit">Next</button> --}}
+                                <div class="email_box">
+                                    <label>Email</label>
+                                    <div class="position-relative">
+                                        <input type="text" class="login_input" name="email" required
+                                            placeholder="Enter email address" />
                                     </div>
                                 </div>
-                            </form>
-                        </div>
 
-
-                        <!--OTP-->
-                        <div class="login_view3 pdbx_pop" style="display: none;">
-                            <div class="arrowbx d-flex">
-                                <i class="fa fa-angle-left" id="bck_2"></i>
-                                <h3>Continue with your account</h3>
+                                <div class="btn_poplog">
+                                    <button class="btnnxt requestemailOtpbtn" type="submit">Next</button>
+                                    {{-- <button class="btnnxt" id="nxtotp" type="submit">Next</button> --}}
+                                </div>
                             </div>
-
-
-                            <form action="" method="POST"  id="verifyOtp">
-                                <div class="flx_hv">
-                                    <P>Use the verification code we sent to <strong class="gmailOtp"></strong> to log in.</P>
-                                    <div class="email_box">
-                                        <label>4-digit verification code</label>
-                                        <div class="position-relative d-flex psrdotp">
-                                            <input type="number" id="firstA"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
-                                            <input type="number" id="firstB"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
-                                            <input type="number" id="firstC"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
-                                            <input type="number" id="firstD"  min="0" max="9" maxlength="1" onKeyPress="if(this.value.length>0) return false;"class="login_input" name="opt[]"/>
-                                        </div>
-                                        <button class="sntbtn" id="resendOtp" type="button">Send a new code</button>
-                                    </div>
-                                    <input type="hidden" id="getEmail"  name="email" value="">
-                                    <div class="btn_poplog">
-                                        <button class="btnnxt verifyOtpbtn" type="submit">Verify code</button>
-                                    </div>
-                                    <div class="rmb_bx text-center mt-2">
-                                        <input type="checkbox" id="Remember" name="Remember" value="">
-                                        <label for="Remember"> Remember me</label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
 
 
+                    <!--OTP-->
+                    <div class="login_view3 pdbx_pop" style="display: none;">
+                        <div class="arrowbx d-flex">
+                            <i class="fa fa-angle-left" id="bck_2"></i>
+                            <h3>Continue with your account</h3>
+                        </div>
 
+
+                        <form action="" method="POST" id="verifyOtp">
+                            <div class="flx_hv">
+                                <P>Use the verification code we sent to <strong class="gmailOtp"></strong> to log in.
+                                </P>
+                                <div class="email_box">
+                                    <label>4-digit verification code</label>
+                                    <div class="position-relative d-flex psrdotp">
+                                        <input type="number" id="firstA" min="0" max="9" maxlength="1"
+                                            onKeyPress="if(this.value.length>0) return false;" class="login_input"
+                                            name="opt[]" />
+                                        <input type="number" id="firstB" min="0" max="9" maxlength="1"
+                                            onKeyPress="if(this.value.length>0) return false;" class="login_input"
+                                            name="opt[]" />
+                                        <input type="number" id="firstC" min="0" max="9" maxlength="1"
+                                            onKeyPress="if(this.value.length>0) return false;" class="login_input"
+                                            name="opt[]" />
+                                        <input type="number" id="firstD" min="0" max="9" maxlength="1"
+                                            onKeyPress="if(this.value.length>0) return false;" class="login_input"
+                                            name="opt[]" />
+                                    </div>
+                                    <button class="sntbtn" id="resendOtp" type="button">Send a new code</button>
+                                </div>
+                                <input type="hidden" id="getEmail" name="email" value="">
+                                <div class="btn_poplog">
+                                    <button class="btnnxt verifyOtpbtn" type="submit">Verify code</button>
+                                </div>
+                                <div class="rmb_bx text-center mt-2">
+                                    <input type="checkbox" id="Remember" name="Remember" value="">
+                                    <label for="Remember"> Remember me</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
+</div>
 
-    <!-- poplogin end -->
+<!-- poplogin end -->
 
-    <!-- poplanguage -->
-    <div class="popds">
-        <div class="modal fade" id="poplanguage">
-            <div class="modal-dialog">
-                <div class="modal-content">
+<!-- poplanguage -->
+<div class="popds">
+    <div class="modal fade" id="poplanguage">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                    <button type="button" class="close" data-dismiss="modal"><img src="{{asset('public/assets/images/close-w.svg')}}"
-                            class="imgres" /></button>
-                    <!-- Modal Header -->
-                    <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><img
+                        src="{{asset('public/assets/images/close-w.svg')}}" class="imgres" /></button>
+                <!-- Modal Header -->
+                <div class="modal-header">
 
-                        <!--Login-->
-                        <div class="pdbx_pop">
-                            <div class="arrowbx d-flex">
+                    <!--Login-->
+                    <div class="pdbx_pop">
+                        <div class="arrowbx d-flex">
 
-                                <h3>Regional settings</h3>
-                            </div>
-                            <form method="post" id='setRegion' action='{{url("setRegion")}}'>
-                                @csrf
+                            <h3>Regional settings</h3>
+                        </div>
+                        <form method="post" id='setRegion' action='{{url("setRegion")}}'>
+                            @csrf
 
-                                <input type="hidden" value="{{Request::ip();}}" name="ip">
+                            <input type="hidden" value="{{Request::ip();}}" name="ip">
                             <div class="d-flex flx_hv">
                                 <div class="email_box">
                                     <label><i class="fa fa-language mr-1" aria-hidden="true"></i>Language</label>
                                     <div class="position-relative">
-                                        <select class="login_input" name="language" aria-invalid="false" id="culture-selector-locale"
-                                            name="locale">
+                                        <select class="login_input" name="language" aria-invalid="false"
+                                            id="culture-selector-locale" name="locale">
                                             <optgroup dir="ltr" label="Popular languages">
                                                 <option value="en-GB">English (United Kingdom)</option>
                                             </optgroup>
@@ -284,7 +309,9 @@
                                             <option value="">Select</option>
                                             @if(!empty(getcountries()))
                                             @foreach(getcountries() as $countries)
-                                                <option {{!empty($setting->country) && $setting->country ==  $countries->sortname ? 'selected':''}} value='{{$countries->sortname ?? ""}}'>{{$countries->name ?? ""}}</option>
+                                            <option {{!empty($setting->country) && $setting->country ==
+                                                $countries->sortname ? 'selected':''}} value='{{$countries->sortname ??
+                                                ""}}'>{{$countries->name ?? ""}}</option>
                                             @endforeach
                                             @endif
                                         </select>
@@ -301,7 +328,9 @@
                                             <option value="">Select</option>
                                             @if(!empty(getcurrencies()))
                                             @foreach(getcurrencies() as $data)
-                                                <option {{!empty($setting->currency) && $setting->currency ==  $data->code ? 'selected':''}} value='{{$data->code ?? ""}}'>{{$data->code ?? ""}} - {{$data->icon ?? ""}}</option>
+                                            <option {{!empty($setting->currency) && $setting->currency == $data->code ?
+                                                'selected':''}} value='{{$data->code ?? ""}}'>{{$data->code ?? ""}} -
+                                                {{$data->icon ?? ""}}</option>
                                             @endforeach
                                             @endif
                                             <!-- <optgroup dir="ltr" label="Popular currencies">
@@ -472,13 +501,13 @@
                         </form>
 
 
-                        </div>
-
-
-
                     </div>
+
+
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- poplanguage end -->
+</div>
+<!-- poplanguage end --> @endif

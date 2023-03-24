@@ -6,7 +6,13 @@
 @section('pageContent')
 
 <div class="container_pd">
-
+@php
+if(!empty($result)){
+$hotelDetails = $result['data']->hotel;
+$room = $result['data']->hotel->rooms[0]->rates[0];
+// dd($hotelDetailsGet);
+}
+@endphp
     <div class="detailsmain">
 
         <div class="leftmain_rv flxfvf">
@@ -18,14 +24,14 @@
             <div class="whitebrd cngmd_hb">
                 <div class="top_txt_price bggr d-flex justify-content-between align-items-center">
                     <div class="left_top_txt">
-                        <h2>Park Avenue Baker Street London
-                            <span class="d-flex ml-2"><i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i></span>
+                        <h2>{{  $hotelDetails->name }}
+                            <span class="d-flex ml-2">   @php
+                                $explode = explode(" ", $hotelDetails->categoryName);
+                                for($i=0; $i<$explode[0]; $i++) { echo '<i
+                                    class="fa fa-star"></i>' ; } @endphp</span>
                         </h2>
-                        <span><i class="fa fa-map-marker mr-1"></i>Greater London, United Kingdom</span>
+                        <span><i class="fa fa-map-marker mr-1"></i> {{
+                            $hotelDetails->destinationName }}</span>
                     </div>
                     <div class="price_right">
                         <h3>Non-Refundable</h3>
@@ -40,8 +46,8 @@
                         <ul class="clklist d-flex align-items-center justify-content-between">
                             <li>
                                 <h6>CHECK-IN</h6>
-                                <h3>Nov 22</h3>
-                                <h4>Tue, 3:00 PM</h4>
+                                <h3>{{ date('F-d', strtotime($hotelDetails->checkIn)) }}</h3>
+                                {{-- <h4>Tue, 3:00 PM</h4> --}}
                             </li>
 
                             <li>
@@ -50,8 +56,8 @@
 
                             <li>
                                 <h6>CHECK-OUT</h6>
-                                <h3>Nov 23</h3>
-                                <h4>Wed, 11:00 AM</h4>
+                                <h3>{{ date('F-d', strtotime($hotelDetails->checkOut)) }}</h3>
+                                {{-- <h4>Wed, 11:00 AM</h4> --}}
                             </li>
 
                             <li>
@@ -66,8 +72,8 @@
                             <li>
                                 <h6>Rooms & Guests</h6>
                                 <h3>
-                                    1
-                                    <span class="sm_ds"> Room</span> 4
+                                    {{  $hotelDetailsGet->rooms }}
+                                    <span class="sm_ds"> Room</span> {{  $hotelDetailsGet->adult +  $hotelDetailsGet->child }}
                                     <span class="sm_ds"> Guest</span>
                                 </h3>
 
@@ -82,10 +88,10 @@
                         <h3>Deluxe Room, 1 FullBed, Non Refundable</h3>
                     </li>
                     <li>
-                        <h4>2
+                        <h4>{{   $hotelDetailsGet->adult  }}
                             <span>Adult</span>
                         </h4>
-                        <h4>2
+                        <h4>{{   $hotelDetailsGet->child }}
                             <span>Children</span>
                         </h4>
                     </li>
@@ -428,21 +434,7 @@
                             <div class="form-group">
                                 <input type="text" id="mobile_code" class="" placeholder="Phone Number" name="name">
                             </div>
-                            <script>
-                                $(document).ready(function() {
 
-                                    $("#mobile_code").intlTelInput({
-
-                                        initialCountry: "in",
-
-                                        separateDialCode: true,
-
-                                        // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
-
-                                    });
-
-                                });
-                            </script>
 
                         </div>
 
@@ -591,15 +583,15 @@
                             <div class="card-header" id="farehead1">
                                 <a href="#" class="btn btn-header-link d-flex justify-content-between  align-items-center" data-toggle="collapse" data-target="#fr1" aria-expanded="true" aria-controls="faq1">
                                     <h5>Room Rates </h5>
-                                    <span class="float-right"><i class="fa fa-rupee mr-1"></i>2,78,976.6</span>
+                                    <span class="float-right"><i class="fa fa-rupee mr-1"></i>{{ $room->net }}</span>
                                 </a>
                             </div>
 
                             <div id="fr1" class="collapse show" aria-labelledby="farehead1" data-parent="#farenew">
                                 <div class="card-body">
                                     <div class="prce d-flex justify-content-between align-items-center">
-                                        <span>Room 1</span>
-                                        <span><i class="fa fa-rupee mr-1"></i>2,78,976.6</span>
+                                        <span>Room{{   $hotelDetailsGet->adult +  $hotelDetailsGet->child  }}</span>
+                                        <span><i class="fa fa-rupee mr-1"></i>{{  $hotelDetailsGet->adult +  $hotelDetailsGet->child  *  $room->net  }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -630,7 +622,7 @@
                     </div>
                     <div class="totalpd d-flex justify-content-between align-items-center">
                         <h6>Total Amount:</h6>
-                        <h6><i class="fa fa-rupee mr-1"></i>3,99,844</h6>
+                        <h6><i class="fa fa-rupee mr-1"></i>{{  $hotelDetailsGet->adult +  $hotelDetailsGet->child  *  $room->net  }}</h6>
                     </div>
                 </div>
 
@@ -685,4 +677,21 @@
 
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+
+        $("#mobile_code").intlTelInput({
+
+            initialCountry: "in",
+
+            separateDialCode: true,
+
+            // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+
+        });
+
+    });
+</script>
 @endsection

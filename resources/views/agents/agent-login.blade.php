@@ -193,8 +193,6 @@
 
 
 <div class="banner">
-    <h1>Agent
-        Registration</h1>
     <div class="container">
         <div class="owl-carousel owl-theme">
             <div class="item">
@@ -251,6 +249,7 @@
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center">
                             <a class="forgotPass" href="#">Forgot Password</a>
+                            <a  class="forgotPass" href="{{ url('agent/signup') }}">Signup</a>
                             <button type="submit" class="loginBtn btn">Login</button>
                         </div>
                     </div>

@@ -102,7 +102,8 @@
                         <div class="list_hotel_img">
                             <div class="lgzoomimg">
                                 <a href="#">
-                                    <img src="https://photos.hotelbeds.com/giata/{{ $hotelImg['path']  }}" class="img-res" />
+                                    <img src="https://photos.hotelbeds.com/giata/{{ $hotelImg['path']  }}"
+                                        class="img-res" />
                                 </a>
                             </div>
                         </div>
@@ -210,14 +211,20 @@
 
                             <div class="hotslc">
                                 @php
-                                $rate_key = checkrates($rate->rateKey)['data']->hotel->rooms[0]->rates[0]->rateKey;
+                                // $rate_key = checkrates($rate->rateKey)['data']->hotel->rooms[0]->rates[0]->rateKey;
 
                                 // $rate_key = $checkrates_response['hotels'][0]['rooms'][0]['rates'][0]['rateKey']
-                                    // dd( checkrates($rate->rateKey));die;
+                                // {{ url('book_now/'. $rate->rateKey) }} dd( checkrates($rate->rateKey));die;
                                 @endphp
                                 {{-- rateKey --}}
-                                <a href="{{  url('book_now/'. $rate->rateKey) }}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5"
-                                        aria-hidden="true"></i></a>
+                                <form method="post" action="{{ url('book_now/') }} ">
+                                    @csrf
+                                    <input type="hidden" name="razkey" value="{{ $rate->rateKey }}">
+                                    <input type="hidden" name="hotelCode" value="{{ $hotelDetails->code }}">
+                                    <button type="submit" data-id="{{ $rate->rateKey }}" data-hotel={{ $hotelDetails->code }}
+                                        class="btn-grad ftbtn_src booked_btn">Book Now<i class="fa fa-angle-right ml5"
+                                            aria-hidden="true"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -858,6 +865,45 @@
         });
 
         $(document).ready(function() {
+            // $('.booked_btn').click(function(event) {
+            //     event.preventDefault();
+            //     const razkey  = $(this).data('id');
+            //     const hotelCode  = $(this).data('hotel');
+
+            //     $.ajax({
+            //     url: '/book_now',
+            //     type: 'Post',
+            //     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            //     data: {
+            //         razkey: razkey,
+            //         hotelCode: hotelCode,
+            //     },
+            //     dataType:'json',
+            //     beforeSend: function (msg) {
+            //         $(this).html(
+            //             '<i class="fa fa-spinner fa-spin"></i> wait..'
+            //         );
+            //         $(this).prop("disabled", true);
+            //     },
+            //     success: function (response) {
+            //         $(this).prop("disabled", false);
+            //         console.log(response);
+            //         if (response.status == 200) {
+            //             $.each(response.data, function (index, element) {
+            //                 $("#view-account-information-" + index).html(
+            //                     element
+            //                 );
+            //             });
+
+            //             $("body .view-account-information").show().fadeIn(200);
+            //             toastr["success"](
+            //                 "Success!",
+            //                 "Account Information has been updated!"
+            //             );
+            //         }
+            //     },
+            // });
+            })
             $(".paraclick").click(function() {
                 $(".para_dis").toggleClass("hegitbx");
             });

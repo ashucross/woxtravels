@@ -132,12 +132,22 @@
 <section class="main">
     <div class="section-header">
         <div class="container">
-            <h1>Agent Registration </h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Agent Registration </h1>
+                </div>
+                <div class="col-md-6">
+
+                    <a href="{{ url('/agent/login') }}" style="color:#fff8f8;">Already Account Login </a>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="container">
         <h2><i class="fa-solid fa-user"></i> Travel Agents</h2>
         <h4>Login Details</h4>
+
 
         <form  enctype="multipart/form-data" action="{{ url('agent/signup/save') }}" method="post" class="register-form" id="needs-validation"
             novalidate>
