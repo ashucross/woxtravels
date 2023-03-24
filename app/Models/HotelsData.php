@@ -30,6 +30,10 @@ class HotelsData extends Model
         'web',
         'noDecimalPrice',
         'response_data',
+        'adult',
+        'child',
+        'rooms',
+        'childages',
     ];
 //ALTER TABLE `hotel_data` ADD `noDecimalPrice` INT(20) NULL AFTER `web`;
 

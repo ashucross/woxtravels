@@ -159,7 +159,7 @@ class StayController extends Controller
         $hotels = [];
         $params = $request->all() ?? '';
         $signature = getsignature();
-        // dd($signature);
+        // dd($params);
         $search_hotels = [];
         if (!empty($signature) && $signature['status'] == 200) {
             $gethotels = searchHotel($signature['data'], $params);
@@ -196,6 +196,10 @@ class StayController extends Controller
                                 'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
                                 'web' => $details['hoteldetail']->hotel->web ?? '',
                                 'response_data' => json_encode($details['data']),
+                                 'adult' => $request->adult ?? '',
+                                'child' => $request->child ?? '',
+                                'rooms' => $request->rooms ?? '',
+                                'childages' => json_encode($request->childages) ?? '',
                             ]);
                             //  dd($details['data']);
                             //dd($details['hoteldetail']->hotel->facilities);

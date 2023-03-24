@@ -32,7 +32,11 @@ class HotelsData extends Migration
             $table->text('images');
             $table->text('web');
             $table->text('response_data');
-            $table->integer('noDecimalPrice');
+            $table->text('childages');
+            $table->text('rooms');
+            $table->text('child');
+            $table->text('adult');
+            $table->integer('noDecimalPrice')->nullable();
             $table->timestamps();
         });
     }

@@ -209,6 +209,12 @@
                             </div>
 
                             <div class="hotslc">
+                                @php
+                                $rate_key = checkrates($rate->rateKey)['data']->hotel->rooms[0]->rates[0]->rateKey;
+
+                                // $rate_key = $checkrates_response['hotels'][0]['rooms'][0]['rates'][0]['rateKey']
+                                    // dd( checkrates($rate->rateKey));die;
+                                @endphp
                                 {{-- rateKey --}}
                                 <a href="{{  url('book_now/'. $rate->rateKey) }}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5"
                                         aria-hidden="true"></i></a>

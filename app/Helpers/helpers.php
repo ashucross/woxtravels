@@ -6,6 +6,7 @@ use App\Models\Curren_Cies;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Twilio\Rest\Client;
 
 function sendWhatsAppMessage(string $message, string $recipient)
@@ -292,8 +293,6 @@ function searchHotel($data, $params = null)
             "code" => $params['location']
         ])
     ];
-
-
     try {
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -404,39 +403,189 @@ function getHotelImage($hotelCode, $data)
 }
 
 
-function hotelApisAminities(){
-	$apiKey =env('HOTEL_API_KEY');
-	$sharedSecret =env('HOTEL_SECRET_KEY');
-	$signature = hash("sha256", $apiKey.$sharedSecret.time());
-	$r = array(
-		   'Content-Type:application/json',
-			'Accept: application/json',
-			'Api-key:'. $apiKey,
-			'X-Signature:'.$signature,
-			'Accept-Encoding:gzip'
-	);
-	//  dd($r);
+function checkrates($rate_key)
+{
+    $apiKey = env('HOTEL_API_KEY');
+    $sharedSecret = env('HOTEL_SECRET_KEY');
+    $signature = hash("sha256", $apiKey . $sharedSecret . time());
+    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/checkrates";
+
+    $r = array(
+        'Content-Type:application/json',
+        'Accept: application/json',
+        'Api-key:' . $apiKey,
+        'X-Signature:' . $signature,
+        'Accept-Encoding:gzip'
+    );
+
+    $post = [
+        "rooms" => array([
+            "rateKey" => $rate_key,
+        ]),
+    ];
+
+    try {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $endpoint,
+            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '', 'Content-Type:application/json'],
+            CURLOPT_POSTFIELDS => json_encode($post)
+        ));
+        $resp = curl_exec($curl);
+        if (!curl_errno($curl)) {
+            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                case 400:  # Fail
+                    $hotels = json_decode($resp);
+                    return ([
+                        'status' => 203,
+                        'data' => '',
+                        'message' => $hotels->error->message ?? '',
+                    ]);
+                    break;
+                case 200:  # OK
+                    $hotels = json_decode($resp);
+                    return ([
+                        'status' => 200,
+                        'data' => $hotels
+                    ]);
+                    break;
+                default:
+                    return ([
+                        'status' => $http_code,
+                        'data' => ''
+                    ]);
+            }
+        }
+        curl_close($curl);
+    } catch (Exception $ex) {
+        return ([
+            'status' => 'error',
+            'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
+        ]);
+    }
+}
+
+
+
+function bookings($rate_key)
+{
+    $apiKey = env('HOTEL_API_KEY');
+    $sharedSecret = env('HOTEL_SECRET_KEY');
+    $signature = hash("sha256", $apiKey . $sharedSecret . time());
+    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/bookings";
+
+
+
+    $post = array(
+        "holder" => array(
+            "name" => "John",
+            "surname" => "Doe",
+            "email" => "johndoe@example.com",
+            "phone" => "+1234567890",
+            "address" => "123 Main St.",
+            "city" => "Anytown",
+            "countryCode" => "US",
+            "zip" => "12345"
+        ),
+        "rooms" => array(
+            array(
+                "rateKey" => $rate_key,
+                "paxes" => array(
+                    array(
+                        "name" => "John",
+                        "surname" => "Doe",
+                        "type" => "AD",
+                        "age" => 30,
+                        "roomId" => 1
+                    )
+                )
+            ),
+        ),
+        "clientReference" => "IntegrationAgency",
+        "remark" => "Booking remarks are to be written here.",
+        "tolerance" => 2.00
+    );
+
+
+    try {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $endpoint,
+            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '', 'Content-Type:application/json'],
+            CURLOPT_POSTFIELDS => json_encode($post)
+        ));
+        $resp = curl_exec($curl);
+        dd($resp);
+        if (!curl_errno($curl)) {
+            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                case 400:  # Fail
+                    $hotels = json_decode($resp);
+                    return ([
+                        'status' => 203,
+                        'data' => '',
+                        'message' => $hotels->error->message ?? '',
+                    ]);
+                    break;
+                case 200:  # OK
+                    $hotels = json_decode($resp);
+                    return ([
+                        'status' => 200,
+                        'data' => $hotels
+                    ]);
+                    break;
+                default:
+                    return ([
+                        'status' => $http_code,
+                        'data' => ''
+                    ]);
+            }
+        }
+        curl_close($curl);
+    } catch (Exception $ex) {
+        return ([
+            'status' => 'error',
+            'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
+        ]);
+    }
+}
+
+function hotelApisAminities()
+{
+    $apiKey = env('HOTEL_API_KEY');
+    $sharedSecret = env('HOTEL_SECRET_KEY');
+    $signature = hash("sha256", $apiKey . $sharedSecret . time());
+    $r = array(
+        'Content-Type:application/json',
+        'Accept: application/json',
+        'Api-key:' . $apiKey,
+        'X-Signature:' . $signature,
+        'Accept-Encoding:gzip'
+    );
+    //  dd($r);
     $curl = curl_init();
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => 'https://api.test.hotelbeds.com/hotel-content-api/1.0/types/facilities',
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => '',
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 0,
-		  CURLOPT_FOLLOWLOCATION => true,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => 'GET',
-		  CURLOPT_HTTPHEADER => array(
-			'Content-Type:application/json',
-			'Accept: application/json',
-			'Api-key:d0f27614d49932fcdc296ce8bcfffb42',
-			'X-Signature:'.$signature.'',
-			'Accept-Encoding:gzip'
-		  ),
-		));
-		$response = curl_exec($curl);
-		curl_close($curl);
-		$accessresponse = json_decode($response, true);
-        dd($accessresponse);die;
-        return $accessresponse;
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.test.hotelbeds.com/hotel-content-api/1.0/types/facilities',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type:application/json',
+            'Accept: application/json',
+            'Api-key:d0f27614d49932fcdc296ce8bcfffb42',
+            'X-Signature:' . $signature . '',
+            'Accept-Encoding:gzip'
+        ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $accessresponse = json_decode($response, true);
+    return $accessresponse;
 }
