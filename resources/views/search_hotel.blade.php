@@ -138,9 +138,9 @@
                                 <span class="iconint"><i class="fa fa-calendar"></i></span>
                                 <input aut type="text" name="checkin" value='{{$params["checkin"] ?? ""}}' required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
                             </div>
-                            <!--  <div class="position-relative "> 
-                            <span class="iconint"><i class="fa fa-calendar"></i></span> 
-                            <input value='{{$params["checkin"] ?? ""}}' aut type="text" name="checkin" placeholder="Check-In - Check-Out" class="input_src  input_hgt "> 
+                            <!--  <div class="position-relative ">
+                            <span class="iconint"><i class="fa fa-calendar"></i></span>
+                            <input value='{{$params["checkin"] ?? ""}}' aut type="text" name="checkin" placeholder="Check-In - Check-Out" class="input_src  input_hgt ">
                         </div> -->
 
 
@@ -303,7 +303,7 @@
                         </div>
 
                     </div>
-             
+
 
 
 
@@ -349,36 +349,36 @@
 
                 <div class="panel-group " id="accordion">
 
-                    <div class="panel panel-default"> 
-                        <div class="panel-heading"> 
-                            <h4 class="panel-title"> 
-                                <a data-toggle="collapse" data-parent="#accordion" href="#PRICE" aria-expanded="true"> 
-                                    <div class="txtftr"> 
-                                        <h6>PRICE</h6> 
-                                        <span>Clear</span> 
-                                    </div> 
-                                </a> 
-                            </h4> 
-                        </div> 
-                        <div id="PRICE" class="panel-collapse collapse show"> 
-                            <div class="panel-body"> 
-                                <div class="rage_price"> 
-                                    <div id="slider-range"></div> 
-                                    <div class="d-flex justify-content-between slider-labels"> 
-                                        <div class=" caption"> 
-                                            <strong>Min:</strong> <span id="slider-range-value1"></span> 
-                                        </div> 
-                                        <div class=" text-right caption"> 
-                                            <strong>Max:</strong> <span id="slider-range-value2"></span> 
-                                        </div> 
-                                    </div> 
-                                    <form> 
-                                        <input type="hidden" name="min-value" id="min-value" value=""> 
-                                        <input type="hidden" name="max-value" id="max-value" value=""> 
-                                    </form> 
-                                </div> 
-                            </div> 
-                        </div> 
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#PRICE" aria-expanded="true">
+                                    <div class="txtftr">
+                                        <h6>PRICE</h6>
+                                        <span>Clear</span>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="PRICE" class="panel-collapse collapse show">
+                            <div class="panel-body">
+                                <div class="rage_price">
+                                    <div id="slider-range"></div>
+                                    <div class="d-flex justify-content-between slider-labels">
+                                        <div class=" caption">
+                                            <strong>Min:</strong> <span id="slider-range-value1"></span>
+                                        </div>
+                                        <div class=" text-right caption">
+                                            <strong>Max:</strong> <span id="slider-range-value2"></span>
+                                        </div>
+                                    </div>
+                                    <form>
+                                        <input type="hidden" name="min-value" id="min-value" value="">
+                                        <input type="hidden" name="max-value" id="max-value" value="">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="panel panel-default">
@@ -1249,9 +1249,9 @@
                     <div class="list_hotel_txt">
                         <div class="listing_hd_hotel">
                             <h2><span>{{$hotel->name ?? ''}}</span>
-                                <!-- <div class="startbx smallstar"> 
-                                    <span>5&nbsp;-&nbsp;</span> 
-                                    <i class="fa fa-star"></i> 
+                                <!-- <div class="startbx smallstar">
+                                    <span>5&nbsp;-&nbsp;</span>
+                                    <i class="fa fa-star"></i>
                                 </div>  -->
                             </h2>
                             <ul class="listbt_sml">
@@ -1306,7 +1306,7 @@
                             <p>Website : {{$hotel->web ?? ''}}</p>
                         </div>
                         <div class="hotslc">
-                            <a href="{{url('hotelDetails'.'/'.$hotel->code)}}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5" aria-hidden="true"></i></a>
+                            <a href="{{url('hotelDetails'.'/'.$hotel->FS_sessionid)}}" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -3365,7 +3365,7 @@ $(document).ready(function() {
             decimals: 0,
             thousand: ',',
             prefix: ''
-        }); 
+        });
         var minVal = $('#min-value').val();
         var maxVal = $('#max-value').val();
         noUiSlider.create(rangeSlider, {
@@ -3385,9 +3385,9 @@ $(document).ready(function() {
             document.getElementById('slider-range-value1').innerHTML = values[0];
             document.getElementById('slider-range-value2').innerHTML = values[1];
             $('#min-value').val(moneyFormat.from(values[0]));
-            $('#max-value').val(moneyFormat.from(values[1])); 
+            $('#max-value').val(moneyFormat.from(values[1]));
         });
-   
+
 
     $(".item_list").click(function() {
         var country_select = $('.country_select').val();
@@ -3413,8 +3413,8 @@ $(document).ready(function() {
     });
     $('.country_select').selectize();
 
-    // $(".item_list").autocomplete({ 
-    //       source: function(request, response) { 
+    // $(".item_list").autocomplete({
+    //       source: function(request, response) {
     //           $.ajax({
     //               url: '{{url("getSuggestionitems")}}',
     //               type: 'get',
@@ -3427,7 +3427,7 @@ $(document).ready(function() {
     //               }
     //           });
     //       },
-    //       select: function(event, ui) {  
+    //       select: function(event, ui) {
     //          $(".item_list").val(ui.item.data);
     //          $(".item_list").attr('data-code',ui.item.code);
     //           /*
@@ -3439,7 +3439,7 @@ $(document).ready(function() {
     //           },500) */
     //       }
     //   });
-    //   $(document).on('focus','.item_list',function() { 
+    //   $(document).on('focus','.item_list',function() {
     //       $(this).autocomplete('search', '1')
     //   });
 
@@ -3473,7 +3473,7 @@ $(document).ready(function() {
 
     $(document).on("change",'.orderby', function(e) {
         var val = $(this).val();
-        var country_select  = $('.country_select ').val(); 
+        var country_select  = $('.country_select ').val();
         $.ajax({
         type: "POST",
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},

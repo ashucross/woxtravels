@@ -51,7 +51,8 @@ Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 Route::post('/search_hotel', [StayController::class, 'search_hotel'])->name('search_hotel');
 Route::post('/setRegion', [StayController::class, 'setRegion'])->name('setRegion');
 Route::get('/hotelDetails/{id?}', [StayController::class, 'hotelDetails'])->name('hotelDetails');
-Route::post('/book_now', [StayController::class, 'book_now'])->name('book_now');
+Route::post('/hotel/review', [StayController::class, 'book_now'])->name('book_now');
+Route::post('/hotel/booking', [StayController::class, 'conf_book_now']);
 Route::get('/loadMoredata', [StayController::class, 'loadMoredata'])->name('loadMoredata');
 Route::get('/getSuggestionitems', [StayController::class, 'getSuggestionitems'])->name('getSuggestionitems');
 Route::post('/search_hot', [StayController::class, 'search_hot'])->name('search_hot');
@@ -59,7 +60,7 @@ Route::post('/submit_contact_form', [StayController::class, 'submit_contact_form
 
 Route::get('/packages', [AttractionController::class, 'index'])->name('packages');
 Route::get('/package-list/{destination}', [AttractionController::class, 'packageList'])->name('packages-list');
-Route::get('/package/{city}/{package}', [AttractionController::class, 'details'])->name('packages');
+Route::get('/package/{city}/{package}', [AttractionController::class, 'details']);
 
 Route::get('/visa', [VisaController::class, 'index'])->name('visa');
 Route::post('/visa_enquiry', [VisaController::class, 'visa_enquiry'])->name('visa_enquiry');

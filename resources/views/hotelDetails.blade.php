@@ -17,7 +17,7 @@
                         $rooms = json_decode($hotelDetails->response_data)->rooms;
                         $hotelDetailsGet = getHotelImage($hotelDetails->code, getsignature()['data']);
                         $hotelDetailsFind = $hotelDetailsGet['status'] == 200 ? $hotelDetailsGet['data']['hotel'] : '';
-                        // dd($hotelDetailsFind['images']);
+                        // dd($hotelDetailsFind['facilities']);
                         @endphp
                         <span class="d-flex ml-2">
                             @php
@@ -30,7 +30,7 @@
                 </div>
                 <div class="price_right">
                     <h2><i class="fa fa-dollar mr-1"></i>{{ $hotelDetails->maxRate }}</h2>
-                    <a href="{{url('book_now')}}" class="btn-grad bkd">BOOK THIS NOW</a>
+                    <a href="{{url('review')}}" class="btn-grad bkd">BOOK THIS NOW</a>
                 </div>
             </div>
         </div>
@@ -217,11 +217,13 @@
                                 // {{ url('book_now/'. $rate->rateKey) }} dd( checkrates($rate->rateKey));die;
                                 @endphp
                                 {{-- rateKey --}}
-                                <form method="post" action="{{ url('book_now/') }} ">
+                                <form method="post" action="{{ url('/hotel/review') }} ">
                                     @csrf
                                     <input type="hidden" name="razkey" value="{{ $rate->rateKey }}">
                                     <input type="hidden" name="hotelCode" value="{{ $hotelDetails->code }}">
-                                    <button type="submit" data-id="{{ $rate->rateKey }}" data-hotel={{ $hotelDetails->code }}
+                                    <input type="hidden" name="FS_sessionid" value="{{ $hotelDetails->FS_sessionid }}">
+                                    <button type="submit" data-id="{{ $rate->rateKey }}" data-hotel={{
+                                        $hotelDetails->code }}
                                         class="btn-grad ftbtn_src booked_btn">Book Now<i class="fa fa-angle-right ml5"
                                             aria-hidden="true"></i></button>
                                 </form>

@@ -220,6 +220,7 @@ function getHotel($data, $pagination, $init)
 
 function getCountryName($country, $city)
 {
+    // var_dump($country);
     $airports = DB::table('airports')->where(['country_code' => $country, 'city_code' => $city])->first();
     return $airports ?? '';
 }
@@ -362,6 +363,7 @@ function getHotelImage($hotelCode, $data)
 
         // Execute the cURL request and get the response
         $response = curl_exec($curl);
+        // dd($response)
         // Check for errors
         if (curl_errno($curl)) {
             echo "cURL error: " . curl_error($curl);
@@ -469,46 +471,24 @@ function checkrates($rate_key)
 
 
 
-function bookings($rate_key)
+function bookings($travelers, $rate_key, $holderDetails)
 {
     $apiKey = env('HOTEL_API_KEY');
     $sharedSecret = env('HOTEL_SECRET_KEY');
     $signature = hash("sha256", $apiKey . $sharedSecret . time());
     $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/bookings";
-
-
-
     $post = array(
-        "holder" => array(
-            "name" => "John",
-            "surname" => "Doe",
-            "email" => "johndoe@example.com",
-            "phone" => "+1234567890",
-            "address" => "123 Main St.",
-            "city" => "Anytown",
-            "countryCode" => "US",
-            "zip" => "12345"
-        ),
+        "holder" => $holderDetails,
         "rooms" => array(
             array(
                 "rateKey" => $rate_key,
-                "paxes" => array(
-                    array(
-                        "name" => "John",
-                        "surname" => "Doe",
-                        "type" => "AD",
-                        "age" => 30,
-                        "roomId" => 1
-                    )
-                )
+                "paxes" => $travelers
             ),
         ),
         "clientReference" => "IntegrationAgency",
         "remark" => "Booking remarks are to be written here.",
         "tolerance" => 2.00
     );
-
-
     try {
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -519,7 +499,7 @@ function bookings($rate_key)
             CURLOPT_POSTFIELDS => json_encode($post)
         ));
         $resp = curl_exec($curl);
-        dd($resp);
+        // dd($resp);
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 400:  # Fail
@@ -534,13 +514,16 @@ function bookings($rate_key)
                     $hotels = json_decode($resp);
                     return ([
                         'status' => 200,
-                        'data' => $hotels
+                        'data' => $hotels,
+                        'message' => 'true',
                     ]);
                     break;
                 default:
+                    $hotels = json_decode($resp);
                     return ([
                         'status' => $http_code,
-                        'data' => ''
+                        'data' => '',
+                        'message' => $hotels->error->message ?? '',
                     ]);
             }
         }
@@ -589,3 +572,5 @@ function hotelApisAminities()
     $accessresponse = json_decode($response, true);
     return $accessresponse;
 }
+
+

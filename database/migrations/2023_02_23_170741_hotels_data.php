@@ -36,6 +36,7 @@ class HotelsData extends Migration
             $table->text('rooms');
             $table->text('child');
             $table->text('adult');
+            $table->text('FS_sessionid');
             $table->integer('noDecimalPrice')->nullable();
             $table->timestamps();
         });

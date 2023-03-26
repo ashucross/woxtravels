@@ -987,7 +987,8 @@
             $('.loading-div').css('display','none');
             localStorage.removeItem("travelers-details");
             if(response.success == true){
-                window.location.href = 'initiate-Payment' + '/' + response.booking_id;
+                // window.location.href = 'initiate-Payment' + '/' + response.booking_id;
+                window.location.href = 'flight/booking-confirmation' + '/' + response.booking_id;
             }
 
         },

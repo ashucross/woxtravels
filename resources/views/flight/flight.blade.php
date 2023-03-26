@@ -1438,6 +1438,7 @@
                 singleDatePicker: true,
                 opens: "left",
                 autoApply: true,
+                minDate: new Date(),
             },
             function(start, end, label) {
                 console.log(
@@ -1670,6 +1671,7 @@
                 singleDatePicker: true,
                 opens: "left",
                 autoApply: true,
+                minDate: new Date(),
             },
             function(start, end, label) {
                 console.log(

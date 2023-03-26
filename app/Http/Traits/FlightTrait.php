@@ -485,8 +485,8 @@ trait FlightTrait
     public function  bkConfiration($id)
     {
         if (!empty($id)) {
-            dd($id);
             $myBooking = BookingDetail::where('id', $id)->first();
+            // dd($myBooking);
             $data = meta_key();
             return view('flight.booking-success', compact('myBooking', 'data'));
         }

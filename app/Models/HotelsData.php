@@ -34,6 +34,7 @@ class HotelsData extends Model
         'child',
         'rooms',
         'childages',
+        'FS_sessionid',
     ];
 //ALTER TABLE `hotel_data` ADD `noDecimalPrice` INT(20) NULL AFTER `web`;
 

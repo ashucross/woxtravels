@@ -198,6 +198,7 @@ $(document).ready(function() {
                 singleDatePicker: true,
                 opens: "left",
                 autoApply: true,
+                minDate: new Date(),
             },
             function(start, end, label) {
                 console.log(
@@ -248,6 +249,7 @@ $(document).ready(function() {
         $('.ckein').daterangepicker({
             autoApply: true,
             autoUpdateInput: false,
+            minDate: new Date(),
             locale: {
                 cancelLabel: "Clear",
             },
