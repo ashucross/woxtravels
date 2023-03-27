@@ -279,6 +279,8 @@ function searchHotel($data, $params = null)
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
     $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
+    // $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
+
     $dates = explode('-', $params['checkin']);
     $post = [
         'stay' => ([
@@ -574,3 +576,37 @@ function hotelApisAminities()
 }
 
 
+
+
+
+function voucher()
+{
+
+    // Replace these with your own values
+    $apiKey = env('HOTEL_API_KEY');
+    $apiSecret = env('HOTEL_SECRET_KEY');
+    $bookingReference = '270-324200';
+    $languageCode = 'en';
+
+    // Build the request URL
+    $url = 'https://api.test.hotelbeds.com/hotel-api/1.0/bookings/' . $bookingReference . '/voucher';
+    $url .= '?language=' . $languageCode;
+
+    // Set up the authorization header
+    $authHeader = 'Api-Key: ' . $apiKey . "\r\n";
+    $authHeader .= 'X-Signature: ' . hash('sha256', $apiKey . $apiSecret . time()) . "\r\n";
+
+    // Make the request
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($authHeader));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    dd($response);
+    curl_close($ch);
+
+    // Parse the response and extract the voucher details
+    $voucherData = json_decode($response, true);
+    $voucherCode = $voucherData['voucher']['code'];
+    $voucherUrl = $voucherData['voucher']['pdf'];
+}

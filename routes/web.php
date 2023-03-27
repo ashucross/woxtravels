@@ -24,7 +24,19 @@ use App\Http\Controllers\Agent\AgentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear-cache', function () {
+	//$run = Artisan::call('config:clear');
+	$run = Artisan::call('cache:clear');
+	//$run = Artisan::call('config:cache');
+	return 'FINISHED';
+});
+Route::get('site/shutdown', function () {
+	return Artisan::call('down');
+});
 
+Route::get('site/live', function () {
+	return Artisan::call('up');
+});
 
 Route::get('/', [FlightController::class, 'index'])->name('flight');
 
@@ -50,9 +62,10 @@ Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkCon
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 Route::post('/search_hotel', [StayController::class, 'search_hotel'])->name('search_hotel');
 Route::post('/setRegion', [StayController::class, 'setRegion'])->name('setRegion');
-Route::get('/hotelDetails/{id?}', [StayController::class, 'hotelDetails'])->name('hotelDetails');
+Route::get('/hotelDetails/{id?}/{travelr?}', [StayController::class, 'hotelDetails'])->name('hotelDetails');
 Route::post('/hotel/review', [StayController::class, 'book_now'])->name('book_now');
 Route::post('/hotel/booking', [StayController::class, 'conf_book_now']);
+Route::get('/hotel/confirm/{id}', [StayController::class, 'confirmBookingview'])->name('booking.show');
 Route::get('/loadMoredata', [StayController::class, 'loadMoredata'])->name('loadMoredata');
 Route::get('/getSuggestionitems', [StayController::class, 'getSuggestionitems'])->name('getSuggestionitems');
 Route::post('/search_hot', [StayController::class, 'search_hot'])->name('search_hot');

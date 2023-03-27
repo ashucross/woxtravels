@@ -10,6 +10,8 @@ use App\Models\RegionalSetting;
 use App\Models\HotelDestination;
 use Illuminate\Support\Facades\Session;
 
+use DB;
+
 class StayController extends Controller
 {
     /**
@@ -67,54 +69,10 @@ class StayController extends Controller
         $hotelsdata = [];
         $init = 1;
         $pagination = 12;
-
         $countries = Countries::get();
         $cities = HotelDestination::get();
-        /*  $signature = getsignature();
-        foreach($countries as $country){
-            $destination = getSuggestionitems($signature['data'],$country->sortname);
-            if(!empty($destination['data']->destinations) && count($destination['data']->destinations) > 0){
-
-                foreach($destination['data']->destinations as $dest){
-                    $exist = HotelDestination::where('code',$dest->code)->where('country',$country->sortname)->first();
-                    if(empty($exist)){
-                        HotelDestination::create([
-                            'code'=>$dest->code,
-                            'country'=>$country->sortname,
-                            'name'=>$dest->name->content ?? '',
-                        ]);
-                    }
-                }
-            }
-
-        }echo 'done';die; */
-        /* $signature = getsignature();
-        $gethotels = getSuggestionitems($signature['data'],'IN');
-            dd($gethotels); */
-        /* $signature = getsignature();
-        foreach($countries as $country){
-            $destination = getCountries($signature['data'],$country->sortname);
-            foreach($destination['data']->destinations as $dest){
-                HotelDestination::updateOrCreate(['code'=>$dest->code,'country'=>$country->sortname],[
-                    'name'=>$dest->name->content ?? '',
-                    'code'=>$dest->code,
-                    'country'=>$country->sortname,
-                ]);
-            }
-
-        }
-         echo 'yes';die;
-        if($signature['status'] == 200){
-            $gethotels = getHotel($signature['data'],$pagination,$init);
-            $hotelsdata = $gethotels['data'];
-            dd($hotelsdata);
-        }else{
-            return ([
-                'status'=>$signature['status']
-            ]);
-        }  */
         Session::forget('token');
-        return view('hotel', compact('data', 'hotelsdata', 'cities'));
+        return view('hotel.hotel', compact('data', 'hotelsdata', 'cities'));
     }
     public function setRegion(Request $request)
     {
@@ -148,6 +106,7 @@ class StayController extends Controller
 
     public function search_hotel(Request $request)
     {
+        // ini_set('max_execution_time', 180);
         $error = '';
         $cities = HotelDestination::get();
         $data = array(
@@ -164,7 +123,6 @@ class StayController extends Controller
         $hotels = [];
         $params = $request->all() ?? '';
         $signature = getsignature();
-        // dd($params);
         $search_hotels = [];
         if ($request->session()->has('token')) {
             $tokenId = $request->session()->get('token');
@@ -180,12 +138,8 @@ class StayController extends Controller
                 $hotelsdata = $gethotels['data']->hotels ?? [];
                 if (!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0) {
                     foreach ($hotelsdata->hotels as $hotel) {
-                        // $isexist = HotelsData::where('code', $hotel->code)->first();
-                        // // if (!empty($isexist)) {
-                        // //     $search_hotels[] = $isexist;
-                        // // } elseif (empty($isexist)) {
                         $details = getHoteldetail($signature['data'], $hotel);
-                        $createdHotel = HotelsData::create([
+                        $search_hotels[] = array(
                             'code' => $details['data']->code ?? '',
                             'name' => $details['data']->name ?? '',
                             'categoryName' => $details['data']->categoryName ?? '',
@@ -206,21 +160,50 @@ class StayController extends Controller
                             'response_data' => json_encode($details['data']),
                             'adult' => $request->adult ?? '',
                             'child' => $request->child ?? '',
+                            'childages' => $request->childages ?? '',
                             'rooms' => $request->rooms ?? '',
                             'childages' => json_encode($request->childages) ?? '',
-                            'FS_sessionid' => $tokenId,
-                        ]);
-                        $newhotel = HotelsData::where('id', $createdHotel->id)->first();
-                        $search_hotels[] = $newhotel;
+                            'FS_sessionid' => $tokenId
+                        );
+                        // $createdHotel = HotelsData::create([
+                        //     'code' => $details['data']->code ?? '',
+                        //     'name' => $details['data']->name ?? '',
+                        //     'categoryName' => $details['data']->categoryName ?? '',
+                        //     'destinationCode' => $details['data']->destinationCode ?? '',
+                        //     'destinationName' => $details['data']->destinationName ?? '',
+                        //     // 'noDecimalPrice'=> isset($details['data']->noDecimalPrice) ? round($details['data']->noDecimalPrice) :  '',
+                        //     'minRate' => $details['data']->minRate ?? '',
+                        //     'maxRate' => $details['data']->maxRate ?? '',
+                        //     'currency' => $details['data']->currency ?? '',
+                        //     'chain' => $details['hoteldetail']->hotel->chain->description->content ?? '',
+                        //     'address' => $details['hoteldetail']->hotel->address->content ?? '',
+                        //     'postalCode' => $details['hoteldetail']->hotel->postalCode ?? '',
+                        //     'email' => $details['hoteldetail']->hotel->email ?? '',
+                        //     'phones' => !empty($details['hoteldetail']->hotel->phones) && count($details['hoteldetail']->hotel->phones) > 0 ? serialize($details['hoteldetail']->hotel->phones) : '',
+                        //     'ranking' => $details['hoteldetail']->hotel->ranking ?? '',
+                        //     'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
+                        //     'web' => $details['hoteldetail']->hotel->web ?? '',
+                        //     'response_data' => json_encode($details['data']),
+                        //     'adult' => $request->adult ?? '',
+                        //     'child' => $request->child ?? '',
+                        //     'rooms' => $request->rooms ?? '',
+                        //     'childages' => json_encode($request->childages) ?? '',
+                        //     'FS_sessionid' => $tokenId,
+                        // ]);
+                        // $newhotel = HotelsData::where('id', $createdHotel->id)->first();
+                        // $search_hotels[] = $newhotel;
                         // }
                     }
+                    $totalPer = $request->adult . '-' . $request->child . '-' . json_encode($request->childages) . '-' . $request->rooms;
+                    $request->session()->put('totalPer', $totalPer);
+                    $request->session()->put('search_hotels', $search_hotels);
                 }
             }
         } else {
             $search_hotels = [];
+            $totalPer = '';
         }
-
-        return view('search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error'));
+        return view('hotel.search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error', 'totalPer'));
     }
 
 
@@ -272,22 +255,54 @@ class StayController extends Controller
             ]); */
         }
     }
-    public function hotelDetails(Request $request)
+    public function hotelDetails(Request $request, $hotelDetailsGet, $passangers)
     {
-        $segments = $request->segments(1);
-        $hotelDetails = HotelsData::where('FS_sessionid', $segments[1])->first();
-        $data = array(
-            '_MetaTitle' => 'Hotel Detail',
-            '_MetaKeywords' => '',
-            '_MetaDescription' => '',
-            '_Flight' => '',
-            '_Hotel' => 'active',
-            '_Packages' => '',
-            '_Visa' => '',
-            '_Insurance' => '',
-            '_Car' => '',
-        );
-        return view('hotelDetails', compact('data', 'hotelDetails'));
+        if (!empty($hotelDetailsGet)) {
+            $hotel = json_decode($hotelDetailsGet);
+            $explodepass = explode('-', $passangers);
+            $signature = getsignature();
+            $details = getHoteldetail($signature['data'], $hotel);
+            $hotelDetails = array(
+                'code' => $details['data']->code ?? '',
+                'name' => $details['data']->name ?? '',
+                'categoryName' => $details['data']->categoryName ?? '',
+                'destinationCode' => $details['data']->destinationCode ?? '',
+                'destinationName' => $details['data']->destinationName ?? '',
+                // 'noDecimalPrice'=> isset($details['data']->noDecimalPrice) ? round($details['data']->noDecimalPrice) :  '',
+                'minRate' => $details['data']->minRate ?? '',
+                'maxRate' => $details['data']->maxRate ?? '',
+                'currency' => $details['data']->currency ?? '',
+                'chain' => $details['hoteldetail']->hotel->chain->description->content ?? '',
+                'address' => $details['hoteldetail']->hotel->address->content ?? '',
+                'postalCode' => $details['hoteldetail']->hotel->postalCode ?? '',
+                'email' => $details['hoteldetail']->hotel->email ?? '',
+                'phones' => !empty($details['hoteldetail']->hotel->phones) && count($details['hoteldetail']->hotel->phones) > 0 ? serialize($details['hoteldetail']->hotel->phones) : '',
+                'ranking' => $details['hoteldetail']->hotel->ranking ?? '',
+                'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
+                'web' => $details['hoteldetail']->hotel->web ?? '',
+                'response_data' => json_encode($details['data']),
+                'adult' => $explodepass['0'] ?? '',
+                'child' => $explodepass['1'] ?? '',
+                'rooms' => $explodepass['3'] ?? '',
+                'childages' => json_encode($explodepass['2']) ?? '',
+            );
+            $request->session()->put('passangers', $passangers);
+            $request->session()->put('hotelDetails', $hotelDetails);
+            $request->session()->put('detailsset', $details);
+            $data = array(
+                '_MetaTitle' => 'Hotel Detail',
+                '_MetaKeywords' => '',
+                '_MetaDescription' => '',
+                '_Flight' => '',
+                '_Hotel' => 'active',
+                '_Packages' => '',
+                '_Visa' => '',
+                '_Insurance' => '',
+                '_Car' => '',
+            );
+            return view('hotel.hotelDetails', compact('data', 'hotelDetails', 'details'));
+        } else {
+        }
     }
 
     public function book_now(Request $request)
@@ -295,10 +310,13 @@ class StayController extends Controller
         if (!empty($request->razkey)) {
             $result = checkrates($request->razkey);
             if ($result['status']) {
-                $rateKey = $result['data']->hotel->rooms[0]->rates[0]->rateKey;
                 if ($result['data']->hotel->rooms[0]->rates[0]->rateType == 'BOOKABLE') {
-                    $hotelDetailsGet = HotelsData::where('FS_sessionid', $request->FS_sessionid)->first();
-
+                    $tokenId = $request->session()->get('token');
+                    $hotelDetailsGet = Session::get('hotelDetails');
+                    $hotelCompleteDetails = Session::get('detailsset');
+                    $passangers = Session::get('passangers');
+                    $explodepass = explode('-', $passangers);
+                    $rateKey = $result['data']->hotel->rooms[0]->rates[0]->rateKey;
                     $data = array(
                         '_MetaTitle' => 'Book Now',
                         '_MetaKeywords' => '',
@@ -310,7 +328,7 @@ class StayController extends Controller
                         '_Insurance' => '',
                         '_Car' => '',
                     );
-                    return view('book_now', compact('data', 'rateKey', 'hotelDetailsGet', 'result'));
+                    return view('hotel.book_now', compact('data', 'rateKey', 'hotelDetailsGet', 'result', 'explodepass', 'hotelCompleteDetails'));
                 } else {
                     return response()->json([
                         'status' => 404,
@@ -337,8 +355,8 @@ class StayController extends Controller
         $holderDetails = [
             "name" => $request->first_name_holder,
             "surname" => $request->last_name_holder,
-            "email" => $request->mobile_number,
-            "phone" => $request->holder_email
+            "email" => $request->holder_email,
+            "phone" => $request->mobile_number
         ];
         $rateKey = $request->rateKey;
         $travelers = [];
@@ -353,17 +371,50 @@ class StayController extends Controller
             }
         }
         $booking = bookings($travelers, $rateKey, $holderDetails);
-        // dd($booking);
         if ($booking['status'] == 200) {
-            //    ($booking['data']->booking['status'] =='CONFIRMED')
+            $bookingDetails = $booking['data']->booking;
+            $bookingId = DB::table('hotel_booking_details')->insert(
+                array(
+                    'booking_id'     =>   $booking['data']->booking->reference,
+                    'booking_reference'   =>   $booking['data']->booking->reference,
+                    'booking_date'   =>   $booking['data']->booking->creationDate,
+                    'email'   =>    $request->holder_email,
+                    'mobile'   =>    $request->mobile_number,
+                    'booking_request'   =>   'Dayle',
+                    'hotel_code'   =>   $booking['data']->booking->hotel->code,
+                    'city_code'   =>    $booking['data']->booking->hotel->destinationCode,
+                    'checkin'   =>   $booking['data']->booking->hotel->checkIn,
+                    'checkout'   =>   $booking['data']->booking->hotel->checkOut,
+                    'room_code'   =>   $booking['data']->booking->hotel->code,
+                    'rate_key'   =>   $request->rateKey,
+                    'booking_response'   =>   json_encode($booking['data']),
+                )
+            );
+            $bookingId = DB::getPdo()->lastInsertId();
+            $url = url('/hotel/confirm/' . $bookingId);
+            if (isset($bookingId)) {
+                return response()->json([
+                    'status' => 200,
+                    'url' => $url,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'sessionDataId' => '',
+                    'hotelCode' => '',
+                    'message' => $booking['message'],
+                ]);
+            }
+            // return Redirect::route('booking.show, $bookingId')->with( ['data' => $lastBooking] );
             $totalAmount = $booking['data']->booking->totalNet;
             $paymentType = "Hotel Booking";
-            $sessionDataId = CREATE_CHECKOUT_SESSION($totalAmount, 12, $paymentType);
+            // $sessionDataId = CREATE_CHECKOUT_SESSION($totalAmount, 12, $paymentType);
             if (!empty($sessionDataId)) {
                 return response()->json([
                     'status' => 200,
                     'sessionDataId' => $sessionDataId,
                     'hotelCode' => $booking,
+                    'lastBooking' => $lastBooking,
                     'message' => $booking['message'],
                 ]);
             }
@@ -389,5 +440,23 @@ class StayController extends Controller
 
         ];
         return $result;
+    }
+
+
+    public function confirmBookingview(Request $request, $id)
+    {
+        $data = array(
+            '_MetaTitle' => 'Book Now',
+            '_MetaKeywords' => '',
+            '_MetaDescription' => '',
+            '_Flight' => '',
+            '_Hotel' => 'active',
+            '_Packages' => '',
+            '_Visa' => '',
+            '_Insurance' => '',
+            '_Car' => '',
+        );
+        $hotel_booking_details =  DB::table('hotel_booking_details')->select('*')->where('id', $id)->first();
+      return view('hotel.hotel-booking-confing',['hotel_booking_details'=>$hotel_booking_details, 'data' => $data]);
     }
 }
