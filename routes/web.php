@@ -66,6 +66,7 @@ Route::get('/hotelDetails/{id?}/{travelr?}', [StayController::class, 'hotelDetai
 Route::post('/hotel/review', [StayController::class, 'book_now'])->name('book_now');
 Route::post('/hotel/booking', [StayController::class, 'conf_book_now']);
 Route::get('/hotel/confirm/{id}', [StayController::class, 'confirmBookingview'])->name('booking.show');
+Route::any('hotel/filter', [StayController::class, 'hotelfilter'])->name('hotel.filter');
 Route::get('/loadMoredata', [StayController::class, 'loadMoredata'])->name('loadMoredata');
 Route::get('/getSuggestionitems', [StayController::class, 'getSuggestionitems'])->name('getSuggestionitems');
 Route::post('/search_hot', [StayController::class, 'search_hot'])->name('search_hot');

@@ -575,7 +575,42 @@ function hotelApisAminities()
     return $accessresponse;
 }
 
-
+function rankings()
+{
+    $apiKey = env('HOTEL_API_KEY');
+    $sharedSecret = env('HOTEL_SECRET_KEY');
+    $signature = hash("sha256", $apiKey . $sharedSecret . time());
+    $r = array(
+        'Content-Type:application/json',
+        'Accept: application/json',
+        'Api-key:' . $apiKey,
+        'X-Signature:' . $signature,
+        'Accept-Encoding:gzip'
+    );
+    //  dd($r);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.test.hotelbeds.com/hotel-content-api/1.0/types/categories',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type:application/json',
+            'Accept: application/json',
+            'Api-key:d0f27614d49932fcdc296ce8bcfffb42',
+            'X-Signature:' . $signature . '',
+            'Accept-Encoding:gzip'
+        ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $accessresponse = json_decode($response, true);
+    return $accessresponse;
+}
 
 
 

@@ -386,7 +386,7 @@
                                         <div id="slider-range"></div>
                                         <div class="d-flex justify-content-between slider-labels">
                                             <div class=" caption">
-                                                <strong>Min:</strong> <span id="slider-range-value1"></span>
+                                                <strong>Mi11n:</strong> <span id="slider-range-value1"></span>
                                             </div>
                                             <div class=" text-right caption">
                                                 <strong>Max:</strong> <span id="slider-range-value2"></span>
@@ -558,15 +558,10 @@
                                             <h6>Stars</h6>
 
                                             <span>Clear</span>
-
                                         </div>
-
                                     </a>
-
                                 </h4>
-
                             </div>
-
                             <div id="Stars" class="panel-collapse collapse in show">
 
                                 <div class="panel-body pdmrbx">
@@ -574,144 +569,131 @@
                                     <div class="checkftr">
 
                                         <ul class="check-boxes-custom list-checkboxes">
+                                            <form id="search_form">
+                                                <li>
 
-                                            <li>
+                                                    <label for="star1" class="label-container checkbox-default">
 
-                                                <label for="star1" class="label-container checkbox-default">
+                                                        <div class="startbx">
 
-                                                    <div class="startbx">
+                                                            <i class="fa fa-star"></i>
 
-                                                        <i class="fa fa-star"></i>
 
-                                                        <i class="fa fa-star"></i>
+                                                        </div>
 
-                                                        <i class="fa fa-star"></i>
+                                                        <input class="flightfilter" name="stars[]" id="star1"
+                                                            type="checkbox" value="1">
 
-                                                        <i class="fa fa-star"></i>
+                                                        <span class="checkmark"></span>
 
-                                                        <i class="fa fa-star"></i>
+                                                    </label>
 
-                                                    </div>
+                                                    {{-- <span class="lsprc"> 56 </span> --}}
 
-                                                    <input name="star" class="flightfilter" id="star1" type="checkbox"
-                                                        value="1">
+                                                </li>
 
-                                                    <span class="checkmark"></span>
 
-                                                </label>
 
-                                                <span class="lsprc"> 56 </span>
+                                                <li>
 
-                                            </li>
+                                                    <label for="star2" class="label-container checkbox-default">
 
+                                                        <div class="startbx">
 
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
 
-                                            <li>
 
-                                                <label for="star2" class="label-container checkbox-default">
+                                                        </div>
 
-                                                    <div class="startbx">
+                                                        <input class="flightfilter" name="stars[]" id="star2"
+                                                            type="checkbox" value="2">
 
-                                                        <i class="fa fa-star"></i>
+                                                        <span class="checkmark"></span>
 
-                                                        <i class="fa fa-star"></i>
+                                                    </label>
 
-                                                        <i class="fa fa-star"></i>
+                                                    {{-- <span class="lsprc">314</span> --}}
 
-                                                        <i class="fa fa-star"></i>
+                                                </li>
 
-                                                    </div>
+                                                <li>
 
-                                                    <input name="star" class="flightfilter" id="star2" type="checkbox"
-                                                        value="1">
+                                                    <label for="star3" class="label-container checkbox-default">
 
-                                                    <span class="checkmark"></span>
+                                                        <div class="startbx">
 
-                                                </label>
+                                                            <i class="fa fa-star"></i>
 
-                                                <span class="lsprc">314</span>
+                                                            <i class="fa fa-star"></i>
 
-                                            </li>
+                                                            <i class="fa fa-star"></i>
 
-                                            <li>
+                                                        </div>
 
-                                                <label for="star3" class="label-container checkbox-default">
+                                                        <input class="flightfilter" name="stars[]" id="star3"
+                                                            type="checkbox" value="3">
 
-                                                    <div class="startbx">
+                                                        <span class="checkmark"></span>
 
-                                                        <i class="fa fa-star"></i>
+                                                    </label>
 
-                                                        <i class="fa fa-star"></i>
+                                                    {{-- <span class="lsprc">591</span> --}}
 
-                                                        <i class="fa fa-star"></i>
+                                                </li>
 
-                                                    </div>
 
-                                                    <input name="star" class="flightfilter" id="star3" type="checkbox"
-                                                        value="1">
 
-                                                    <span class="checkmark"></span>
+                                                <li>
 
-                                                </label>
+                                                    <label for="star4" class="label-container checkbox-default">
 
-                                                <span class="lsprc">591</span>
+                                                        <div class="startbx">
 
-                                            </li>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
 
+                                                            <i class="fa fa-star"></i>
 
+                                                        </div>
 
-                                            <li>
+                                                        <input class="flightfilter" name="stars[]" id="star4"
+                                                            type="checkbox" value="4">
 
-                                                <label for="star4" class="label-container checkbox-default">
+                                                        <span class="checkmark"></span>
 
-                                                    <div class="startbx">
+                                                    </label>
 
-                                                        <i class="fa fa-star"></i>
+                                                    {{-- <span class="lsprc">119</span> --}}
 
-                                                        <i class="fa fa-star"></i>
+                                                </li>
 
-                                                    </div>
 
-                                                    <input name="star" class="flightfilter" id="star4" type="checkbox"
-                                                        value="1">
 
-                                                    <span class="checkmark"></span>
+                                                <li>
 
-                                                </label>
+                                                    <label for="star5" class="label-container checkbox-default">
 
-                                                <span class="lsprc">119</span>
+                                                        <div class="startbx">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
 
-                                            </li>
+                                                        </div>
 
+                                                        <input class="flightfilter" name="stars[]" id="star5"
+                                                            type="checkbox" value="5">
 
+                                                        <span class="checkmark"></span>
 
-                                            <li>
+                                                    </label>
 
-                                                <label for="star5" class="label-container checkbox-default">
+                                                    {{-- <span class="lsprc">38</span> --}}
 
-                                                    <div class="startbx">
-
-                                                        <i class="fa fa-star"></i>
-
-                                                    </div>
-
-                                                    <input name="star" class="flightfilter" id="star5" type="checkbox"
-                                                        value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">38</span>
-
-                                            </li>
-
-
-
-
-
-
-
+                                                </li>
+                                            </form>
                                         </ul>
 
                                     </div>
@@ -1306,15 +1288,7 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-
-
-                <div class="largebox_listing">
+                <div class="largebox_listing" id="Cheapest">
                     @if(!empty($search_hotels) && count($search_hotels) > 0)
                     @foreach($search_hotels as $hotel)
                     <?php
@@ -1332,10 +1306,10 @@
                         <div class="list_hotel_txt">
                             <div class="listing_hd_hotel">
                                 <h2><span>{{$hotel['name'] ?? ''}}</span>
-                                    <!-- <div class="startbx smallstar">
-                                    <span>5&nbsp;-&nbsp;</span>
-                                    <i class="fa fa-star"></i>
-                                </div>  -->
+                                    @php
+                                    $explode = explode(" ", $hotel['categoryName']);
+                                    for($i=0; $i<$explode[0]; $i++) { echo '<i
+                                        class="fa fa-star"></i>' ; } @endphp
                                 </h2>
                                 <ul class="listbt_sml">
                                     <li><a href="#">{{$hotel['categoryName'] ?? ''}}</a></li>
@@ -1405,187 +1379,9 @@
                     </div>
                     @endforeach
                     @endif
-
-
-                    {{--<div class="lglist">
-
-                        <div class="list_hotel_img">
-
-                            <div class="lgzoomimg">
-
-                                <a href="#">
-
-                                    <img src="images/Hera.jpg" class="img-res" />
-
-                                </a>
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <div class="list_hotel_txt">
-
-
-
-                            <div class="listing_hd_hotel">
-
-                                <h2><span>The Hera Hotel Sapanca</span>
-
-                                    <div class="startbx smallstar">
-
-                                        <span>5&nbsp;-&nbsp;</span>
-
-                                        <i class="fa fa-star"></i>
-
-
-
-                                    </div>
-
-                                </h2>
-
-                                <ul class="listbt_sml">
-
-                                    <li><a href="#">Cayici Mahallesi, Izmit Cd. No 44, Sapanca, 54600, Sakarya</a></li>
-
-
-
-                                </ul>
-
-
-
-                                <ul class="iconsml">
-
-                                    <li>
-
-                                        <span><img src="images/Pool.png" class="img-res" /></span>
-
-                                        <span>Pool</span>
-
-                                    </li>
-
-
-
-                                    <li>
-
-                                        <span><img src="images/FreeParking.png" class="img-res" /></span>
-
-                                        <span>Free Parking</span>
-
-                                    </li>
-
-
-
-                                    <li>
-
-                                        <span><img src="images/Spa.png" class="img-res" /></span>
-
-                                        <span>Spa</span>
-
-                                    </li>
-
-
-
-                                    <li>
-
-                                        <span><img src="images/Gym.png" class="img-res" /></span>
-
-                                        <span>Gym</span>
-
-                                    </li>
-
-
-
-                                    <li>
-
-                                        <span><img src="images/Restaurant.png" class="img-res" /></span>
-
-                                        <span>Restaurant</span>
-
-                                    </li>
-
-
-
-                                    <li>
-
-                                        <span><img src="images/Bar.png" class="img-res" /></span>
-
-                                        <span>Bar</span>
-
-                                    </li>
-
-
-
-
-
-                                </ul>
-
-
-
-                                <div class="green_ex">
-
-                                    <span><i class="fa fa-star"></i>&nbsp;4.77 (48 reviews)</span>
-
-                                </div>
-
-
-
-
-
-
-
-
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <div class="pribtns">
-
-                            <div class="priceshow">
-
-                                <h3><i class="fa fa-dollar mr-1"></i>10,000
-
-                                    <span>per night</span>
-
-                                </h3>
-
-                                <p>total <i class="fa fa-dollar mr-1"></i>30,000 for 3 nights Tax & fees Inclusive</p>
-
-                            </div>
-
-                            <div class="hotslc">
-
-                                <a href="#" class="btn-grad ftbtn_src">Book Now<i class="fa fa-angle-right ml5"
-                                        aria-hidden="true"></i></a>
-
-                            </div>
-
-                        </div>
-
-                    </div>--}}
-
-
-
                 </div>
-
-
-
-
-
-
-
             </div>
-
         </section>
-
     </div>
 </form>
 @endsection
@@ -3693,6 +3489,36 @@ $(document).ready(function() {
     $('.arrowus').click(function() {
         $('.dropslct').show();
     });
+
+
+    $("#slider-range").click(function(){
+    var price = $("#slider-range-value2").text().replace("$", "")
+    // alert(price);
+    $.ajax({
+        url: "{{URL::to('hotel/filter')}}?" + "&maxPrice=" + price
+        , method: 'GET'
+        , success: function(data) {
+            $('#Cheapest').html(data.html)
+
+
+        }
+    });
+})
+
+
+ $("input[type='checkbox']").change(function(){
+        var form_data = $("#search_form").serialize();
+        $.ajax({
+            url: "{{URL::to('hotel/filter')}}",
+            method: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: form_data,
+            success: function(data){
+                $('#Cheapest').html(data.html)
+            }
+        });
+    });
+
 
 });
 </script>

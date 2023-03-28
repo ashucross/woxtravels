@@ -106,7 +106,7 @@ class StayController extends Controller
 
     public function search_hotel(Request $request)
     {
-        // ini_set('max_execution_time', 180);
+        ini_set('max_execution_time', 200);
         $error = '';
         $cities = HotelDestination::get();
         $data = array(
@@ -139,10 +139,12 @@ class StayController extends Controller
                 if (!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0) {
                     foreach ($hotelsdata->hotels as $hotel) {
                         $details = getHoteldetail($signature['data'], $hotel);
+                        $explode = explode(" ", $details['data']->categoryName);
                         $search_hotels[] = array(
                             'code' => $details['data']->code ?? '',
                             'name' => $details['data']->name ?? '',
                             'categoryName' => $details['data']->categoryName ?? '',
+                            'hotelStar' => $explode[0] ?? '',
                             'destinationCode' => $details['data']->destinationCode ?? '',
                             'destinationName' => $details['data']->destinationName ?? '',
                             // 'noDecimalPrice'=> isset($details['data']->noDecimalPrice) ? round($details['data']->noDecimalPrice) :  '',
@@ -165,34 +167,6 @@ class StayController extends Controller
                             'childages' => json_encode($request->childages) ?? '',
                             'FS_sessionid' => $tokenId
                         );
-                        // $createdHotel = HotelsData::create([
-                        //     'code' => $details['data']->code ?? '',
-                        //     'name' => $details['data']->name ?? '',
-                        //     'categoryName' => $details['data']->categoryName ?? '',
-                        //     'destinationCode' => $details['data']->destinationCode ?? '',
-                        //     'destinationName' => $details['data']->destinationName ?? '',
-                        //     // 'noDecimalPrice'=> isset($details['data']->noDecimalPrice) ? round($details['data']->noDecimalPrice) :  '',
-                        //     'minRate' => $details['data']->minRate ?? '',
-                        //     'maxRate' => $details['data']->maxRate ?? '',
-                        //     'currency' => $details['data']->currency ?? '',
-                        //     'chain' => $details['hoteldetail']->hotel->chain->description->content ?? '',
-                        //     'address' => $details['hoteldetail']->hotel->address->content ?? '',
-                        //     'postalCode' => $details['hoteldetail']->hotel->postalCode ?? '',
-                        //     'email' => $details['hoteldetail']->hotel->email ?? '',
-                        //     'phones' => !empty($details['hoteldetail']->hotel->phones) && count($details['hoteldetail']->hotel->phones) > 0 ? serialize($details['hoteldetail']->hotel->phones) : '',
-                        //     'ranking' => $details['hoteldetail']->hotel->ranking ?? '',
-                        //     'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
-                        //     'web' => $details['hoteldetail']->hotel->web ?? '',
-                        //     'response_data' => json_encode($details['data']),
-                        //     'adult' => $request->adult ?? '',
-                        //     'child' => $request->child ?? '',
-                        //     'rooms' => $request->rooms ?? '',
-                        //     'childages' => json_encode($request->childages) ?? '',
-                        //     'FS_sessionid' => $tokenId,
-                        // ]);
-                        // $newhotel = HotelsData::where('id', $createdHotel->id)->first();
-                        // $search_hotels[] = $newhotel;
-                        // }
                     }
                     $totalPer = $request->adult . '-' . $request->child . '-' . json_encode($request->childages) . '-' . $request->rooms;
                     $request->session()->put('totalPer', $totalPer);
@@ -262,6 +236,9 @@ class StayController extends Controller
             $explodepass = explode('-', $passangers);
             $signature = getsignature();
             $details = getHoteldetail($signature['data'], $hotel);
+            $ranking = array(
+                'ranking' =>  $details['hoteldetail']->hotel->ranking ?? ''
+            );
             $hotelDetails = array(
                 'code' => $details['data']->code ?? '',
                 'name' => $details['data']->name ?? '',
@@ -289,6 +266,7 @@ class StayController extends Controller
             $request->session()->put('passangers', $passangers);
             $request->session()->put('hotelDetails', $hotelDetails);
             $request->session()->put('detailsset', $details);
+            // $request->session()->put('ranking', $ranking);
             $data = array(
                 '_MetaTitle' => 'Hotel Detail',
                 '_MetaKeywords' => '',
@@ -457,6 +435,43 @@ class StayController extends Controller
             '_Car' => '',
         );
         $hotel_booking_details =  DB::table('hotel_booking_details')->select('*')->where('id', $id)->first();
-      return view('hotel.hotel-booking-confing',['hotel_booking_details'=>$hotel_booking_details, 'data' => $data]);
+        return view('hotel.hotel-booking-confing', ['hotel_booking_details' => $hotel_booking_details, 'data' => $data]);
+    }
+
+    public function hotelfilter(Request $request)
+    {
+        $old = Session::get('search_hotels');
+        dd($old);
+        $dar = collect($old);
+        $dar1 = [];
+        if (request()->get('maxPrice')) {
+            $price = request()->get('maxPrice');
+            $dar1  = $dar->where('maxRate', '<', $price)->toArray();
+        } else if ($request->stars) {
+            $selected_stars = $request->stars;
+            $datara = implode(",", $selected_stars);
+            $starsSet = [];
+            foreach ($request->stars as $stars) {
+                $starsSet[] = $stars;
+            }
+            $dar1  = $dar->WhereIn('hotelStar',   $starsSet)->toArray();
+        } else if ($request->stars) {
+            $selected_stars = $request->stars;
+            $datara = implode(",", $selected_stars);
+            $starsSet = [];
+            foreach ($request->stars as $stars) {
+                $starsSet[] = $stars;
+            }
+            $dar1  = $dar->WhereIn('hotelStar',   $starsSet)->toArray();
+        } else {
+            $dar1  = $dar->toArray();
+        }
+        $search_hotels = array_values($dar1);
+        $totalPer = Session::get('totalPer');
+        $html = view('hotel.filter', compact(['search_hotels', 'totalPer']))->render();
+        return response()->json([
+            'status' => true,
+            'html' => $html,
+        ]);
     }
 }

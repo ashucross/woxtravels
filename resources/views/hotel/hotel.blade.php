@@ -1,5 +1,5 @@
 @extends('homeLayout')
-@section('styles') 
+@section('styles')
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css">
 <!-- page specific style code here-->
@@ -15,7 +15,7 @@ label#location-error,#checkin-error,#adults-error {
     font-size: 14px;
     margin-left: 12px;
     color: #ff4d4d;
-} 
+}
 .selectize-input {
     border: none;
 }
@@ -34,7 +34,9 @@ ul#ui-id-1 {
 @endsection
 @section('pageContent')
 
-
+@php
+    dd(rankings());
+@endphp
 <section class="search_box  position-relative">
    <div class="tab_nav">
       <!-- Nav tabs -->
@@ -47,12 +49,12 @@ ul#ui-id-1 {
                <div class="boxsearching ">
                   <form method="post" id='searchHot' action='{{url("search_hotel")}}'>
                      @csrf
-                    
+
                      <div class="d-flex justify-content-between">
                         <div class="search_des d-flex justify-content-between ">
                            <div class="Fromwhere position-relative">
                               <!-- <h3 class="search_title">Destination</h3> -->
-                             
+
                               <div class="position-relative">
                                  <span class="iconint"><i class="fa fa-map-marker"></i></span>
                                  <div class="ui-widget">
@@ -63,8 +65,8 @@ ul#ui-id-1 {
                                           <option value="{{$count->code ?? ''}}">{{$count->name ?? ''}}</option>
                                        @endforeach
                                     @endif
-                                 </select> 
-                                 
+                                 </select>
+
                                  </div>
                                  <!-- <input type="text" autocomplete="off"  class="input_src leftri input_hgt item_list" required name="location" placeholder="Where are you going?" data-toggle="dropdown" />
                                  </div> -->
@@ -104,7 +106,7 @@ ul#ui-id-1 {
                            <select type="text"  class="input_src leftri input_hgt item_list" required name="location" >
                                     <option>Select Location</option>
                                  </select>
-                          
+
                         </div> -->
                         <div class="search_date ht_width_dt">
                         <div class="position-relative ">
@@ -114,28 +116,28 @@ ul#ui-id-1 {
                         </div>
                         <!-- <div class="search_date widthn50">
                               <h3 class="search_title">Check-Out</h3>
-                              
-                              
-                              
+
+
+
                               <div class="position-relative">
-                              
-                              
-                              
+
+
+
                                   <span class="iconint"><i class="fa fa-calendar"></i></span>
-                              
-                              
-                              
+
+
+
                                   <input aut type="text" name="daterange2" class="input_src  input_hgt">
-                              
-                              
-                              
+
+
+
                               </div>
-                              
-                              
-                              
+
+
+
                               </div> -->
                         <div class="search_adult ht_width_tr">
-                    
+
 
                            <!-- <h3 class="search_title">Travelers</h3> -->
                            <div class="position-relative " data-toggle="dropdown">
@@ -400,7 +402,7 @@ ul#ui-id-1 {
             @endforeach
             @endif
          @endif  --}}
-         
+
          <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">
@@ -667,7 +669,7 @@ ul#ui-id-1 {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
 <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> 
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 <script>
@@ -676,7 +678,7 @@ ul#ui-id-1 {
       $(".item_list").click(function(){
          var country_select = $('.country_select').val();
          // console.log(country_select);return;
-         if(country_select){ 
+         if(country_select){
             $('.item_list').html("<option>Loading...</option>");
             $.ajax({
             url: '{{url("getSuggestionitems")}}',
@@ -697,8 +699,8 @@ ul#ui-id-1 {
    });
    $('.country_select').selectize();
 
-      // $(".item_list").autocomplete({ 
-      //       source: function(request, response) { 
+      // $(".item_list").autocomplete({
+      //       source: function(request, response) {
       //           $.ajax({
       //               url: '{{url("getSuggestionitems")}}',
       //               type: 'get',
@@ -711,7 +713,7 @@ ul#ui-id-1 {
       //               }
       //           });
       //       },
-      //       select: function(event, ui) {  
+      //       select: function(event, ui) {
       //          $(".item_list").val(ui.item.data);
       //          $(".item_list").attr('data-code',ui.item.code);
       //           /*
@@ -723,7 +725,7 @@ ul#ui-id-1 {
       //           },500) */
       //       }
       //   });
-      //   $(document).on('focus','.item_list',function() { 
+      //   $(document).on('focus','.item_list',function() {
       //       $(this).autocomplete('search', '1')
       //   });
     });
@@ -755,15 +757,15 @@ ul#ui-id-1 {
         let _Token = $(this).attr('slug');
         let _Adult = parseInt($("#" + _Token + "-qnty-adult").val());
         let _Child = parseInt($("#" + _Token + "-qnty-child").val());
-        let _Infant = parseInt($("#" + _Token + "-qnty-room").val());  
-        let _Total = _Adult + _Child; 
+        let _Infant = parseInt($("#" + _Token + "-qnty-room").val());
+        let _Total = _Adult + _Child;
         let $input = $(this).prev("input.qty");
         let val = parseInt($input.val());
         let slugId = $input.attr("id");
         switch (slugId) {
             case _Token + "-qnty-adult":
                 if (_Total + 1 <= 9 && _Adult + 1 <= 9) {
-                    $input.val(val + 1).change(); 
+                    $input.val(val + 1).change();
                 } else {
                     toastr["error"]("Error!", "Only 9 passenger is allowed");
                 }
@@ -832,14 +834,14 @@ ul#ui-id-1 {
          }
       });
 
-      $('.child_added').click(function(){ 
-         if($('#oneway-qnty-child').val() > 0){ 
-            $('.child_ages:last').clone().insertAfter($('.child_ages:last'));  
+      $('.child_added').click(function(){
+         if($('#oneway-qnty-child').val() > 0){
+            $('.child_ages:last').clone().insertAfter($('.child_ages:last'));
          }
       });
-      $('.child_minus').click(function(){ 
-         if($('#oneway-qnty-child').val() > 1){ 
-            $('.child_ages:last').remove();  
+      $('.child_minus').click(function(){
+         if($('#oneway-qnty-child').val() > 1){
+            $('.child_ages:last').remove();
          }
       });
       $('.set-adults-val').click(function(e){
@@ -867,11 +869,11 @@ ul#ui-id-1 {
          $('.dropslct').show();
       });
 
-      var pagination = 12; 
-      $('.loadmore').click(function(){ 
+      var pagination = 12;
+      $('.loadmore').click(function(){
          $('.loadmore').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
          pagination = parseInt(pagination) + 12;
-         var init = parseInt(pagination) - 11; 
+         var init = parseInt(pagination) - 11;
          $.ajax({
             url: "{{url('loadMoredata')}}",
             dataType:'json',
@@ -883,6 +885,6 @@ ul#ui-id-1 {
             }
          });
       });
-   
+
 </script>
 @endsection
