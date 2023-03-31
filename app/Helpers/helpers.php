@@ -60,7 +60,7 @@ function getsignature()
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
     $signature = hash("sha256", $apiKey . $Secret . time());
-    $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/status";
+    $endpoint =  env('HOTEL_API_URL1') . "status";
     try {
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -230,9 +230,8 @@ function getdestinationName($code)
     return $destiantion->name ?? '';
 }
 
-function getHoteldetail($data, $hotel = null)
+function getHoteldetail($hotel = null)
 {
-    $signature = $data;
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
     $endpoint = "https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels/" . $hotel->code . "/details?language=ENG&useSecondaryLanguage=False";
@@ -242,7 +241,7 @@ function getHoteldetail($data, $hotel = null)
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => $endpoint,
-            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '', 'Content-Type:application/json'],
+            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' .  getsignature()['data']  . '', 'Content-Type:application/json'],
         ));
         $resp = curl_exec($curl);
         if (!curl_errno($curl)) {
@@ -273,9 +272,132 @@ function getHoteldetail($data, $hotel = null)
 }
 
 
-function searchHotel($data, $params = null)
+function getHotelList($destination, $start, $end)
 {
-    $signature = $data;
+    $apiKey = env('HOTEL_API_KEY');
+    $Secret = env('HOTEL_SECRET_KEY');
+    try {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => env('HOTEL_API_URL2') . 'hotels?fields=all&destinationCode=' . $destination . '&language=ENG&from=' . $start . '&to=' .  $end . '&useSecondaryLanguage=false',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type:application/json',
+                'Accept: application/json',
+                'Api-key:' . $apiKey . '',
+                'X-Signature:' . getsignature()['data'] . '',
+                'Accept-Encoding:gzip'
+            ),
+        ));
+        $resp = curl_exec($curl);
+        if (!curl_errno($curl)) {
+            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                case 200:  # OK
+                    $hotel = json_decode($resp);
+                    return ([
+                        'status' => 200,
+                        'data' => $hotel,
+                    ]);
+                    break;
+                default:
+                    return ([
+                        'status' => $http_code,
+                        'data' => '',
+                    ]);
+            }
+        }
+        curl_close($curl);
+    } catch (Exception $ex) {
+        return ([
+            'status' => 'error',
+            'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
+        ]);
+    }
+}
+
+// function searchHotel( $params = null)
+// {
+
+//     $apiKey = env('HOTEL_API_KEY');
+//     $Secret = env('HOTEL_SECRET_KEY');
+//     $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
+//     // $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
+
+//     // $dates = explode('-', $params['checkin']);
+//     $post = [
+//         'stay' => ([
+//             "checkIn" => date('Y-m-d', strtotime($params['checkIn'])),
+//             "checkOut" =>  date('Y-m-d', strtotime($params['checkOut']))
+//         ]),
+//         "occupancies" => array([
+//             "rooms" => (int)$params['rooms'],
+//             "adults" => (int)$params['adult'],
+//             "children" => (int)$params['child']
+//         ]),
+//         "hotels" => ([
+//             "hotel" =>
+//             [
+//                 (int)$params['hotel_code']
+//             ]
+//         ]),
+//         // "destination" => ([
+//         //     "code" => 'DEL'
+//         // ]),
+//     ];
+//     // dd($post);
+//     try {
+//         $curl = curl_init();
+//         curl_setopt_array($curl, array(
+//             CURLOPT_POST => true,
+//             CURLOPT_RETURNTRANSFER => 1,
+//             CURLOPT_URL => $endpoint,
+//             CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . getsignature()['data'] . '', 'Content-Type:application/json'],
+//             CURLOPT_POSTFIELDS => json_encode($post)
+//         ));
+//         $resp = curl_exec($curl);
+//         // dd($resp);
+//         if (!curl_errno($curl)) {
+//             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+//                 case 400:  # Fail
+//                 $hotels = json_decode($resp);
+//                 return ([
+//                     'status' => 203,
+//                     'data' => '',
+//                     'message' => $hotels->error->message ?? '',
+//                 ]);
+//                 break;
+//                 case 200:  # OK
+//                 dd($resp);
+//                     $hotels = json_decode($resp);
+//                     return ([
+//                         'status' => 200,
+//                         'data' => $hotels
+//                     ]);
+//                     break;
+//                 default:
+
+//                     return ([
+//                         'status' => $http_code,
+//                         'data' => ''
+//                     ]);
+//             }
+//         }
+//         curl_close($curl);
+//     } catch (Exception $ex) {
+//         return ([
+//             'status' => 'error',
+//             'message' => "Error while sending request, reason: %s\n", $ex->getMessage()
+//         ]);
+//     }
+// }
+function searchHotel( $params = null)
+{
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
     $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
@@ -294,7 +416,11 @@ function searchHotel($data, $params = null)
         ]),
         "destination" => ([
             "code" => $params['location']
-        ])
+        ]),
+        "filter" => ([
+            "maxHotels" => 53
+        ]),
+
     ];
     try {
         $curl = curl_init();
@@ -302,10 +428,11 @@ function searchHotel($data, $params = null)
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => $endpoint,
-            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . $signature . '', 'Content-Type:application/json'],
+            CURLOPT_HTTPHEADER => ['Accept:application/json', 'Api-key:' . $apiKey . '', 'X-Signature:' . getsignature()['data'] . '', 'Content-Type:application/json'],
             CURLOPT_POSTFIELDS => json_encode($post)
         ));
         $resp = curl_exec($curl);
+        // dd($resp);
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 400:  # Fail
@@ -644,4 +771,28 @@ function voucher()
     $voucherData = json_decode($response, true);
     $voucherCode = $voucherData['voucher']['code'];
     $voucherUrl = $voucherData['voucher']['pdf'];
+}
+
+
+
+function compareNumbersByDigit($a, $b)
+{
+    $aDigits = str_split((string) $a); // Convert $a to a string and split it into an array of digits
+    $bDigits = str_split((string) $b); // Convert $b to a string and split it into an array of digits
+
+    $numDigits = max(count($aDigits), count($bDigits)); // Determine the maximum number of digits in $a and $b
+
+    // Loop through each digit position, starting from the left
+    for ($i = 0; $i < $numDigits; $i++) {
+        $aDigit = $aDigits[$i] ?? 0; // Get the $i-th digit of $a, or 0 if it doesn't exist
+        $bDigit = $bDigits[$i] ?? 0; // Get the $i-th digit of $b, or 0 if it doesn't exist
+
+        // If the digits are not equal, return the comparison result
+        if ($aDigit !== $bDigit) {
+            return $aDigit <=> $bDigit; // Compare the digits using the spaceship operator
+        }
+    }
+
+    // If all digits are equal, return the original comparison result
+    return $a <=> $b;
 }

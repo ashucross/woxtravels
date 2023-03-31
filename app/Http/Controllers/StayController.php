@@ -106,7 +106,7 @@ class StayController extends Controller
 
     public function search_hotel(Request $request)
     {
-        ini_set('max_execution_time', 200);
+        ini_set('max_execution_time', 5000);
         $error = '';
         $cities = HotelDestination::get();
         $data = array(
@@ -123,6 +123,7 @@ class StayController extends Controller
         $hotels = [];
         $params = $request->all() ?? '';
         $signature = getsignature();
+        // dd(hotelApisAminities());
         $search_hotels = [];
         if ($request->session()->has('token')) {
             $tokenId = $request->session()->get('token');
@@ -131,15 +132,17 @@ class StayController extends Controller
             $tokenId = $request->session()->get('token');
         }
         if (!empty($signature) && $signature['status'] == 200) {
-            $gethotels = searchHotel($signature['data'], $params);
+            $gethotels = searchHotel( $params);
             if ($gethotels['status'] == 203) {
                 $error = $gethotels['message'] ?? '';
             } else {
                 $hotelsdata = $gethotels['data']->hotels ?? [];
                 if (!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0) {
                     foreach ($hotelsdata->hotels as $hotel) {
-                        $details = getHoteldetail($signature['data'], $hotel);
-                        $explode = explode(" ", $details['data']->categoryName);
+                        $details = getHoteldetail($hotel);
+                        $ranking[] = $details['hoteldetail']->hotel->ranking ?? '';
+                        // dd($details['hoteldetail']->hotel->facilities);die;
+                        $explode = !empty($details['data']->categoryName) ? explode(" ", $details['data']->categoryName) : '';
                         $search_hotels[] = array(
                             'code' => $details['data']->code ?? '',
                             'name' => $details['data']->name ?? '',
@@ -160,6 +163,7 @@ class StayController extends Controller
                             'images' => !empty($details['hoteldetail']->hotel->images) && count($details['hoteldetail']->hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata' . '/' . $details['hoteldetail']->hotel->images[0]->path : '',
                             'web' => $details['hoteldetail']->hotel->web ?? '',
                             'response_data' => json_encode($details['data']),
+                            'facilities' => $details['hoteldetail']->hotel->facilities ?? '',
                             'adult' => $request->adult ?? '',
                             'child' => $request->child ?? '',
                             'childages' => $request->childages ?? '',
@@ -171,13 +175,15 @@ class StayController extends Controller
                     $totalPer = $request->adult . '-' . $request->child . '-' . json_encode($request->childages) . '-' . $request->rooms;
                     $request->session()->put('totalPer', $totalPer);
                     $request->session()->put('search_hotels', $search_hotels);
+                    $request->session()->put('ranking', $ranking);
                 }
             }
         } else {
             $search_hotels = [];
             $totalPer = '';
         }
-        return view('hotel.search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error', 'totalPer'));
+        return view('hotel.search_hotel', compact('data', 'params', 'cities', 'error', 'totalPer'));
+        // return view('hotel.search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error', 'totalPer'));
     }
 
 
@@ -441,9 +447,21 @@ class StayController extends Controller
     public function hotelfilter(Request $request)
     {
         $old = Session::get('search_hotels');
-        dd($old);
         $dar = collect($old);
         $dar1 = [];
+        // if($request->Excellent &&  $request->stars){
+        //     $starsSet = [];
+        //     foreach ($request->stars as $stars) {
+        //         $starsSet[] = $stars;
+        //     }
+        //     $selectedExcellent = $request->Excellent;
+        //     $Excellents = [];
+        //     foreach ($selectedExcellent as $Excellent) {
+        //         $Excellents[] = $Excellent;
+        //     }
+        //     $dar1  = $dar->WhereIn('hotelStar',   $starsSet)->WhereIn('ranking',   $Excellents)->toArray();
+        //     dd($dar);
+        // }die;
         if (request()->get('maxPrice')) {
             $price = request()->get('maxPrice');
             $dar1  = $dar->where('maxRate', '<', $price)->toArray();
@@ -455,14 +473,22 @@ class StayController extends Controller
                 $starsSet[] = $stars;
             }
             $dar1  = $dar->WhereIn('hotelStar',   $starsSet)->toArray();
-        } else if ($request->stars) {
-            $selected_stars = $request->stars;
-            $datara = implode(",", $selected_stars);
+        } else if ($request->Excellent) {
+            $selectedExcellent = $request->Excellent;
             $starsSet = [];
-            foreach ($request->stars as $stars) {
-                $starsSet[] = $stars;
+            foreach ($selectedExcellent as $Excellent) {
+                $starsSet[] = $Excellent;
             }
-            $dar1  = $dar->WhereIn('hotelStar',   $starsSet)->toArray();
+            $dar1  = $dar->WhereIn('ranking',   $starsSet)->toArray();
+        } elseif ($request->orderbyFilter) {
+            if ($request->orderbyFilter == 'low') {
+                // Sort by age in ascending order
+                $dar1 = $dar->sortBy('maxRate')->toArray();
+            } else {
+                // Sort by age in descending order
+                $dar1 = $dar->sortByDesc('maxRate')->toArray();
+            }
+        } elseif ($request->low) {
         } else {
             $dar1  = $dar->toArray();
         }

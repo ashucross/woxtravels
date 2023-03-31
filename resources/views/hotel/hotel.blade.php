@@ -33,10 +33,6 @@ ul#ui-id-1 {
 </style>
 @endsection
 @section('pageContent')
-
-@php
-    dd(rankings());
-@endphp
 <section class="search_box  position-relative">
    <div class="tab_nav">
       <!-- Nav tabs -->
@@ -66,79 +62,17 @@ ul#ui-id-1 {
                                        @endforeach
                                     @endif
                                  </select>
-
                                  </div>
-                                 <!-- <input type="text" autocomplete="off"  class="input_src leftri input_hgt item_list" required name="location" placeholder="Where are you going?" data-toggle="dropdown" />
-                                 </div> -->
-                                 <!--  <div class="dropdown-menu drp_plane">
-                                       <div class="plane_list">
-                                          <span>Top Cities</span>
-                                          <ul>
-                                             <li>
-                                                <div class="fli_name"><i class="fa fa-hotel"></i> Delhi
-                                                </div>
-                                                <div class="airport_name"><span>1214
-                                                   properties</span><span>India</span>
-                                                </div>
-                                             </li>
-                                             <li>
-                                                <div class="fli_name"><i class="fa fa-hotel"></i> Mumbai
-                                                </div>
-                                                <div class="airport_name"><span>1214
-                                                   properties</span><span>India</span>
-                                                </div>
-                                             </li>
-                                             <li>
-                                                <div class="fli_name"><i class="fa fa-hotel"></i> Bengaluru
-                                                </div>
-                                                <div class="airport_name"><span>1720
-                                                   properties</span><span>India</span>
-                                                </div>
-                                             </li>
-                                          </ul>
-                                       </div>
-                                    </div> -->
                               </div>
                            </div>
                         </div>
-                        <!-- <div class="search_date ht_width_dt">
-                           <span class="iconint"><i class="fa fa-map-marker"></i></span>
-                           <select type="text"  class="input_src leftri input_hgt item_list" required name="location" >
-                                    <option>Select Location</option>
-                                 </select>
-
-                        </div> -->
                         <div class="search_date ht_width_dt">
                         <div class="position-relative ">
                               <span class="iconint"><i class="fa fa-calendar"></i></span>
                               <input aut type="text" name="checkin" required placeholder="Check-In - Check-Out" class="ckein input_src  input_hgt ">
                            </div>
                         </div>
-                        <!-- <div class="search_date widthn50">
-                              <h3 class="search_title">Check-Out</h3>
-
-
-
-                              <div class="position-relative">
-
-
-
-                                  <span class="iconint"><i class="fa fa-calendar"></i></span>
-
-
-
-                                  <input aut type="text" name="daterange2" class="input_src  input_hgt">
-
-
-
-                              </div>
-
-
-
-                              </div> -->
                         <div class="search_adult ht_width_tr">
-
-
                            <!-- <h3 class="search_title">Travelers</h3> -->
                            <div class="position-relative " data-toggle="dropdown">
                               <span class="iconint"><i class="fa fa-user-o"></i></span>
@@ -195,31 +129,6 @@ ul#ui-id-1 {
                                                    <option value="17">17 years old</option>
                                                 </select>
                                              </div>
-                                             <!-- <div class="childxd">
-                                                <select>
-                                                   <option hidden>
-                                                      Age needed
-                                                   </option>
-                                                   <option value="0" selected="">0 years old</option>
-                                                   <option value="1">1 year old</option>
-                                                   <option value="2">2 years old</option>
-                                                   <option value="3">3 years old</option>
-                                                   <option value="4">4 years old</option>
-                                                   <option value="5">5 years old</option>
-                                                   <option value="6">6 years old</option>
-                                                   <option value="7">7 years old</option>
-                                                   <option value="8">8 years old</option>
-                                                   <option value="9">9 years old</option>
-                                                   <option value="10">10 years old</option>
-                                                   <option value="11">11 years old</option>
-                                                   <option value="12">12 years old</option>
-                                                   <option value="13">13 years old</option>
-                                                   <option value="14">14 years old</option>
-                                                   <option value="15">15 years old </option>
-                                                   <option value="16">16 years old</option>
-                                                   <option value="17">17 years old</option>
-                                                </select>
-                                             </div> -->
                                           </div>
                                           <div class="ht_qt_txt">
                                              <p>To find you a place to stay that fits your entire group along with correct prices, we need to know how old your children will be at check-out</p>
@@ -378,31 +287,6 @@ ul#ui-id-1 {
          </div>
       </div>
       <div class="row">
-        {{--  @if(!empty($hotelsdata))
-            @if(!empty($hotelsdata->hotels) && count($hotelsdata->hotels) > 0)
-            @foreach($hotelsdata->hotels as $hotel)
-            <?php $image = !empty($hotel->images) && count($hotel->images) > 0 ? 'http://photos.hotelbeds.com/giata'.'/'.$hotel->images[0]->path : ''; ?>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 loadmorediv">
-               <div class="theme_common_box_two img_hover">
-                  <div class="theme_two_box_img">
-                     <a href="hotel-details.html">
-                        <img height='280px' src="{{!empty($image) ? $image : asset('public/assets/images/hotel1.png')}}" alt="img">
-                     </a>
-                     <p><i class="fas fa-map-marker-alt"></i>{{$hotel->name->content ?? ''}}</p>
-                  </div>
-                  <div class="theme_two_box_content">
-                     <h4><a href="hotel-details.html">{{$hotel->name->content ?? ''}}, {{$hotel->city->content ?? ''}}</a></h4>
-                     <p><span class="review_rating"><!-- 4.8/5 Excellent -->Ranking : {{$hotel->ranking ?? ''}}</span> <!-- <span class="review_count">(1214
-                              reviewes)</span> -->
-                     </p>
-                     <h3><!-- $99.00 <span>Price starts from</span> --></h3>
-                  </div>
-               </div>
-            </div>
-            @endforeach
-            @endif
-         @endif  --}}
-
          <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                   <div class="theme_common_box_two img_hover">
                      <div class="theme_two_box_img">

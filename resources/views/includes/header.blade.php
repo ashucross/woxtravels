@@ -1,8 +1,29 @@
 @php
 $segments = request()->segments();
-
 @endphp
 @if(isset($segments[0]) && $segments[0] == 'agent')
+<header>
+    <section class="logo_menu_box d-flex justify-content-between  clearfix align-items-center">
+        <div class="logo d-flex align-items-center">
+            <div class="boxthems">
+                <button type="button" class="cogbtn">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
+                <span>Choice Theme</span>
+                <ul id="switcher">
+                    <li id="BlackButton"></li>
+                    <li id="whiteButton"></li>
+                    <li id="darkblue"></li>
+                </ul>
+            </div>
+            <a href="{{url('')}}" class="imgblack">
+                <img src="{{asset('public/assets/images/logo-color.svg')}}" alt="" class="imgres " />
+            </a>
+            <a href="{{url('')}}" class="imagewhite">
+                <img src="{{asset('public/assets/images/logo-white.svg')}}" alt="" class="imgres " />
+            </a>
+    </section>
+</header>
  @else
  <header>
     <section class="logo_menu_box d-flex justify-content-between  clearfix align-items-center">

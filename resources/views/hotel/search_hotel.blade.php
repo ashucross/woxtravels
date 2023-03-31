@@ -1,5 +1,10 @@
 @extends('homeLayout')
 @section('styles')
+<style>
+    ul.check-boxes-custom.list-checkboxes {
+    overflow: visible;
+}
+</style>
 <!-- page specific style code here-->
 <!-- page specific style code here-->
 <link rel="stylesheet"
@@ -401,7 +406,7 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
+                        {{-- <div class="panel panel-default">
 
                             <div class="panel-heading">
 
@@ -540,23 +545,17 @@
 
                             </div>
 
-                        </div>
+                        </div> --}}
 
 
 
                         <div class="panel panel-default">
-
                             <div class="panel-heading">
-
                                 <h4 class="panel-title">
-
                                     <a data-toggle="collapse" data-parent="#accordion" href="#Stars"
                                         aria-expanded="true" aria-expanded="true">
-
                                         <div class="txtftr">
-
                                             <h6>Stars</h6>
-
                                             <span>Clear</span>
                                         </div>
                                     </a>
@@ -581,7 +580,7 @@
 
                                                         </div>
 
-                                                        <input class="flightfilter" name="stars[]" id="star1"
+                                                        <input class="flightfilter starFilter" name="stars[]" id="star1"
                                                             type="checkbox" value="1">
 
                                                         <span class="checkmark"></span>
@@ -606,7 +605,7 @@
 
                                                         </div>
 
-                                                        <input class="flightfilter" name="stars[]" id="star2"
+                                                        <input class="flightfilter starFilter" name="stars[]" id="star2"
                                                             type="checkbox" value="2">
 
                                                         <span class="checkmark"></span>
@@ -631,7 +630,7 @@
 
                                                         </div>
 
-                                                        <input class="flightfilter" name="stars[]" id="star3"
+                                                        <input class="flightfilter starFilter" name="stars[]" id="star3"
                                                             type="checkbox" value="3">
 
                                                         <span class="checkmark"></span>
@@ -658,7 +657,7 @@
 
                                                         </div>
 
-                                                        <input class="flightfilter" name="stars[]" id="star4"
+                                                        <input class="flightfilter starFilter" name="stars[]" id="star4"
                                                             type="checkbox" value="4">
 
                                                         <span class="checkmark"></span>
@@ -683,7 +682,7 @@
 
                                                         </div>
 
-                                                        <input class="flightfilter" name="stars[]" id="star5"
+                                                        <input class="flightfilter starFilter" name="stars[]" id="star5"
                                                             type="checkbox" value="5">
 
                                                         <span class="checkmark"></span>
@@ -744,94 +743,39 @@
                                     <div class="checkftr">
 
                                         <ul class="check-boxes-custom list-checkboxes">
-
-                                            <li>
-
-                                                <label for="Excellent1"
-                                                    class="label-container checkbox-default">Excellent
-
-                                                    <input name="Excellent" class="flightfilter" id="Excellent1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">172</span>
-
-                                            </li>
-
-                                            <li>
-
-                                                <label for="Verygood1" class="label-container checkbox-default">Very
-                                                    good
-
-                                                    <input name="Verygood" class="Verygoodrating" id="Verygood1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">246</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Good1" class="label-container checkbox-default">Good
-
-                                                    <input name="Good" class="flightfilter" id="Good1" type="checkbox"
-                                                        value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">188</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Fair1" class="label-container checkbox-default">Fair
-
-                                                    <input name="Fair" class="flightfilter" id="Fair1" type="checkbox"
-                                                        value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">90</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Poor1" class="label-container checkbox-default">Poor
-
-                                                    <input name="Poor" class="flightfilter" id="Poor1" type="checkbox"
-                                                        value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">57</span>
-
-                                            </li>
-
-
-
-
-
+                                            @php
+                                            $numbers = Session::get('ranking');
+                                            sort($numbers);
+                                            $grouped = collect($numbers)->groupBy(function ($number) {
+                                            $digits = str_split((string) $number);
+                                            sort($digits);
+                                            return implode('', $digits);
+                                            })->map(function ($group) {
+                                            $counts = array_count_values(str_split((string) $group->first()));
+                                            return $group->map(function ($number) use ($counts) {
+                                            return [
+                                            'number' => $number,
+                                            'count' => $counts,
+                                            ];
+                                            });
+                                            });
+                                            @endphp
+                                            @if(!empty($grouped))
+                                            <form id="rankingFilter_based">
+                                                @foreach($grouped as $digit => $number)
+                                                <li>
+                                                    <label for="{{ $digit }}"
+                                                        class="label-container checkbox-default">{{ $digit }} Hotel with
+                                                        Rating
+                                                        <input name="Excellent[]" class="flightfilter rankingFilter"
+                                                            id="{{ $digit }}" type="checkbox" value="{{ $digit }}">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="lsprc">{{ count($number) }}</span>
+                                                </li>
+                                                @endforeach
+                                            </form>
+                                            @endif
                                         </ul>
 
                                     </div>
@@ -878,370 +822,26 @@
                                     <div class="checkftr">
 
                                         <ul class="check-boxes-custom list-checkboxes">
+                                            @foreach (hotelApisAminities()['facilities'] as $hotelApisAminities)
 
                                             <li>
 
                                                 <label for="24hourfrontdesk1"
-                                                    class="label-container checkbox-default">24-hour
+                                                    class="label-container checkbox-default">{{
+                                                    $hotelApisAminities['description']['content']}}
 
-                                                    front desk
-
-                                                    <input name="24hourfrontdesk" class="flightfilter"
-                                                        id="24hourfrontdesk1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">918</span>
-
-                                            </li>
-
-                                            <li>
-
-                                                <label for="24hourroomservice1"
-                                                    class="label-container checkbox-default">24-hour
-
-                                                    room service
-
-                                                    <input name="24hourroomservice" class="Verygoodrating"
-                                                        id="24hourroomservice1" type="checkbox" value="1">
+                                                    <input name="24hourfrontdesk" class="flightfilter facilityfilter"
+                                                        id="24hourfrontdesk1" type="checkbox"
+                                                        value="{{ $hotelApisAminities['description']['content']}}">
 
                                                     <span class="checkmark"></span>
 
                                                 </label>
 
-                                                <span class="lsprc">0</span>
+                                                {{-- <span class="lsprc">918</span> --}}
 
                                             </li>
-
-
-
-                                            <li>
-
-                                                <label for="Airconditioning1"
-                                                    class="label-container checkbox-default">Air
-
-                                                    conditioning
-
-                                                    <input name="Airconditioning" class="flightfilter"
-                                                        id="Airconditioning1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">33</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Beachnearby1" class="label-container checkbox-default">Beach
-
-                                                    nearby
-
-                                                    <input name="Beachnearby" class="flightfilter" id="Beachnearby1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">1</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Carparking1" class="label-container checkbox-default">Car
-                                                    parking
-
-                                                    <input name="Carparking" class="flightfilter" id="Carparking1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">241</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Facilitiesfordisabled1"
-                                                    class="label-container checkbox-default">Facilities
-
-                                                    for disabled
-
-                                                    <input name="Facilitiesfordisabled" class="flightfilter"
-                                                        id="Facilitiesfordisabled1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">631</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Fitnesscenter1"
-                                                    class="label-container checkbox-default">Fitness
-
-                                                    center
-
-                                                    <input name="Fitnesscenter" class="flightfilter" id="Fitnesscenter1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">170</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Freecarparking1"
-                                                    class="label-container checkbox-default">Free car
-
-                                                    parking
-
-                                                    <input name="Freecarparking" class="flightfilter"
-                                                        id="Freecarparking1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">18</span>
-
-                                            </li>
-
-
-
-
-
-                                            <li>
-
-                                                <label for="Freewifi1" class="label-container checkbox-default">Free
-                                                    wifi
-
-                                                    <input name="Freewifi" class="flightfilter" id="Freewifi1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">993</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Kitchen1" class="label-container checkbox-default">Kitchen
-
-                                                    <input name="Kitchen" class="flightfilter" id="Kitchen1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">3</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Nonsmokingrooms1"
-                                                    class="label-container checkbox-default">Non smoking
-
-                                                    rooms
-
-                                                    <input name="Nonsmokingrooms" class="flightfilter"
-                                                        id="Nonsmokingrooms1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">40</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Petsallowed1" class="label-container checkbox-default">Pets
-
-                                                    allowed
-
-                                                    <input name="Petsallowed" class="flightfilter" id="Petsallowed1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">17</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Roomservice1" class="label-container checkbox-default">Room
-
-                                                    service
-
-                                                    <input name="Roomservice" class="flightfilter" id="Roomservice1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">16</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Areashuttle1" class="label-container checkbox-default">Area
-
-                                                    shuttle
-
-                                                    <input name="Areashuttle" class="flightfilter" id="Areashuttle1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">45</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Smokingrooms1"
-                                                    class="label-container checkbox-default">Smoking
-
-                                                    rooms
-
-                                                    <input name="Smokingrooms" class="flightfilter" id="Smokingrooms1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">0</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Spacenter1" class="label-container checkbox-default">Spa
-                                                    center
-
-                                                    <input name="Spacenter" class="flightfilter" id="Spacenter1"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">0</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Swimmingpool1"
-                                                    class="label-container checkbox-default">Swimming
-
-                                                    pool
-
-                                                    <input name="Swimmingpool" class="flightfilter" id="Swimmingpool"
-                                                        type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">14</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Wifi1" class="label-container checkbox-default">Wifi
-
-                                                    <input name="Wifi" class="flightfilter" id="Wifi1" type="checkbox"
-                                                        value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">95</span>
-
-                                            </li>
-
-
-
-                                            <li>
-
-                                                <label for="Covid19HygieneProtocols1"
-                                                    class="label-container checkbox-default">Covid-19
-
-                                                    Hygiene Protocols
-
-                                                    <input name="Covid19HygieneProtocols" class="flightfilter"
-                                                        id="Covid19HygieneProtocols1" type="checkbox" value="1">
-
-                                                    <span class="checkmark"></span>
-
-                                                </label>
-
-                                                <span class="lsprc">0</span>
-
-                                            </li>
-
-
+                                            @endforeach
 
                                         </ul>
 
@@ -1278,7 +878,7 @@
                         <p>Our best prices have now loaded</p>
                     </h2>
                     <div class="ratingdrop">
-                        <select class="lidr_pc orderby" name="orderby">
+                        <select class="lidr_pc orderbyFilter" name="orderbyFilter">
                             <!-- <option>Rating</option> -->
                             <option value="">Select</option>
                             <option value="low">Price&nbsp;&nbsp;:&nbsp;&nbsp;low to high</option>
@@ -1309,55 +909,54 @@
                                     @php
                                     $explode = explode(" ", $hotel['categoryName']);
                                     for($i=0; $i<$explode[0]; $i++) { echo '<i
-                                        class="fa fa-star"></i>' ; } @endphp
-                                </h2>
-                                <ul class="listbt_sml">
-                                    <li><a href="#">{{$hotel['categoryName'] ?? ''}}</a></li>
-                                    <li><a href="#">{{$hotel['destinationName'] ?? ''}}</a></li>
-                                </ul>
-                                <ul class="iconsml">
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/Pool.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Pool</span>
-                                    </li>
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/FreeParking.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Free Parking</span>
-                                    </li>
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/Spa.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Spa</span>
-                                    </li>
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/Gym.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Gym</span>
-                                    </li>
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/Restaurant.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Restaurant</span>
-                                    </li>
-                                    <li>
-                                        <span><img src="{{asset('public/assets/images/Bar.png')}}"
-                                                class="img-res" /></span>
-                                        <span>Bar</span>
-                                    </li>
-                                </ul>
-                                <div class="green_ex">
-                                    <span>
-                                        <?php $i = 0;
+                                        class="fa fa-star"></i>' ; } @endphp </h2>
+                                        <ul class="listbt_sml">
+                                            <li><a href="#">{{$hotel['categoryName'] ?? ''}}</a></li>
+                                            <li><a href="#">{{$hotel['destinationName'] ?? ''}}</a></li>
+                                        </ul>
+                                        <ul class="iconsml">
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/Pool.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Pool</span>
+                                            </li>
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/FreeParking.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Free Parking</span>
+                                            </li>
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/Spa.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Spa</span>
+                                            </li>
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/Gym.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Gym</span>
+                                            </li>
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/Restaurant.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Restaurant</span>
+                                            </li>
+                                            <li>
+                                                <span><img src="{{asset('public/assets/images/Bar.png')}}"
+                                                        class="img-res" /></span>
+                                                <span>Bar</span>
+                                            </li>
+                                        </ul>
+                                        <div class="green_ex">
+                                            <span>
+                                                <?php $i = 0;
                                     $rank = (int)$hotel['ranking'] ?? 0;
                                     ?>
-                                        Rank : {{$rank ?? 0}}
-                                        <!--  <i class="fa fa-star"></i> -->
+                                                Rank : {{$rank ?? 0}}
+                                                <!--  <i class="fa fa-star"></i> -->
 
-                                        <!-- &nbsp;4.77 (48 reviews) -->
-                                    </span>
-                                </div>
+                                                <!-- &nbsp;4.77 (48 reviews) -->
+                                            </span>
+                                        </div>
                             </div>
                         </div>
                         <div class="pribtns">
@@ -3506,13 +3105,42 @@ $(document).ready(function() {
 })
 
 
- $("input[type='checkbox']").change(function(){
+ $(".starFilter").change(function(){
         var form_data = $("#search_form").serialize();
         $.ajax({
             url: "{{URL::to('hotel/filter')}}",
             method: "POST",
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             data: form_data,
+            success: function(data){
+                $('#Cheapest').html(data.html)
+            }
+        });
+    });
+
+ $(".rankingFilter").change(function(){
+        var form_data = $("#rankingFilter_based").serialize();
+        $.ajax({
+            url: "{{URL::to('hotel/filter')}}",
+            method: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: form_data,
+            success: function(data){
+                $('#Cheapest').html(data.html)
+            }
+        });
+    });
+
+ $(".orderbyFilter").change(function(){
+    var selectedOptionValue = $(this).val();
+    alert(selectedOptionValue);
+        $.ajax({
+            url: "{{URL::to('hotel/filter')}}",
+            method: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                orderbyFilter:selectedOptionValue
+            },
             success: function(data){
                 $('#Cheapest').html(data.html)
             }

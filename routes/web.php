@@ -60,6 +60,7 @@ Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkCon
 // Route::post('/flight_order', [FlightController::class, 'flight_order'])->name('flight_order');
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
+Route::get('/hotel/ajaxlisting', [StayController::class, 'ajaxlisting'])->name('ajaxlisting');
 Route::post('/search_hotel', [StayController::class, 'search_hotel'])->name('search_hotel');
 Route::post('/setRegion', [StayController::class, 'setRegion'])->name('setRegion');
 Route::get('/hotelDetails/{id?}/{travelr?}', [StayController::class, 'hotelDetails'])->name('hotelDetails');
