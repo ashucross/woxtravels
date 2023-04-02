@@ -1687,7 +1687,7 @@
                                                         <?php
                                                             $totalPer = Session::get('totalPer');
                                                         ?>
-                                                    <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='. $totalPer)}}"
+                                                    <a href="{{ url('flightList/details?data='.json_encode($searchFlight,true).'&dictionaries='.json_encode($flightresult['dictionaries']).'&px='. $totalPer . '&carriers=' .  $flightresult['dictionaries']['carriers'][$searchFlight['itineraries'][0]["segments"][0]['carrierCode']])}}"
                                                         type="button" class="btnvw"><i
                                                             class="fa fa-plane"></i>&nbsp;&nbsp;Book Now</a>
                                                     {{-- <span id="fltid">Flight Details<i

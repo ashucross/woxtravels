@@ -58,6 +58,7 @@ Route::get('flight/filter', [FlightController::class, 'flightfilter'])->name('fi
 Route::get('initiate-Payment/{id}', [FlightController::class, 'inititatePayment'])->name('inititatePayment');
 Route::get('flight/booking-confirmation/{id?}', [FlightController::class, 'bkConfiration'])->name('booking.confirmation');
 // Route::post('/flight_order', [FlightController::class, 'flight_order'])->name('flight_order');
+Route::get('flight/generate-pdf/{id?}', [FlightController::class, 'generatePDF']);
 
 Route::get('/hotel', [StayController::class, 'index'])->name('hotel');
 Route::get('/hotel/ajaxlisting', [StayController::class, 'ajaxlisting'])->name('ajaxlisting');

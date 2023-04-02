@@ -512,10 +512,8 @@
                 <p><i class="fa fa-check-circle"></i>&nbsp;Good job! Book now so you don’t miss out on this price</p>
             </div>
             @php
-            // dd($flights);
-            @endphp
-            @php
             $Traveldate=date_create($fly->itineraries[0]->segments[0]->departure->at);
+            $flight_name = $_GET['carriers']
             @endphp
             <div class="listbooking-rv ">
                 <ul>
@@ -548,7 +546,7 @@
                                             @php $namePlane = json_decode(json_encode($dictionaries->carriers),true)
                                             @endphp
 
-                                            <span>{{ $fly->itineraries[0]->segments[0]->carrierCode }}</span>
+                                            <span>{{  $flight_name }}</span>
                                         </div>
                                     </div>
 
@@ -646,7 +644,7 @@
             </div>
             <form action="" id="flightbooking-form" method="POST">
                 {{ csrf_field() }}
-                {{-- <input type="sdaf" name="flight_id" value="{{ $fly->FS_id }}"> --}}
+                <input type="hidden" name="flight_name" value="{{ $flight_name }}">
                 <div class="Review_book whitebrd">
                     @foreach($ticketDetails as $key => $value)
 

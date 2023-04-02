@@ -121,6 +121,7 @@ class StayController extends Controller
             '_Car' => '',
         );
         $hotels = [];
+        $totalPer = '';
         $params = $request->all() ?? '';
         $signature = getsignature();
         // dd(hotelApisAminities());
@@ -182,8 +183,8 @@ class StayController extends Controller
             $search_hotels = [];
             $totalPer = '';
         }
-        return view('hotel.search_hotel', compact('data', 'params', 'cities', 'error', 'totalPer'));
-        // return view('hotel.search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error', 'totalPer'));
+        // return view('hotel.search_hotel', compact('data', 'params', 'cities', 'error', 'totalPer'));
+        return view('hotel.search_hotel', compact('data', 'search_hotels', 'params', 'cities', 'error', 'totalPer'));
     }
 
 
@@ -241,7 +242,7 @@ class StayController extends Controller
             $hotel = json_decode($hotelDetailsGet);
             $explodepass = explode('-', $passangers);
             $signature = getsignature();
-            $details = getHoteldetail($signature['data'], $hotel);
+            $details = getHoteldetail($hotel);
             $ranking = array(
                 'ranking' =>  $details['hoteldetail']->hotel->ranking ?? ''
             );

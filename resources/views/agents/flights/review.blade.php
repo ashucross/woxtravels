@@ -14,14 +14,14 @@
 </div> -->
 <script>
 $(document).ready(function(){
- 
+
 $(window).on("load", function () {
-   
+
 const details =  localStorage.getItem('travelers-details');
    if(details !== null){
         submitFlight(details);
    }
-   
+
 });
   $('.datetime').datepicker({
             numberOfMonths: 2
@@ -30,13 +30,13 @@ const details =  localStorage.getItem('travelers-details');
 
      $(".form-input").keyup(function(event){
              $(this).siblings('span.errors').empty();
-      })  
+      })
         $(".form-input").on('change',function(event){
              $(this).siblings('span.errors').empty();
-      }) 
+      })
         $(".form-input").on('click',function(event){
              $(this).siblings('span.errors').empty();
-      })   
+      })
       $(function(){
 	$('#payment-process').click(function(e){
 		e.preventDefault();
@@ -58,7 +58,7 @@ function makePayment(name,email,phone,amount,currency,id) {
     amount: amount,
     currency: currency,
     payment_options: "card, mobilemoneyghana, ussd",
-    redirect_url: "{{url('Booking/Confirm/')}}"+'?booking_id='+id, 
+    redirect_url: "{{url('Booking/Confirm/')}}"+'?booking_id='+id,
     meta: {
       consumer_id: 23,
       consumer_mac: "92a3-912ba-1192a",
@@ -78,7 +78,7 @@ function makePayment(name,email,phone,amount,currency,id) {
     },
   });
 }
-                               
+
    $("#flightbooking-form").on('submit',function(event){
        event.preventDefault();
        var form= $(this).serialize();
@@ -111,7 +111,7 @@ function makePayment(name,email,phone,amount,currency,id) {
               $('#payment').modal('show');
               $('#bookingId').val(response.booking_id);
             }
-        
+
         },
         error: function(response) {
             $('.loading-div').css('display','none');
@@ -131,12 +131,12 @@ function makePayment(name,email,phone,amount,currency,id) {
                                   $(this).after('<span class="errors">' + value + '</span>')
                                 }
                             });
-                             
+
                         });
 
                     }
-        } 
-     
+        }
+
        });
    }
     $('#login-form').click(function(e){
@@ -168,7 +168,7 @@ function makePayment(name,email,phone,amount,currency,id) {
               if (response.status === 400) {
               $('#login-email-error').after('<span class="errors">' + response.responseJSON.errors + '</span>')
               }
-   
+
                     if (response.status === 422) {
                         var errors = $.parseJSON(response.responseText);
                         $.each(errors.errors, function(key, value) {
@@ -183,12 +183,12 @@ function makePayment(name,email,phone,amount,currency,id) {
                             }
                         });
                     }
-        } 
-     
+        }
+
        });
           e.preventDefault();
     })
-   
+
 })
 
 </script>
@@ -258,7 +258,7 @@ function makePayment(name,email,phone,amount,currency,id) {
     }
 
     /* @import url("https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/blitzer/jquery-ui.min.css");  */
-    
+
     .ui-datepicker td span,
     .ui-datepicker td a {
         padding-bottom: 1em;
@@ -1260,10 +1260,10 @@ function makePayment(name,email,phone,amount,currency,id) {
 																	<img src="{{$file}}"
 																		class="img-res" alt="{{$data->itineraries[0]->segments[0]->carrierCode}}">
 																@else
-																	<i class="fas fa-plane"></i><i class="fas fa-plane"></i>		
-																@endif		
+																	<i class="fas fa-plane"></i><i class="fas fa-plane"></i>
+																@endif
 																</span>
-                                               
+
                                             @php $airPlane = json_encode($dictionaries) @endphp
                                             @php $namePlane = json_decode(json_encode($dictionaries->carriers),true) @endphp
 
@@ -1306,7 +1306,7 @@ function makePayment(name,email,phone,amount,currency,id) {
                                     <div class="timebox d-flex">
                                         <h4>{{ date('H:i A', strtotime($data->itineraries[0]->segments[0]->departure->at) )}}</h4>
                                         <span><img src="{{asset('images/longarrow.svg')}}" class="img-res">
-                                        
+
                                         </span>
                                         <h4>{{ date('H:i A', strtotime($data->itineraries[0]->segments[0]->arrival->at) )}}</h4>
 
@@ -1339,8 +1339,8 @@ function makePayment(name,email,phone,amount,currency,id) {
 																	<img src="{{$file}}"
 																		class="img-res" alt="{{$data->itineraries[0]->segments[0]->carrierCode}}">
 																@else
-																	<i class="fas fa-plane"></i><i class="fas fa-plane"></i>		
-																@endif	
+																	<i class="fas fa-plane"></i><i class="fas fa-plane"></i>
+																@endif
                                         </span><span class="suitcase_txt"><strong>{{ date('H:i A', strtotime($data->itineraries[0]->segments[0]->departure->at) )}}
                                                 - {{ date('H:i A', strtotime($data->itineraries[0]->segments[0]->arrival->at) )}},</strong> {{ strtolower(str_replace('H','H     ',substr($data->itineraries[0]->duration, 2)))}}</span></div>
                                 </div>
@@ -1436,7 +1436,7 @@ function makePayment(name,email,phone,amount,currency,id) {
                 <h1><img src="http://24hr.lightmytrip.com/public/images/loginics.svg" class="img-res">&nbsp;Login-in your {{ env('APP_NAME') }} )</h1>
                 <div class="ds">
                  @if(auth()->check())
-                
+
                     <a href="#" class="cntds">Continue as Guest</a>
                     @else
 
@@ -1444,7 +1444,7 @@ function makePayment(name,email,phone,amount,currency,id) {
                         @endif
                 </div>
             </div>
-                <form id="flightbooking-form" method="Post"> 
+                <form id="flightbooking-form" method="Post">
               @csrf
             <div class="Review_book whitebrd">
                    @foreach($ticketDetails as $key => $value)
@@ -1457,14 +1457,14 @@ function makePayment(name,email,phone,amount,currency,id) {
                      </span></h4>
                     <p>Enter traveler name(s) and date(s) of birth exactly as shown on the passport or other goverment-issued photo ID to be used on this trip.</p>
                 </div>
-             
+
                       @for( $i = 0; $i<$value['total']; $i++ )
 							@php ++$j @endphp
                             							@php ++$j @endphp                            	<input type="hidden"  name="{{strtolower($value['name'])}}[{{$i}}][travelId]" value="{{$value['travelerId']}}" />
                 <div class="row pdrs">
                     <div class="col-sm-4 ">
                         <div class="inpse" >
-                            <input class="form-input" type="text" id="{{strtolower($value['name'])}}.{{$i}}.first_name" 
+                            <input class="form-input" type="text" id="{{strtolower($value['name'])}}.{{$i}}.first_name"
                              name="{{strtolower($value['name'])}}[{{$i}}][first_name]" placeholder="First Name">
                         </div>
                     </div>
@@ -1509,7 +1509,7 @@ function makePayment(name,email,phone,amount,currency,id) {
 
                         <div class="inpse ">
                             <label>Nationality<span class="stres">*</span></label>
-                            
+
                              {{-- <input type="hidden" id="roundtosearch" value="{{request()->get('to')}}">
                                     <span>To</span> --}}
 
@@ -1524,7 +1524,7 @@ function makePayment(name,email,phone,amount,currency,id) {
                     </div>
                 </div>
                 <div class="row pdrs">
-            
+
                     <div class="col-sm-12">
                         <div class="txtal">
                             <h5>Passport Details</h5>
@@ -1803,7 +1803,7 @@ function makePayment(name,email,phone,amount,currency,id) {
         </button>
       </div>
       <div class="modal-body">
-     
+
         <div class="col-sm-12">
             <span id="login-email-error"></span>
             <div class="inpse ">
@@ -1829,7 +1829,7 @@ function makePayment(name,email,phone,amount,currency,id) {
                             <input type="password" id="login-password" placeholder="Enter password">
              </div>
         </div>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1851,7 +1851,7 @@ function makePayment(name,email,phone,amount,currency,id) {
         </button>
       </div>
       <div class="modal-body">
-     
+
           <div class="card">
             <div class="container">
                 <span>Email:<h4 id="contact_email-e"><b></b></h4></span>
@@ -1869,8 +1869,8 @@ function makePayment(name,email,phone,amount,currency,id) {
         <input type="hidden" id="contact_name" value="{{auth()->user()->first_name ?? ''}} &nbsp; &nbsp; &nbsp;  {{auth()->user()->last_name ?? ''}}" placeholder="Enter email">
         <input type="hidden" id="amount" placeholder="Enter email">
         <input type="hidden" id="currency" placeholder="Enter email">
-        <input type="hidden" id="bookingId" /> 
-      
+        <input type="hidden" id="bookingId" />
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

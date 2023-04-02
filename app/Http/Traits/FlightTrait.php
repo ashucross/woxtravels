@@ -16,6 +16,7 @@ use App\Services\FlightServices;
 use App\Http\Requests\Flight\FlightBookingRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 trait FlightTrait
 {
@@ -139,80 +140,80 @@ trait FlightTrait
             $response = curl_exec($curlF);
             curl_close($curlF);
             // Set up the endpoint and necessary headers
-        // $endpoint = 'https://test.api.amadeus.com/v2/shopping/flight-offers';
-        // $api_key = '<YOUR_API_KEY>';
-        // $headers = [
-        //     'Authorization: Bearer ' . $this->Token . '',
-        //     'Content-Type: application/json'
-        // ];
+            // $endpoint = 'https://test.api.amadeus.com/v2/shopping/flight-offers';
+            // $api_key = '<YOUR_API_KEY>';
+            // $headers = [
+            //     'Authorization: Bearer ' . $this->Token . '',
+            //     'Content-Type: application/json'
+            // ];
 
-        // // Set up the request body with your desired search parameters
-        // $search_params = [
-        //     "originDestinations" => [
-        //         [
-        //             "id" => "1",
-        //             "originLocationCode" => "MAD",
-        //             "destinationLocationCode" => "PAR",
-        //             "departureDateTimeRange" => [
-        //                 "date" => "2023-10-03"
-        //             ]
-        //         ],
-        //         [
-        //             "id" => "2",
-        //             "originLocationCode" => "PAR",
-        //             "destinationLocationCode" => "MUC",
-        //             "departureDateTimeRange" => [
-        //                 "date" => "2023-10-05"
-        //             ]
-        //         ],
-        //         [
-        //             "id" => "3",
-        //             "originLocationCode" => "MUC",
-        //             "destinationLocationCode" => "AMS",
-        //             "departureDateTimeRange" => [
-        //                 "date" => "2023-10-08"
-        //             ]
-        //         ]
-        //     ],
-        //     "travelers" => [
-        //         [
-        //             "id" => "1",
-        //             "travelerType" => "ADULT",
-        //             "fareOptions" => [
-        //                 "STANDARD"
-        //             ]
-        //         ]
-        //     ],
-        //     "sources" => [
-        //         "GDS"
-        //     ],
-        //     "searchCriteria" => [
-        //         "maxFlightOffers" => 2
-        //     ]
-        // ];
+            // // Set up the request body with your desired search parameters
+            // $search_params = [
+            //     "originDestinations" => [
+            //         [
+            //             "id" => "1",
+            //             "originLocationCode" => "MAD",
+            //             "destinationLocationCode" => "PAR",
+            //             "departureDateTimeRange" => [
+            //                 "date" => "2023-10-03"
+            //             ]
+            //         ],
+            //         [
+            //             "id" => "2",
+            //             "originLocationCode" => "PAR",
+            //             "destinationLocationCode" => "MUC",
+            //             "departureDateTimeRange" => [
+            //                 "date" => "2023-10-05"
+            //             ]
+            //         ],
+            //         [
+            //             "id" => "3",
+            //             "originLocationCode" => "MUC",
+            //             "destinationLocationCode" => "AMS",
+            //             "departureDateTimeRange" => [
+            //                 "date" => "2023-10-08"
+            //             ]
+            //         ]
+            //     ],
+            //     "travelers" => [
+            //         [
+            //             "id" => "1",
+            //             "travelerType" => "ADULT",
+            //             "fareOptions" => [
+            //                 "STANDARD"
+            //             ]
+            //         ]
+            //     ],
+            //     "sources" => [
+            //         "GDS"
+            //     ],
+            //     "searchCriteria" => [
+            //         "maxFlightOffers" => 2
+            //     ]
+            // ];
 
-        // // Convert the search parameters to a JSON string
-        // $search_params_json = json_encode($search_params);
+            // // Convert the search parameters to a JSON string
+            // $search_params_json = json_encode($search_params);
 
-        // // Set up the cURL request
-        // $curl = curl_init();
-        // curl_setopt_array($curl, [
-        //     CURLOPT_URL => $endpoint,
-        //     CURLOPT_RETURNTRANSFER => true,
-        //     CURLOPT_HTTPHEADER => $headers,
-        //     CURLOPT_POST => true,
-        //     CURLOPT_POSTFIELDS => $search_params_json
-        // ]);
+            // // Set up the cURL request
+            // $curl = curl_init();
+            // curl_setopt_array($curl, [
+            //     CURLOPT_URL => $endpoint,
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_HTTPHEADER => $headers,
+            //     CURLOPT_POST => true,
+            //     CURLOPT_POSTFIELDS => $search_params_json
+            // ]);
 
-        // // Execute the request and get the response
-        // $response = curl_exec($curl);
+            // // Execute the request and get the response
+            // $response = curl_exec($curl);
 
-        // // Close the cURL session
-    // curl_close($curl);
+            // // Close the cURL session
+            // curl_close($curl);
 
-        // Output the response
-        // echo $response;
-        // var_dump($response);die;
+            // Output the response
+            // echo $response;
+            // var_dump($response);die;
 
             $dataArray = json_decode($response, true);
             // dd($dataArray);
@@ -348,6 +349,7 @@ trait FlightTrait
     public function flightDetails()
     {
         $data = json_decode(request()->get('data'));
+        // dd();
         $dictionaries = json_decode(request()->get('dictionaries'));
         $passangers = request()->get('px');
         $sessionData['data'] = $data;
@@ -380,8 +382,8 @@ trait FlightTrait
         $ticketDetails = $details;
         Session::put('data', $sessionData);
         $userFlight = Session::get('data');
-
-        return redirect()->route('flightReview');
+        $cr =  'carriers=' . $_GET['carriers'];
+        return redirect()->route('flightReview', [$cr]);
     }
 
 
@@ -411,6 +413,7 @@ trait FlightTrait
 
     public function bookingInfo($request, $data)
     {
+        // dd($data['flight_name']);
         $travelers = [];
 
         if ((array_key_exists("adult", $data))) {
@@ -443,7 +446,7 @@ trait FlightTrait
         }
         $dataInput['flight_details'] = $traveler;
         $result = bookingsDetails($dataInput);
-        $dataOutput = addBookingsDetails($result);
+        $dataOutput = addBookingsDetails($result,$data['flight_name']);
         $booking = BookingDetail::create($dataOutput);
         $contact = [
             'email' => $request->get('email'),
@@ -489,6 +492,18 @@ trait FlightTrait
             // dd($myBooking);
             $data = meta_key();
             return view('flight.booking-success', compact('myBooking', 'data'));
+        }
+    }
+
+
+    /*pdf*/
+    public function  generatePDF($id)
+    {
+        if (!empty($id)) {
+            $myBooking = BookingDetail::where('id', $id)->first();
+            $pdf = PDF::loadView('flight.flight-pdf', compact('myBooking'));
+            return $pdf->stream('document.pdf');
+            // return $pdf->download('ticket.pdf');
         }
     }
 

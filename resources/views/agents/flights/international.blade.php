@@ -1254,17 +1254,17 @@
 
 
                                     @php $px= explode('-',Request::get('px')) @endphp
-                                    <?php 
-									
-										$srch = Request::get('srch'); 
-										
+                                    <?php
+
+										$srch = Request::get('srch');
+
 										$mytravlercount = explode('-', Request::get('px'));
 										$mtcount = 0;
 										for($mit =0; $mit<count($mytravlercount); $mit++){
 											$mtcount += $mytravlercount[$mit];
 										}
-										$cbn = Request::get('cbn'); 
-										$nt = Request::get('nt'); 
+										$cbn = Request::get('cbn');
+										$nt = Request::get('nt');
 										$explodesearc = explode('|', $srch);
 										$originexplode = explode('-', $explodesearc[0]);
 										$desexplode = explode('-', $explodesearc[1]);
@@ -1570,7 +1570,7 @@
                                                                     </ul>
 
                                                                     {{-- <div class="bagbx">
-								
+
 													<span><img src="http://24hr.lightmytrip.com/public/images/Baggage-gray.svg"  />&nbsp; {{ $searchFlight["travelerPricings"][0]["fareDetailsBySegment"][0]["includedCheckedBags"]["weight"] }} kg Hand baggage&nbsp;&nbsp;|&nbsp;&nbsp;2x 23kg Checked baggage</span>
                                                                 </div> --}}
                                                             </div>
@@ -1650,9 +1650,9 @@
                                         </div><!-- .content-main end -->
                                     </div>
                                 <div class="col-lg-3 col-md-3 col-lg-pull-9 col-md-pull-9 col-sm-12 cus_col_3">
-                                   
+
                                        <div class="sidebar style-1 custom_sidebar">
-													<a class="filter_close"><i class="fa fa-times"></i></a> 
+													<a class="filter_close"><i class="fa fa-times"></i></a>
 													<h3>Filter <span onclick="ClearAll();" class="clearfilter">Clear All</span></h3>
 													<div class="inner_filter">
 														<div class="box-widget">
@@ -1661,10 +1661,10 @@
 																<div class="slider-dragable-range slider-range-price">
 																	<input type="text" class="price">
 																	<div class="slider-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-slider-min-value="609" data-slider-max-value="23369" data-range-start-value="609" data-range-end-value="23369" data-slider-value-sign="₹"><div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span></div>
-																</div><!-- .slider-dragable-price end --> 											 				
+																</div><!-- .slider-dragable-price end -->
 															</div><!-- .box-content end -->
 														</div><!-- .box-widget end -->
-														<div class="box-widget"> 
+														<div class="box-widget">
 															<h5 class="box-title">Departure Time</h5>
 															<div class="box-content">
 																<div class="slider-dragable-range slider-range-price-time">
@@ -1673,7 +1673,7 @@
 																</div><!-- .slider-dragable-range end -->
 															</div><!-- .box-content end -->
 														</div><!-- .box-widget end -->
-														<!--<div class="box-widget">   
+														<!--<div class="box-widget">
 															<h5 class="box-title">Return</h5>
 															<div class="box-content">
 																<div class="slider-dragable-range slider-range-price">
@@ -1687,7 +1687,7 @@
 															<h5 class="box-title">Stops</h5>
 															<div class="box-content">
 																<ul class="check-boxes-custom list-checkboxes">
-																	
+
 																	<li>
 																		<label for="option1" class="label-container checkbox-default">Non Stop
 																			<input name="options" class="Stopfliter" id="option1" type="checkbox" value="0" onclick="doFilter('stop',0,event);">
@@ -1716,7 +1716,7 @@
 																																			<li style="display: list-item;">
 																		<label class="label-container checkbox-default">
 																																					Indigo
-																																				
+
 																			<input name="airline" class="chboxAirline" type="checkbox" value="" id="Chk6E" onclick="doFilter('flight','6E',event);">
 																			<span class="checkmark"></span>
 																		</label>
@@ -1724,7 +1724,7 @@
 																																				<li style="display: list-item;">
 																		<label class="label-container checkbox-default">
 																																					Air India
-																																				
+
 																			<input name="airline" class="chboxAirline" type="checkbox" value="" id="ChkAI" onclick="doFilter('flight','AI',event);">
 																			<span class="checkmark"></span>
 																		</label>
@@ -1732,7 +1732,7 @@
 																																				<li style="display: list-item;">
 																		<label class="label-container checkbox-default">
 																																					SpiceJet
-																																				
+
 																			<input name="airline" class="chboxAirline" type="checkbox" value="" id="ChkSG" onclick="doFilter('flight','SG',event);">
 																			<span class="checkmark"></span>
 																		</label>
@@ -1740,7 +1740,7 @@
 																																				<li style="display: list-item;">
 																		<label class="label-container checkbox-default">
 																																					Vistara
-																																				
+
 																			<input name="airline" class="chboxAirline" type="checkbox" value="" id="ChkUK" onclick="doFilter('flight','UK',event);">
 																			<span class="checkmark"></span>
 																		</label>
@@ -1748,7 +1748,7 @@
 																																				<li style="display: list-item;">
 																		<label class="label-container checkbox-default">
 																																					GO FIRST
-																																				
+
 																			<input name="airline" class="chboxAirline" type="checkbox" value="" id="ChkG8" onclick="doFilter('flight','G8',event);">
 																			<span class="checkmark"></span>
 																		</label>
@@ -1844,7 +1844,7 @@
 																	</div>
 																</div>
 															</div>
-														</div>--> 
+														</div>-->
 													</div>
 													<div class="applyfilter_btn">
 														<button type="button" class="apply_btn">Apply Filter</button>

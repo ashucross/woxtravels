@@ -1,15 +1,3 @@
-@php
-if(!empty($myBooking)){
-    $bookingId = json_decode($myBooking->booking_response)->booking_id;
-    $bookingDetails = getBookingDetiils($bookingId);
-    // echo "<pre>";
-        $depFlight = $bookingDetails[0];
-        // echo "<pre>";
-        // var_dump($depFlight);
-$phoneNumber = $bookingDetails['travelersDetails'][0]['contact']['phones'][0]['countryCallingCode']  . ' ' . $bookingDetails['travelersDetails'][0]['contact']['phones'][0]['number'];
-$emailId = $bookingDetails['travelersDetails'][0]['contact']['emailAddress'];
-if(!empty($bookingDetails)){
-@endphp
 @extends('homeLayout')
 @section('styles')
 <style>
@@ -20,6 +8,21 @@ if(!empty($bookingDetails)){
 @endsection
 @section('pageContent')
 @include('includes.popds')
+@php
+$bookingId = json_decode($myBooking->booking_response)->booking_id;
+$bookingDetails = getBookingDetiils($bookingId);
+$booking_response = json_decode($myBooking->booking_response);
+if(count($booking_response->flight_details->data->flightOffers[0]->itineraries) > 1){
+$segmentsec = $booking_response->flight_details->data->flightOffers[0]->itineraries[1]->segments[0];
+}
+// dd($segmentsec);
+$segment = $booking_response->flight_details->data->flightOffers[0]->itineraries[0]->segments[0];
+$depFlight = $bookingDetails[0];
+$phoneNumber = $bookingDetails['travelersDetails'][0]['contact']['phones'][0]['countryCallingCode'] . ' ' .
+$bookingDetails['travelersDetails'][0]['contact']['phones'][0]['number'];
+$emailId = $bookingDetails['travelersDetails'][0]['contact']['emailAddress'];
+@endphp
+@if(!empty($bookingDetails))
 <div class="container">
     <div class="detailsmain">
         <div class="leftmain_rv">
@@ -35,7 +38,7 @@ if(!empty($bookingDetails)){
                 <ul class="clearfix list_ds">
                     <li>
                         <label>Phone No.</label>
-                        <span>+ {{  $phoneNumber }}</span>
+                        <span>+ {{ $phoneNumber }}</span>
                     </li>
                     <li>
                         <label>Email Id</label>
@@ -53,7 +56,8 @@ if(!empty($bookingDetails)){
 
                 </ul>
                 <div class="tkt">
-                    <button class="tkdwn" type="button"><i class="fa fa-download mr-1"></i>Ticked Download</button>
+                    <button class="tkdwn" type="button"><a href="{{ url('flight/generate-pdf/'. $myBooking->id) }}"><i
+                                class="fa fa-download mr-1"></i>Ticked Download</a></button>
                 </div>
             </div>
 
@@ -71,27 +75,36 @@ if(!empty($bookingDetails)){
                                     <div class="airlogo_rv">
                                         <span class="logowt">
                                             <img src="{{ $depFlight['file'] }}" class="img-res"></span>
-                                        <span>TATA SIA</span>
+                                        <span>{{$myBooking->flight_name}}</span>
                                     </div>
 
-                                    <p>AIRLINES LTD dba VISTARA</p>
-                                    <span class="uktxt">{{  $depFlight['depature']['flight'] }}</span>
+                                    <p>{{$myBooking->flight_name}}</p>
+                                    <span class="uktxt">{{ $depFlight['depature']['flight'] }}</span>
                                 </div>
                                 <div class="righttxt_rv">
                                     <div class="datebx_rv">
-                                        <span>Wed, 16 Feb 2022</span>
+                                        <span>{{ date('M d Y H:i:a', strtotime(
+                                            $booking_response->oneway->one_way_route[0]->dep_time)) }}</span>
                                         <span class="dotvr"><b>Cabin&nbsp;:&nbsp;</b> Y , ROUNDTRIP</span>
                                     </div>
                                     <div class="time_rv">
                                         <div class="datetm_rv">
                                             <div class="tbrtvr">
-                                                <h4>20:55,&nbsp;BOM<span>Mumbai&nbsp;(BOM)</span></h4>
+                                                <h4>{{ date('M d Y H:i:a', strtotime(
+                                                    $booking_response->oneway->one_way_route[0]->dep_time)) }},&nbsp;{{
+                                                    $booking_response->oneway->dep_city_code }}<span>{{
+                                                        $booking_response->oneway->dep_city_name }}&nbsp;({{
+                                                        $booking_response->oneway->dep_city_code }})</span></h4>
                                                 <span class="blnspan">&nbsp;</span>
-                                                <h4>23:00,&nbsp;DEL<span>Delhi&nbsp;(DEL)</span></h4>
+                                                <h4>23:00,&nbsp;{{ $booking_response->oneway->arrival_city_code
+                                                    }}<span>{{ $booking_response->oneway->arrival_city_name
+                                                        }}&nbsp;({{ $booking_response->oneway->arrival_city_code
+                                                        }})</span></h4>
                                             </div>
                                         </div>
                                         <div class="tmrv_rt">
-                                            <h5>2h&nbsp;5m</h5>
+                                            <h5>{{ strtolower(str_replace('H','H ',substr($segment->duration,
+                                                2)))}}</h5>
                                             <span>0&nbsp;Stop</span>
                                         </div>
                                     </div>
@@ -102,15 +115,20 @@ if(!empty($bookingDetails)){
                                     <div class="heading_cpl">
                                         <h4><i class="fa fa-suitcase"></i>Flight and Baggage Details</h4>
                                         <div class="suitcase_rv"><span class="suitcase_img"><img
-                                                    src="images/vistara-logo.jpg" class="img-res"></span><span
-                                                class="suitcase_txt"><strong>20:55
-                                                    - 23:00,</strong> 2h 5m</span></div>
+                                                    src="{{ $depFlight['file'] }}" class="img-res"></span><span
+                                                class="suitcase_txt"><strong>{{ date('M d Y H:i:a', strtotime(
+                                                    $booking_response->oneway->one_way_route[0]->dep_time)) }},</strong>
+                                                {{ strtolower(str_replace('H','H ',substr($segment->duration,
+                                                2)))}}</span></div>
                                     </div>
 
                                     <div class="to_list">
-                                        <span>Mumbai(BOM) to Delhi(DEL)</span>
+                                        <span>{{ $booking_response->oneway->dep_city_name }}({{
+                                            $booking_response->oneway->dep_city_code }}) to {{
+                                            $booking_response->oneway->arrival_city_name
+                                            }}({{ $booking_response->oneway->arrival_city_code }})</span>
                                         <ul>
-                                            <li>TATA SIA AIRLINES LTD dba VISTARA 988</li>
+                                            <li>{{$myBooking->flight_name}}</li>
                                             <li>Cabin (Y) / Coach (V)</li>
                                             <li>Operating Airline (UK)</li>
                                             <li>Marketing Airline (UK)</li>
@@ -131,6 +149,88 @@ if(!empty($bookingDetails)){
                             </div>
 
                         </li>
+                        @if(count($booking_response->flight_details->data->flightOffers[0]->itineraries) > 1)
+                        <li>
+                            <div class="flexws">
+                                <div class="leftlogo_rv">
+                                    <div class="airlogo_rv">
+                                        <span class="logowt">
+                                            <img src="{{ $depFlight['file'] }}" class="img-res"></span>
+                                        <span>{{$myBooking->flight_name}}</span>
+                                    </div>
+
+                                    <p>{{$myBooking->flight_name}}</p>
+                                    <span class="uktxt">{{ $depFlight['depature']['flight'] }}</span>
+                                </div>
+                                <div class="righttxt_rv">
+                                    <div class="datebx_rv">
+                                        <span>{{ date('M d Y H:i:a', strtotime(
+                                            $booking_response->twoway->two_way_route[0]->dep_time)) }}</span>
+                                        <span class="dotvr"><b>Cabin&nbsp;:&nbsp;</b> Y , ROUNDTRIP</span>
+                                    </div>
+                                    <div class="time_rv">
+                                        <div class="datetm_rv">
+                                            <div class="tbrtvr">
+                                                <h4>{{ date('M d Y H:i:a', strtotime(
+                                                    $booking_response->twoway->two_way_route[0]->dep_time)) }},&nbsp;{{
+                                                    $booking_response->twoway->dep_city_code }}<span>{{
+                                                        $booking_response->twoway->dep_city_name }}&nbsp;({{
+                                                        $booking_response->twoway->dep_city_code }})</span></h4>
+                                                <span class="blnspan">&nbsp;</span>
+                                                <h4>23:00,&nbsp;{{ $booking_response->twoway->arrival_city_code
+                                                    }}<span>{{ $booking_response->twoway->arrival_city_name
+                                                        }}&nbsp;({{ $booking_response->twoway->arrival_city_code
+                                                        }})</span></h4>
+                                            </div>
+                                        </div>
+                                        <div class="tmrv_rt">
+                                            <h5>{{ strtolower(str_replace('H','H ',substr($segmentsec->duration,
+                                                2)))}}</h5>
+                                            <span>0&nbsp;Stop</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="colps_rv">
+                                <div id="ShowFlight1" class="collapse clpside">
+                                    <div class="heading_cpl">
+                                        <h4><i class="fa fa-suitcase"></i>Flight and Baggage Details</h4>
+                                        <div class="suitcase_rv"><span class="suitcase_img"><img
+                                                    src="{{ $depFlight['file'] }}" class="img-res"></span><span
+                                                class="suitcase_txt"><strong>{{ date('M d Y H:i:a', strtotime(
+                                                    $booking_response->twoway->two_way_route[0]->dep_time)) }},</strong>
+                                                {{ strtolower(str_replace('H','H ',substr($segmentsec->duration,
+                                                2)))}}</span></div>
+                                    </div>
+
+                                    <div class="to_list">
+                                        <span>{{ $booking_response->twoway->dep_city_name }}({{
+                                            $booking_response->twoway->dep_city_code }}) to {{
+                                            $booking_response->twoway->arrival_city_name
+                                            }}({{ $booking_response->twoway->arrival_city_code }})</span>
+                                        <ul>
+                                            <li>{{$myBooking->flight_name}}</li>
+                                            <li>Cabin (Y) / Coach (V)</li>
+                                            <li>Operating Airline (UK)</li>
+                                            <li>Marketing Airline (UK)</li>
+                                            <li>Embraer 320</li>
+                                        </ul>
+                                        <div class="btmlist_to">
+                                            <span>Estimated bag fees&nbsp;:&nbsp;</span>
+                                            <span><strong>Carry on&nbsp;:&nbsp;No fee</strong></span>
+                                            <span><strong>Bag Allowance&nbsp;:&nbsp;15-kg</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 data-toggle="collapse" data-target="#ShowFlight1">Show Flight and Baggage Fee
+                                    Details
+                                    <i class="fa fa-angle-down"></i>
+                                </h6>
+
+                            </div>
+
+                        </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -144,18 +244,23 @@ if(!empty($bookingDetails)){
                         <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th> Pax Type</th>
                                 <th>Name</th>
-                                <th> Date Of Birth</th>
+                                <th> Pax Type</th>
+                                <th> Gender </th>
+                                <th> Pnr No</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($bookingDetails['passengers'] as $key=> $pas)
                             <tr>
-                                <td>1</td>
-                                <td>Adult</td>
-                                <td>Mr Sandeep Kumar</td>
-                                <td>28 Dec 1995</td>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ ucfirst($pas['first_name']) }} {{ $pas['last_name'] }}
+                                </td>
+                                <td>{{ $pas['type']}}</td>
+                                <td>{{ $pas['gender'] }}</td>
+                                <td><strong>{{ $myBooking->pnr }}</strong></td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -338,8 +443,7 @@ if(!empty($bookingDetails)){
         </div>
     </div>
 </div>
-
+@endif
 @php
-}}
 @endphp
 @endsection

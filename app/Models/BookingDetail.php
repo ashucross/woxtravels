@@ -28,7 +28,7 @@ class BookingDetail extends Model
         'email',
         'mobile',
         'type',
-            'id', 'created_at', 'updated_at','agent_id'
+            'id', 'created_at', 'updated_at','agent_id','flight_name'
         ];
 
         public $sortable = ['id', 'created_at', 'updated_at'];

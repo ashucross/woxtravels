@@ -87,7 +87,7 @@ ul#ui-id-1 {
                                              </span>
                                              <div  class='quantity1'  >
                                                 <input type='button' slug='oneway' value='-' class='minus' field='quantity' />
-                                                <input type='text' name='adult' id="oneway-qnty-adult" value='0' class='qty' />
+                                                <input type='text' name='adult' id="oneway-qnty-adult" value='1' class='qty' />
                                                 <input type='button' slug='oneway' value='+' class='plus' field='quantity' />
                                              </div>
                                           </div>
@@ -95,7 +95,7 @@ ul#ui-id-1 {
                                        <div class="qty_box">
                                           <div class=" d-flex justify-content-between align-items-center">
                                              <span>Child:
-                                                <span class="agetxt">Ages 0 - 17</span>
+                                                <span class="agetxt">Ages 0 - 9</span>
                                              </span>
                                              <div   class='quantity1'  action='#'>
                                                 <input type='button'  slug='oneway' value='-'  class='minus child_minus' field='quantity' />
@@ -119,14 +119,6 @@ ul#ui-id-1 {
                                                    <option value="7">7 years old</option>
                                                    <option value="8">8 years old</option>
                                                    <option value="9">9 years old</option>
-                                                   <option value="10">10 years old</option>
-                                                   <option value="11">11 years old</option>
-                                                   <option value="12">12 years old</option>
-                                                   <option value="13">13 years old</option>
-                                                   <option value="14">14 years old</option>
-                                                   <option value="15">15 years old </option>
-                                                   <option value="16">16 years old</option>
-                                                   <option value="17">17 years old</option>
                                                 </select>
                                              </div>
                                           </div>
@@ -140,7 +132,7 @@ ul#ui-id-1 {
                                              </span>
                                              <div id='myform' method='POST' class='quantity1' action='#'>
                                                 <input type='button' value='-' slug="oneway" class='minus' field='quantity' />
-                                                <input type='text' name='rooms'  id="oneway-qnty-room" value='0' class='qty' />
+                                                <input type='text' name='rooms'  id="oneway-qnty-room" value='1' class='qty' />
                                                 <input type='button' value='+' slug="oneway" class='plus' field='quantity' />
                                              </div>
                                           </div>

@@ -401,7 +401,6 @@ function searchHotel( $params = null)
     $apiKey = env('HOTEL_API_KEY');
     $Secret = env('HOTEL_SECRET_KEY');
     $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
-    // $endpoint = "https://api.test.hotelbeds.com/hotel-api/1.0/hotels";
 
     $dates = explode('-', $params['checkin']);
     $post = [
@@ -432,7 +431,6 @@ function searchHotel( $params = null)
             CURLOPT_POSTFIELDS => json_encode($post)
         ));
         $resp = curl_exec($curl);
-        // dd($resp);
         if (!curl_errno($curl)) {
             switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
                 case 400:  # Fail

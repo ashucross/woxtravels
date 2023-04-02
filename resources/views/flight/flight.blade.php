@@ -156,7 +156,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input aut="" type="text" name="ckein"
-                                                    placeholder="Check-In - Check-Out"
+                                                    placeholder="Depart-Return"
                                                     class="ckein input_src  input_hgt ">
                                             </div>
                                         </div>
@@ -1070,7 +1070,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="section_heading_center">
-                    <h2>FLY With us by</h2>
+                    <h2>FLY WITH US BY</h2>
                 </div>
             </div>
         </div>

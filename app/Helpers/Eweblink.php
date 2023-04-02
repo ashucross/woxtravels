@@ -193,7 +193,7 @@ function bookingsDetails($data)
 }
 
 
-function addBookingsDetails($data)
+function addBookingsDetails($data, $flight_name)
 {
     // dd($data);
     $output['agent_id'] = null;;
@@ -210,6 +210,7 @@ function addBookingsDetails($data)
     $output['booking_response'] = json_encode($data, true);
     $output['ticket_status'] = ($data["flight_details"]["data"]["ticketingAgreement"]["option"] == "CONFIRM") ? 1 : 0;
     $output['pnr'] = $data["booking_code"];
+    $output['flight_name'] = $flight_name;
     $output['status'] = 0;
     $output['type'] = null;
     // $output['type']= auth()->guard('agents')->user() ? 'b2b':'b2c';
